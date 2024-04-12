@@ -8,50 +8,35 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Characters', {
+    await queryInterface.createTable('CustomizationItems', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      type: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      color: {
+        type: Sequelize.INTEGER
+      },
+      levelRequirement: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'Users' }
+        allowNull: false
       },
-      name: {
-        type: Sequelize.STRING(50),
-        allowNull: false,
-        unique: true
-      },
-      skin: {
+      price: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 1
+        allowNull: false
       },
-      eyes: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 1
-      },
-      status: {
-        type: Sequelize.STRING(200)
-      },
-      level: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 1
-      },
-      totalXp: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-      },
-      totalCoins: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
+      available: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       },
       createdAt: {
         allowNull: false,
@@ -66,7 +51,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Characters";
+    options.tableName = "CustomizationItems";
     return queryInterface.dropTable(options);
   }
 };

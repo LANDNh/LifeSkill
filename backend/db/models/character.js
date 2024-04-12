@@ -23,6 +23,16 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
+    skin: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
+    },
+    eyes: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
+    },
     status: {
       type: DataTypes.STRING,
       validate: {
@@ -32,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     level: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 1,
       validate: {
         min: 1
       }
@@ -39,6 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     totalXp: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
       validate: {
         min: 0
       }
@@ -46,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
     totalCoins: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
       validate: {
         min: 0
       }
