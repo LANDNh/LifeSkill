@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Quest, {
         foreignKey: 'userId'
       });
+      User.hasMany(models.Friend, {
+        foreignKey: 'addresserId',
+        as: 'Addresser'
+      });
+      User.hasMany(models.Friend, {
+        foreignKey: 'addresseeId',
+        as: 'Addressee'
+      });
     }
   }
   User.init({
