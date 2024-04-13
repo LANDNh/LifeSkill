@@ -3,25 +3,20 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Quest extends Model {
+  class QuestStep extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Quest.belongsTo(models.User, {
-        foreignKey: 'userId'
-      });
-      Quest.hasMany(models.QuestStep, {
-        foreignKey: 'questId',
-        onDelete: 'CASCADE',
-        hooks: true
+      QuestStep.belongsTo(models.Quest, {
+        foreignKey: 'questId'
       });
     }
   }
-  Quest.init({
-    userId: {
+  QuestStep.init({
+    questId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -32,25 +27,29 @@ module.exports = (sequelize, DataTypes) => {
         len: [1, 100]
       }
     },
-    description: {
+    notes: {
       type: DataTypes.STRING,
-      allowNull: false,
       validate: {
         len: [1, 200]
       }
     },
-    type: {
-      type: DataTypes.STRING,
+    difficulty: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
-        isIn: ['head', 'body', 'hand']
+        min: 1
       }
     },
-    difficultyAggregate: DataTypes.INTEGER,
-    completionCoins: DataTypes.INTEGER
+    xp: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 5
+      }
+    }
   }, {
     sequelize,
-    modelName: 'Quest',
+    modelName: 'QuestStep',
   });
-  return Quest;
+  return QuestStep;
 };
