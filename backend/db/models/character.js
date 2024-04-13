@@ -10,7 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Character.belongsTo(models.User, {
+        foreignKey: 'userId'
+      });
+      Character.hasMany(models.CharacterCustomization, {
+        foreignKey: 'characterId'
+      });
     }
   }
   Character.init({
@@ -21,7 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      validate: {
+        len: [4, 50],
+        isAlphanumeric: true
+      }
     },
     skin: {
       type: DataTypes.INTEGER,

@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      CustomizationItem.hasMany(models.CharacterCustomization, {
+        foreignKey: 'itemId'
+      });
     }
   }
   CustomizationItem.init({
@@ -28,9 +30,15 @@ module.exports = (sequelize, DataTypes) => {
     color: {
       type: DataTypes.INTEGER,
     },
-    levelRequirement: DataTypes.INTEGER,
-    price: DataTypes.INTEGER,
-    available: DataTypes.BOOLEAN
+    levelRequirement: {
+      type: DataTypes.INTEGER,
+    },
+    price: {
+      type: DataTypes.INTEGER,
+    },
+    available: {
+      type: DataTypes.BOOLEAN,
+    }
   }, {
     sequelize,
     modelName: 'CustomizationItem',
