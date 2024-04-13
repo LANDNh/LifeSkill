@@ -10,11 +10,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasOne(models.Character);
+      User.hasMany(models.Quest, {
+        foreignKey: 'userId'
+      });
     }
   }
   User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [3, 50],
+        isAlpha: true
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [3, 50],
+        isAlpha: true
+      }
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
