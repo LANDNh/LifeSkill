@@ -1,5 +1,7 @@
 'use strict';
 
+/** @type {import('sequelize-cli').Migration} */
+
 const { User } = require('../models');
 const bcrypt = require("bcryptjs");
 
@@ -8,7 +10,6 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await User.bulkCreate([
