@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         len: [4, 50],
-        isAlphanumeric: true
       }
     },
     skin: {
