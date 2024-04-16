@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: ['daily', 'weekly', 'monthly', 'none']
+        isIn: [['daily', 'weekly', 'monthly', 'none']]
       }
     },
     difficultyAggregate: DataTypes.INTEGER,
