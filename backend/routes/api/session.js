@@ -20,6 +20,7 @@ const validateLogin = [
     handleValidationErrors
 ];
 
+// Restore session user
 router.get(
     '/',
     (req, res) => {
@@ -39,6 +40,7 @@ router.get(
     }
 );
 
+//Log in
 router.post(
     '/',
     validateLogin,
@@ -78,6 +80,7 @@ router.post(
     }
 );
 
+// Log out
 router.delete(
     '/',
     (_req, res) => {
