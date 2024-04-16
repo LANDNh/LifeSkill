@@ -8,6 +8,8 @@ const { Character, CustomizationItem, CharacterCustomization } = require('../../
 
 const router = express.Router();
 
+
+// GET all user characters besides current user
 router.get('/', requireAuth, async (req, res) => {
     const { user } = req
     const characters = await Character.findAll({
@@ -30,6 +32,7 @@ router.get('/', requireAuth, async (req, res) => {
     return res.json(charObj);
 });
 
+// GET current user character
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req
     const character = await Character.findOne({
