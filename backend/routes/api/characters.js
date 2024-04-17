@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Character, CustomizationItem, CharacterCustomization } = require('../../db/models');
+const { Character, CustomizationItem, CharacterCustomization, RetainedAttribute } = require('../../db/models');
 
 const router = express.Router();
 
