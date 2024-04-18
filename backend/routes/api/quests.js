@@ -209,4 +209,14 @@ router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, asyn
     return res.json(quest);
 });
 
+router.delete('/current/:questId', requireAuth, questAuthorize, async (req, res) => {
+    const quest = await Quest.findByPk(req.params.questId);
+
+    await quest.destroy();
+
+    return res.json({
+        message: 'Successfully deleted'
+    });
+});
+
 module.exports = router;
