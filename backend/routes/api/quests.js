@@ -25,6 +25,31 @@ const questAuthorize = async (req, res, next) => {
     }
 };
 
+const validateQuest = [
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Title is required'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage('Description is required'),
+    check('type')
+        .exists({ checkFalsy: true })
+        .withMessage('Type is required'),
+    check('title')
+        .custom(async val => {
+            if (val.length < 1 || val.length > 100) {
+                throw new Error('Title must be between 1 and 200 characters')
+            }
+        }),
+    check('description')
+        .custom(async val => {
+            if (val.length < 1 || val.length > 200) {
+                throw new Error('Description must be between 1 and 200 characters')
+            }
+        }),
+    handleValidationErrors
+]
+
 //Get all quests owned by current user
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
@@ -89,7 +114,7 @@ router.get('/current', requireAuth, async (req, res) => {
     return res.json(questObj);
 });
 
-router.get('/current/:questId', requireAuth, async (req, res) => {
+router.get('/current/:questId', requireAuth, questAuthorize, async (req, res) => {
     const { user } = req;
     const quest = await Quest.findOne({
         where: {
@@ -151,6 +176,22 @@ router.get('/current/:questId', requireAuth, async (req, res) => {
 
         return res.json(questObj);
     }
+});
+
+router.post('/current', requireAuth, validateQuest, async (req, res) => {
+    const { user } = req;
+    const { title, description, type } = req.body;
+
+    const newQuest = await Quest.create({
+        userId: user.id,
+        title,
+        description,
+        type,
+        difficultyAggregate: null,
+        completionCoins: null
+    });
+
+    return res.json(newQuest);
 });
 
 module.exports = router;
