@@ -173,6 +173,68 @@ router.post('/current', requireAuth, async (req, res) => {
     }
 });
 
+// Edit character for current user
+router.put('/current', requireAuth, async (req, res) => {
+    const { user } = req;
+    const { name, skin, eyes, status, customizations } = req.body;
+    const character = await Character.findOne({
+        where: {
+            userId: user.id
+        },
+        include: [
+            {
+                model: CharacterCustomization,
+                attributes: ['id', 'characterId', 'itemId', 'equipped'],
+                include: [
+                    {
+                        model: CustomizationItem,
+                        attributes: ['type', 'description', 'color', 'levelRequirement']
+                    }
+                ]
+            }
+        ]
+    });
+
+    if (!character) {
+        return res.status(404).json({
+            message: 'Character could not be found'
+        });
+    }
+
+    character.set({
+        name: name || character.name,
+        skin: skin || character.skin,
+        eyes: eyes || character.eyes,
+        status: status || character.status,
+    });
+
+    if (customizations && Array.isArray(customizations)) {
+        // id = CharacterCustomization.id, equip is desired equipped state, true or false
+        customizations.forEach(({ id, equip }) => {
+            const customization = character.CharacterCustomizations.find(c => c.id === id);
+            if (customization) {
+                if (equip) {
+                    // Unequip all items of the same type
+                    character.CharacterCustomizations.forEach(c => {
+                        if (c.CustomizationItem.type === customization.CustomizationItem.type) {
+                            c.equipped = false;
+                        }
+                    });
+                    customization.equipped = true; // Equip the intended item
+                } else {
+                    customization.equipped = false; // Directly set equipped to false
+                }
+            }
+        });
+    }
+
+    await character.save();
+
+    await Promise.all(character.CharacterCustomizations.map(customization => customization.save()));
+
+    return res.json(character);
+});
+
 router.delete('/current', requireAuth, async (req, res) => {
     const { user } = req;
     const character = await Character.findOne({
