@@ -8,6 +8,24 @@ const { Character, CustomizationItem, CharacterCustomization, RetainedAttribute 
 
 const router = express.Router();
 
+const validateCharacter = [
+    check('name')
+        .exists({ checkFalsy: true })
+        .withMessage('Character name is required'),
+    check('skin')
+        .exists({ checkFalsy: true })
+        .withMessage('Skin color is required'),
+    check('eyes')
+        .exists({ checkFalsy: true })
+        .withMessage('Eye color is required'),
+    check('status')
+        .custom(async val => {
+            if (val && (val.length < 20 || val.length > 200)) {
+                throw new Error('Status must be between 20 and 200 characters')
+            }
+        }),
+    handleValidationErrors
+]
 
 // Get all user characters besides current user
 router.get('/', requireAuth, async (req, res) => {
@@ -24,7 +42,7 @@ router.get('/', requireAuth, async (req, res) => {
     const charList = [];
 
     characters.forEach(character => {
-        charList.push(character.toJSON())
+        charList.push(character.toJSON());
     });
 
     charObj.Characters = charList;
@@ -115,7 +133,7 @@ router.get('/:characterId', requireAuth, async (req, res) => {
 });
 
 // Create character for current user
-router.post('/current', requireAuth, async (req, res) => {
+router.post('/current', requireAuth, validateCharacter, async (req, res) => {
     const { user } = req;
     const { name, skin, eyes, status } = req.body;
     const retainedAttributes = await RetainedAttribute.findOne({
@@ -174,7 +192,7 @@ router.post('/current', requireAuth, async (req, res) => {
 });
 
 // Edit character for current user
-router.put('/current', requireAuth, async (req, res) => {
+router.put('/current', requireAuth, validateCharacter, async (req, res) => {
     const { user } = req;
     const { name, skin, eyes, status, customizations } = req.body;
     const character = await Character.findOne({
