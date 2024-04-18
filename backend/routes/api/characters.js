@@ -118,13 +118,99 @@ router.get('/:characterId', requireAuth, async (req, res) => {
 router.post('/current', requireAuth, async (req, res) => {
     const { user } = req;
     const { name, skin, eyes, status } = req.body;
-    const newCharacter = await Character.create({
+    const retainedAttributes = await RetainedAttribute.findOne({
+        where: {
+            userId: user.id
+        }
+    });
+    const oldCharacter = await Character.findOne({
+        where: {
+            userId: user.id
+        }
+    });
+
+    if (oldCharacter) {
+        return res.status(400).json({
+            message: 'User already has a Character'
+        });
+    }
+
+    let charData = {
         userId: user.id,
         name,
         skin,
         eyes,
         status
-    })
+    }
+
+    if (retainedAttributes) {
+        charData = {
+            ...charData,
+            level: retainedAttributes.level,
+            totalXp: retainedAttributes.totalXp,
+            totalCoins: retainedAttributes.totalCoins,
+        }
+
+        const newCharacter = await Character.create(charData);
+
+        const retainedCustomizations = retainedAttributes.CharacterCustomizations.map(customization => {
+            return {
+                characterId: newCharacter.id,
+                itemId: customization.itemId,
+                equipped: false
+            };
+        });
+
+        await CharacterCustomization.bulkCreate(retainedCustomizations);
+
+        await retainedAttributes.destroy();
+
+        return res.json(newCharacter);
+    } else {
+        const newCharacter = await Character.create(charData);
+
+        return res.json(newCharacter);
+    }
+});
+
+router.delete('/current', requireAuth, async (req, res) => {
+    const { user } = req;
+    const character = await Character.findOne({
+        where: {
+            userId: user.id
+        },
+        include: [
+            {
+                model: CharacterCustomization,
+                attributes: ['id', 'characterId', 'itemId', 'equipped'],
+            }
+        ]
+    });
+
+    if (!character) {
+        return res.status(404).json({
+            message: 'Character could not be found'
+        });
+    } else {
+        await RetainedAttribute.create({
+            userId: character.userId,
+            level: character.level,
+            totalXp: character.totalXp,
+            totalCoins: character.totalCoins,
+            CharacterCustomizations: character.CharacterCustomizations
+        });
+
+        await CharacterCustomization.destroy({
+            where: {
+                characterId: character.id
+            }
+        });
+
+        await character.destroy();
+        return res.json({
+            message: 'Successfully deleted'
+        });
+    }
 });
 
 module.exports = router;
