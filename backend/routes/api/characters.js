@@ -253,6 +253,7 @@ router.put('/current', requireAuth, validateCharacter, async (req, res) => {
     return res.json(character);
 });
 
+// Delete current user character to make a new one with retained attributes
 router.delete('/current', requireAuth, async (req, res) => {
     const { user } = req;
     const character = await Character.findOne({

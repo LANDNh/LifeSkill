@@ -194,4 +194,19 @@ router.post('/current', requireAuth, validateQuest, async (req, res) => {
     return res.json(newQuest);
 });
 
+router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, async (req, res) => {
+    const { title, description, type } = req.body;
+    const quest = await Quest.findByPk(req.params.questId);
+
+    quest.set({
+        title: title || quest.title,
+        description: description || quest.description,
+        type: type || quest.type
+    });
+
+    await quest.save();
+
+    return res.json(quest);
+});
+
 module.exports = router;
