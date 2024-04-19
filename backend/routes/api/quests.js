@@ -48,7 +48,29 @@ const validateQuest = [
             }
         }),
     handleValidationErrors
-]
+];
+
+const validateQuestStep = [
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Title is required'),
+    check('difficulty')
+        .exists({ checkFalsy: true })
+        .withMessage('Must select difficulty of D, C, B, A or S'),
+    check('title')
+        .custom(async val => {
+            if (val.length < 1 || val.length > 100) {
+                throw new Error('Title must be between 1 and 100 characters')
+            }
+        }),
+    check('notes')
+        .custom(async val => {
+            if (val && (val.length < 1 || val.length > 200)) {
+                throw new Error('Notes must be between 1 and 200 characters')
+            }
+        }),
+    handleValidationErrors
+];
 
 //Get all quests owned by current user
 router.get('/current', requireAuth, async (req, res) => {
@@ -214,7 +236,7 @@ router.post('/current', requireAuth, validateQuest, async (req, res) => {
     return res.json(newQuest);
 });
 
-router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, async (req, res) => {
+router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, validateQuestStep, async (req, res) => {
     const quest = await Quest.findByPk(req.params.questId);
     const { title, notes, difficulty } = req.body;
     const existingQuestStep = await QuestStep.findOne({
