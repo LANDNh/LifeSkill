@@ -46,6 +46,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: 5
       }
+    },
+    complete: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     sequelize,

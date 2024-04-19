@@ -18,7 +18,8 @@ module.exports = {
         description: 'The best way to start the day!',
         type: 'daily',
         difficultyAggregate: 1,
-        completionCoins: 5
+        completionCoins: 5,
+        complete: false
       },
       {
         userId: 1,
@@ -26,7 +27,8 @@ module.exports = {
         description: 'Don\'t forget the essentials!',
         type: 'weekly',
         difficultyAggregate: 2,
-        completionCoins: 20
+        completionCoins: 20,
+        complete: false
       },
       {
         userId: 1,
@@ -34,7 +36,8 @@ module.exports = {
         description: 'Almost done with that credit card debt!',
         type: 'monthly',
         difficultyAggregate: 3,
-        completionCoins: 60
+        completionCoins: 60,
+        complete: false
       },
       {
         userId: 1,
@@ -42,7 +45,8 @@ module.exports = {
         description: 'It\'s on the 27th of July!',
         type: 'none',
         difficultyAggregate: 4,
-        completionCoins: 50
+        completionCoins: 50,
+        complete: false
       },
     ], { validate: true });
   },

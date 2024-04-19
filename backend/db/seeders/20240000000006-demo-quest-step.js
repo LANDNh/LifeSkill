@@ -17,84 +17,96 @@ module.exports = {
         title: 'Freshen Up',
         notes: 'Shower, shave, and anything else.',
         difficulty: 1,
-        xp: 5
+        xp: 5,
+        complete: false
       },
       {
         questId: 1,
         title: 'Eat Breakfast',
         notes: 'Best meal of the day.',
         difficulty: 1,
-        xp: 5
+        xp: 5,
+        complete: false
       },
       {
         questId: 1,
         title: 'Get Dressed',
         notes: 'Maybe get some new underwear.',
         difficulty: 1,
-        xp: 5
+        xp: 5,
+        complete: false
       },
       {
         questId: 2,
         title: 'Purchase Meats',
         notes: 'Lunchmeat, ground beef, chicken breasts.',
         difficulty: 2,
-        xp: 10
+        xp: 10,
+        complete: false
       },
       {
         questId: 2,
         title: 'Obtain Fruits & Veggies',
         notes: 'Bananas, avocados, tomatoes for this week.',
         difficulty: 2,
-        xp: 10
+        xp: 10,
+        complete: false
       },
       {
         questId: 2,
         title: 'Puruse the Clothing',
         notes: 'Maybe get some new underwear.',
         difficulty: 2,
-        xp: 10
+        xp: 10,
+        complete: false
       },
       {
         questId: 3,
         title: 'B.O.M. Bills',
         notes: 'Rent, utilities, credit cards.',
         difficulty: 3,
-        xp: 20
+        xp: 20,
+        complete: false
       },
       {
         questId: 3,
         title: 'M.O.M. Bills',
         notes: 'Phone bills.',
         difficulty: 2,
-        xp: 10
+        xp: 10,
+        complete: false
       },
       {
         questId: 3,
         title: 'E.O.M. Bills',
         notes: 'Car payment and insurance.',
         difficulty: 3,
-        xp: 20
+        xp: 20,
+        complete: false
       },
       {
         questId: 4,
         title: 'Assemble Documents',
         notes: 'Everything is already in the green folder on the desk, even the birth certificate.',
         difficulty: 3,
-        xp: 20
+        xp: 20,
+        complete: false
       },
       {
         questId: 4,
         title: 'Doctor Appointment',
         notes: 'Remember to prep the day before.',
         difficulty: 4,
-        xp: 40
+        xp: 40,
+        complete: false
       },
       {
         questId: 4,
         title: 'Render Payment',
         notes: 'At least we have insurance?',
         difficulty: 5,
-        xp: 80
+        xp: 80,
+        complete: false
       },
     ], { validate: true });
   },

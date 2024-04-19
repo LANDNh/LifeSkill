@@ -47,7 +47,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     difficultyAggregate: DataTypes.INTEGER,
-    completionCoins: DataTypes.INTEGER
+    completionCoins: DataTypes.INTEGER,
+    complete: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'Quest',

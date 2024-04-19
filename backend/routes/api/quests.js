@@ -178,6 +178,26 @@ router.get('/current/:questId', requireAuth, questAuthorize, async (req, res) =>
     }
 });
 
+router.get('/current/:questId/quest-steps', requireAuth, questAuthorize, async (req, res) => {
+    const quest = await Quest.findByPk(req.params.questId);
+    const questSteps = await QuestStep.findAll({
+        where: {
+            questId: quest.id
+        },
+        attributes: ['id', 'questId', 'title', 'notes', 'difficulty', 'xp', 'complete']
+    });
+    const stepObj = {};
+    const stepList = [];
+
+    questSteps.forEach(questStep => {
+        stepList.push(questStep.toJSON());
+    });
+
+    stepObj.QuestSteps = stepList;
+
+    return res.json(stepObj);
+});
+
 router.post('/current', requireAuth, validateQuest, async (req, res) => {
     const { user } = req;
     const { title, description, type } = req.body;
@@ -195,16 +215,41 @@ router.post('/current', requireAuth, validateQuest, async (req, res) => {
 });
 
 router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, async (req, res) => {
-    const { title, description, type } = req.body;
+    const { title, description, type, complete } = req.body;
     const quest = await Quest.findByPk(req.params.questId);
 
     quest.set({
         title: title || quest.title,
         description: description || quest.description,
-        type: type || quest.type
+        type: type || quest.type,
+        complete: complete || quest.complete
     });
 
     await quest.save();
+
+    if (quest.complete) {
+        const { user } = req;
+        const character = await Character.findOne({
+            where: {
+                userId: user.id
+            }
+        });
+
+        if (!character) {
+            return res.status(404).json({
+                message: 'Character could not be found'
+            });
+        }
+
+        character.totalCoins += quest.completionCoins;
+
+        await character.save();
+        await quest.destroy();
+
+        return res.json({
+            message: 'Quest completed'
+        });
+    }
 
     return res.json(quest);
 });

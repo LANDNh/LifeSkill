@@ -38,6 +38,11 @@ module.exports = {
         allowNull: false,
         defaultValue: 5
       },
+      complete: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

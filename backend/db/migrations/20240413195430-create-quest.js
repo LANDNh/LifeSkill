@@ -39,6 +39,11 @@ module.exports = {
       completionCoins: {
         type: Sequelize.INTEGER
       },
+      complete: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -48,7 +53,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
+      },
     }, options);
   },
   async down(queryInterface, Sequelize) {
