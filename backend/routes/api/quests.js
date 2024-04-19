@@ -214,6 +214,39 @@ router.post('/current', requireAuth, validateQuest, async (req, res) => {
     return res.json(newQuest);
 });
 
+router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, async (req, res) => {
+    const quest = await Quest.findByPk(req.params.questId);
+    const { title, notes, difficulty } = req.body;
+    const existingQuestStep = await QuestStep.findOne({
+        where: {
+            questId: quest.id,
+            title: title
+        },
+    });
+
+    if (existingQuestStep) {
+        return res.status(400).json({
+            message: "Quest step with this title already exists for this quest."
+        });
+    }
+
+    let xp = 5; // Default xp
+    if (difficulty === 2) xp = 10;
+    else if (difficulty === 3) xp = 20;
+    else if (difficulty === 4) xp = 40;
+    else if (difficulty === 5) xp = 80;
+
+    const newQuestStep = await QuestStep.create({
+        questId: quest.id,
+        title,
+        notes,
+        difficulty,
+        xp
+    });
+
+    return res.json(newQuestStep);
+});
+
 router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, async (req, res) => {
     const { title, description, type, complete } = req.body;
     const quest = await Quest.findByPk(req.params.questId);
