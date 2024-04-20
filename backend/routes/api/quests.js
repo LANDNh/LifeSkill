@@ -37,13 +37,13 @@ const validateQuest = [
         .withMessage('Type is required'),
     check('title')
         .custom(async val => {
-            if (val.length < 1 || val.length > 100) {
+            if (val && (val.length < 1 || val.length > 100)) {
                 throw new Error('Title must be between 1 and 200 characters')
             }
         }),
     check('description')
         .custom(async val => {
-            if (val.length < 1 || val.length > 200) {
+            if (val && (val.length < 1 || val.length > 200)) {
                 throw new Error('Description must be between 1 and 200 characters')
             }
         }),
@@ -59,8 +59,14 @@ const validateQuestStep = [
         .withMessage('Must select difficulty of D, C, B, A or S'),
     check('title')
         .custom(async val => {
-            if (val.length < 1 || val.length > 100) {
+            if (val && (val.length < 1 || val.length > 100)) {
                 throw new Error('Title must be between 1 and 100 characters')
+            }
+        }),
+    check('difficulty')
+        .custom(async val => {
+            if (val < 1 || val > 5) {
+                throw new Error('Must select difficulty of D, C, B, A or S')
             }
         }),
     check('notes')
@@ -266,6 +272,54 @@ router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, valida
         xp
     });
 
+    const questSteps = await QuestStep.findAll({
+        where: {
+            questId: quest.id
+        }
+    });
+
+    let total = 0;
+    questSteps.forEach(step => {
+        total += step.difficulty;
+    });
+    const difficultyAggregate = Math.round(total / questSteps.length);
+
+
+    let completionCoins;
+    switch (quest.type) {
+        case 'daily':
+            completionCoins = (difficultyAggregate * 5);
+            break;
+        case 'weekly':
+            completionCoins = (difficultyAggregate * 10);
+            break;
+        case 'monthly':
+            completionCoins = (difficultyAggregate * 20);
+            break;
+        default:
+            switch (difficultyAggregate) {
+                case 2:
+                    completionCoins = 10;
+                    break;
+                case 3:
+                    completionCoins = 25;
+                    break;
+                case 4:
+                    completionCoins = 50;
+                    break;
+                case 5:
+                    completionCoins = 100;
+                    break;
+                default:
+                    completionCoins = 5;
+            }
+    }
+
+    await quest.update({
+        difficultyAggregate: difficultyAggregate,
+        completionCoins: completionCoins
+    });
+
     return res.json(newQuestStep);
 });
 
@@ -277,7 +331,7 @@ router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, asyn
         title: title || quest.title,
         description: description || quest.description,
         type: type || quest.type,
-        complete: complete || quest.complete
+        complete: complete !== undefined ? complete : quest.complete
     });
 
     await quest.save();
@@ -296,7 +350,9 @@ router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, asyn
             });
         }
 
-        character.totalCoins += quest.completionCoins;
+        if (quest.completionCoins) {
+            character.totalCoins += quest.completionCoins;
+        }
 
         await character.save();
         await quest.destroy();

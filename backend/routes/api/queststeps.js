@@ -46,12 +46,18 @@ const validateQuestStep = [
         .exists({ checkFalsy: true })
         .withMessage('Must select difficulty of D, C, B, A or S'),
     check('complete')
-        .exists({ checkFalsy: true })
+        .exists()
         .withMessage('Completion status is required'),
     check('title')
         .custom(async val => {
-            if (val.length < 1 || val.length > 100) {
+            if (val && (val.length < 1 || val.length > 100)) {
                 throw new Error('Title must be between 1 and 100 characters')
+            }
+        }),
+    check('difficulty')
+        .custom(async val => {
+            if (val < 1 || val > 5) {
+                throw new Error('Must select difficulty of D, C, B, A or S')
             }
         }),
     check('notes')
@@ -65,10 +71,13 @@ const validateQuestStep = [
 
 router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, async (req, res) => {
     const questStep = await QuestStep.findByPk(req.params.questStepId);
-    const { title, notes, difficulty, complete } = req.body;
+    const { title, notes, complete } = req.body;
+    let { difficulty } = req.body
     const existingQuestStep = await QuestStep.findOne({
         where: {
-            id: req.params.questStepId,
+            id: {
+                [Op.ne]: req.params.questStepId
+            },
             title: title
         },
     });
@@ -79,6 +88,8 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
         });
     }
 
+    difficulty = difficulty || questStep.difficulty;
+
     let xp = 5; // Default xp
     if (difficulty === 2) xp = 10;
     else if (difficulty === 3) xp = 20;
@@ -88,9 +99,9 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
     questStep.set({
         title: title || questStep.title,
         notes: notes || questStep.notes,
-        difficulty: difficulty || questStep.difficulty,
+        difficulty,
         xp,
-        complete: complete || questStep.complete
+        complete: complete !== undefined ? complete : questStep.complete
     });
 
     await questStep.save();
@@ -117,7 +128,6 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
         }
 
         await character.save();
-        await questStep.destroy();
 
         return res.json({
             message: 'Quest Step completed'
