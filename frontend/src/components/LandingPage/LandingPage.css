@@ -58,7 +58,10 @@ body {
     box-shadow: 5px 5px 10px #163DFF;
     color: white;
     padding: 1em;
+    padding-top: 1.5em;
     margin-top: 1em;
+    border-radius: 15px;
+    cursor: pointer;
 }
 
 .landing-page-logo {
