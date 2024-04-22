@@ -1,0 +1,66 @@
+.signup-modal {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.signup-modal h1 {
+    margin: 1em 0em;
+    font-family: "M42_FLIGHT 721";
+    color: #163DFF;
+    border-bottom: 2px solid #163DFF;
+    width: 100%;
+    text-align: center;
+}
+
+.signup-modal form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 450px;
+}
+
+.signup-input {
+    margin: 1em;
+}
+
+.signup-input input {
+    font-family: "Delta Block";
+    font-size: larger;
+    border-radius: 8px;
+}
+
+.signup-submit {
+    margin: 1.5em;
+    margin-bottom: 2.5em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.signup-submit:disabled {
+    background-color: lightgray;
+    color: gray;
+    border: 2px solid black;
+    box-shadow: 5px 5px 10px black;
+    cursor: default;
+}
+
+.signup-error {
+    font-family: "Delta Block";
+    color: red;
+    margin: 0em 1em;
+}
