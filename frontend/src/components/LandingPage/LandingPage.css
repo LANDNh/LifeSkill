@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.landing-page-all {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../../images/landing-page-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}
+
+.landing-page-container {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 45%;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+}
+
+.landing-page-container h1 {
+    font-family: "M42_FLIGHT 721";
+    font-size: 1.5em;
+    text-align: center;
+    color: #163DFF;
+}
+
+.landing-page-container li {
+    padding-top: 2em;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 2px solid #163DFF;
+}
+
+.landing-page-container li p {
+    font-family: "M42_FLIGHT 721";
+    font-size: small;
+    color: #163DFF;
+}
+
+.landing-page-container li button {
+    font-family: "M42_FLIGHT 721";
+    font-size: large;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    padding: 1em;
+    margin-top: 1em;
+}
+
+.landing-page-logo {
+    width: 50%;
+}

@@ -1,1 +1,10 @@
 /* TODO: Add sitewide styles */
+@font-face {
+    font-family: "M42_FLIGHT 721";
+    src: url("../fonts/m42_flight_721/M42_FLIGHT_721/m42.eot?") format("eot"),
+        url("../fonts/m42_flight_721/M42_FLIGHT_721/m42.woff") format("woff"),
+        url("../fonts/m42_flight_721/M42_FLIGHT_721/m42.ttf") format("truetype"),
+        url("../fonts/m42_flight_721/M42_FLIGHT_721/m42.svg#M42_FLIGHT-721") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
