@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { createSelector } from 'reselect';
 
 const LOAD_CHARACTERS = 'characters/loadCharacters';
 const LOAD_CHARACTER = 'character/loadCharacter';
@@ -115,14 +116,22 @@ export const removeCharacter = () => async dispatch => {
     }
 };
 
+const selectCharacters = state => state?.characters;
+
+export const selectAllCharacters = createSelector(selectCharacters, characters => {
+    return characters ? Object.values(characters) : null;
+});
+
+export const selectCharacter = state => state.characters.userCharacter;
+
 const initialState = {};
 
-const characterReucer = (state = initialState, action) => {
+const characterReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_CHARACTERS:
             return { ...state, characters: action.characters };
         case LOAD_USER_CHARACTER:
-            return { ...state, character: action.character };
+            return { ...state, userCharacter: action.character };
         case LOAD_CHARACTER:
             return { ...state, character: action.character };
         case ADD_CHARACTER:
@@ -134,4 +143,4 @@ const characterReucer = (state = initialState, action) => {
     }
 };
 
-export default characterReucer;
+export default characterReducer;

@@ -11,7 +11,7 @@ import logo from '../../../images/LifeSkill-logo.png';
 function LandingPage() {
     const sessionUser = useSelector(state => state.session.user);
 
-    if (sessionUser) return <Navigate to='/quests' replace={true} />
+    if (sessionUser) return <Navigate to='/quests' replace={true} />;
 
     return (
         <div className='landing-page-all'>
