@@ -140,6 +140,8 @@ const characterReducer = (state = initialState, action) => {
             return { ...state, character: action.character };
         case DELETE_CHARACTER:
             return { ...state, character: null };
+        default:
+            return state;
     }
 };
 

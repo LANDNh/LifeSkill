@@ -38,16 +38,16 @@ function CharacterCreateModal() {
             });
     };
 
-    const colorOptions = {
+    const skinColorOptions = {
         1: 'White',
-        2: 'Beige',
-        3: 'Tan',
-        4: 'Brown',
-        5: 'Red',
-        6: 'Blue',
-        7: 'Yellow',
-        8: 'Green',
-        9: 'Purple',
+        2: 'Tan',
+        3: 'Brown'
+    };
+
+    const eyeColorOptions = {
+        1: 'Brown',
+        2: 'Blue',
+        3: 'Green'
     };
 
     const handleSkinChange = (e) => {
@@ -79,7 +79,7 @@ function CharacterCreateModal() {
                         required
                     >
                         <option value="">Select a skin color</option>
-                        {Object.entries(colorOptions).map(([val, color]) => (
+                        {Object.entries(skinColorOptions).map(([val, color]) => (
                             <option key={val} value={val}>
                                 {color}
                             </option>
@@ -94,7 +94,7 @@ function CharacterCreateModal() {
                         required
                     >
                         <option value="">Select an eye color</option>
-                        {Object.entries(colorOptions).map(([val, color]) => (
+                        {Object.entries(eyeColorOptions).map(([val, color]) => (
                             <option key={val} value={val}>
                                 {color}
                             </option>
