@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import LandingPage from './components/LandingPage';
 import CharacterPage from './components/CharacterPage';
+import QuestsListPage from './components/QuestsListPage';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <LandingPage />
+      },
+      {
+        path: '/quests',
+        element: <QuestsListPage />
       },
       {
         path: '/characters/current',

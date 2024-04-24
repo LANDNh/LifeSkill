@@ -3,10 +3,14 @@ import { thunk } from 'redux-thunk';
 
 import sessionReducer from './session';
 import characterReducer from './characterReducer';
+import questReducer from './questReducer';
+import questStepReducer from './questStepReducer';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     characters: characterReducer,
+    quests: questReducer,
+    questSteps: questStepReducer,
 });
 
 let enhancer;

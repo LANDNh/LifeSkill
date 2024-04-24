@@ -4,7 +4,6 @@ import { fetchUserCharacter, selectCharacter } from '../../store/characterReduce
 import { useEffect, useState } from 'react';
 import './CharacterPage.css';
 
-import OpenModalButton from '../OpenModalButton';
 import { useModal } from '../../context/Modal';
 import CharacterCreateModal from '../CharacterCreateModal';
 
@@ -12,7 +11,7 @@ function CharacterPage() {
     const { setModalContent } = useModal();
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const character = useSelector(selectCharacter);
+    const userCharacter = useSelector(selectCharacter);
     const [isLoading, setIsLoading] = useState(true);
 
 
@@ -22,19 +21,19 @@ function CharacterPage() {
     }, [dispatch]);
 
     useEffect(() => {
-        if (!isLoading && !character) {
+        if (!isLoading && !userCharacter) {
             setModalContent(<CharacterCreateModal />);
         }
-    }, [character, isLoading, setModalContent]);
+    }, [userCharacter, isLoading, setModalContent]);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
     let charPic;
 
-    if (character) {
-        switch (character.skin) {
+    if (userCharacter) {
+        switch (userCharacter.skin) {
             case 2:
-                switch (character.eyes) {
+                switch (userCharacter.eyes) {
                     case 2:
                         charPic = '../../../images/character/char-tan-blue.png';
                         break;
@@ -46,7 +45,7 @@ function CharacterPage() {
                 }
                 break;
             case 3:
-                switch (character.eyes) {
+                switch (userCharacter.eyes) {
                     case 2:
                         charPic = '../../../images/character/char-brown-blue.png';
                         break;
@@ -58,7 +57,7 @@ function CharacterPage() {
                 }
                 break;
             default:
-                switch (character.eyes) {
+                switch (userCharacter.eyes) {
                     case 2:
                         charPic = '../../../images/character/char-white-blue.png';
                         break;
