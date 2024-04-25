@@ -1,0 +1,145 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.quest-list-all {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    background: url('../../../images/page-background.png'), linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(122, 226, 255, 1) 82%, rgba(0, 199, 255, 1) 100%);
+    background-repeat: repeat;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.quest-list-container {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 75%;
+    height: fit-content;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+}
+
+.all-tiles {
+    padding: 1em;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.quest-tile {
+    background-color: white;
+    min-width: 250px;
+    min-height: 250px;
+    margin: .75em;
+    padding: .5em;
+    flex-basis: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 1px 1px 10px #00C7FF;
+    font-family: "Delta Block";
+    font-size: small;
+}
+
+.quest-prev {
+    padding-top: .25em;
+    min-width: 50px;
+    min-height: 80px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.quest-prev img {
+    width: 50%;
+}
+
+.tile-info {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: grid;
+    grid-template-areas:
+        '. a .'
+        '. b .'
+        'c . d'
+    ;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.quest-title {
+    color: black;
+    grid-area: a;
+    display: inline;
+    width: max-content;
+    justify-self: center;
+}
+
+.quest-difficulty {
+    grid-area: b;
+    justify-self: center;
+}
+
+.quest-type {
+    grid-area: c;
+    width: auto;
+    text-transform: capitalize;
+}
+
+.quest-coins {
+    grid-area: d;
+    width: max-content;
+    justify-self: end;
+}
+
+.difficulty-unknown {
+    color: gray;
+}
+
+.difficulty-d {
+    color: #5CAF54;
+}
+
+.difficulty-c {
+    color: #0A69CE;
+}
+
+.difficulty-b {
+    color: #9910B6;
+}
+
+.difficulty-a {
+    color: #D12F27;
+}
+
+.difficulty-s {
+    color: #E5AA33;
+}
+
+.fa-coins {
+    color: #E5AA33;
+}
+
+.create-quest i {
+    font-size: 60pt;
+    color: #163DFF;
+    margin-top: .25em;
+}

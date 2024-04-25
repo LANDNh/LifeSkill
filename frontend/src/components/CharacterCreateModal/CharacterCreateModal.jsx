@@ -106,7 +106,7 @@ function CharacterCreateModal() {
                     <textarea
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
-                        placeholder='If you would like to set a status, please use at least 20 characters'
+                        placeholder='Add your status (20-200 characters) here...'
                     ></textarea>
                 </label>
                 {errors.status && <p className='create-character-error'>{errors.status}</p>}
