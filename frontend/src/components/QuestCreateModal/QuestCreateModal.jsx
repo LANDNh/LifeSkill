@@ -41,6 +41,15 @@ function QuestCreateModal() {
         'monthly': 'Monthly'
     };
 
+    const disableQuestCreate = {}
+    if (!title ||
+        !description ||
+        !type) {
+        disableQuestCreate.disabled = true;
+    } else {
+        disableQuestCreate.disabled = false;
+    }
+
     return (
         <div className='create-quest-modal'>
             <h1>Create A New Quest</h1>
@@ -82,6 +91,7 @@ function QuestCreateModal() {
                 <button
                     className='create-quest-submit'
                     type='submit'
+                    {...disableQuestCreate}
                 >Create Quest</button>
             </form>
         </div>

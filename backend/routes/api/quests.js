@@ -119,6 +119,9 @@ router.get('/current', requireAuth, async (req, res) => {
                 break;
             default:
                 switch (quest.difficultyAggregate) {
+                    case 1:
+                        quest.completionCoins = 5;
+                        break;
                     case 2:
                         quest.completionCoins = 10;
                         break;
@@ -132,7 +135,7 @@ router.get('/current', requireAuth, async (req, res) => {
                         quest.completionCoins = 100;
                         break;
                     default:
-                        quest.completionCoins = 5;
+                        quest.completionCoins = null;
                 }
         }
     });
@@ -178,6 +181,9 @@ router.get('/current/:questId', requireAuth, questAuthorize, async (req, res) =>
                 break;
             default:
                 switch (quest.difficultyAggregate) {
+                    case 1:
+                        quest.completionCoins = 5;
+                        break;
                     case 2:
                         quest.completionCoins = 10;
                         break;
@@ -191,7 +197,7 @@ router.get('/current/:questId', requireAuth, questAuthorize, async (req, res) =>
                         quest.completionCoins = 100;
                         break;
                     default:
-                        quest.completionCoins = 5;
+                        quest.completionCoins = null;
                 }
         }
 
@@ -298,6 +304,9 @@ router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, valida
             break;
         default:
             switch (difficultyAggregate) {
+                case 1:
+                    completionCoins = 5;
+                    break;
                 case 2:
                     completionCoins = 10;
                     break;
@@ -311,7 +320,7 @@ router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, valida
                     completionCoins = 100;
                     break;
                 default:
-                    completionCoins = 5;
+                    completionCoins = null;
             }
     }
 
