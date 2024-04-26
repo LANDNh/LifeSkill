@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import './QuestsList.css';
+
 import { fetchUserCharacter, selectCharacter } from '../../store/characterReducer';
 import { fetchQuests, selectAllQuests } from '../../store/questReducer';
 
 import { useModal } from '../../context/Modal';
 import QuestCreateModal from '../QuestCreateModal';
+import './QuestsList.css';
 
 function QuestsListPage() {
     const { setModalContent } = useModal();
@@ -71,7 +72,7 @@ function QuestsListPage() {
                             <div
                                 className='quest-tile'
                                 onClick={() => {
-                                    navigate(`/quests/current/${quest.id}`)
+                                    navigate(`/quests/${quest.id}`)
                                 }}
                                 key={quest.id}
                             >

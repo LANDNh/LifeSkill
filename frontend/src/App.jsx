@@ -6,6 +6,7 @@ import Navigation from './components/Navigation';
 import LandingPage from './components/LandingPage';
 import CharacterPage from './components/CharacterPage';
 import QuestsListPage from './components/QuestsListPage';
+import QuestDetailsPage from './components/QuestDetailsPage';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: '/quests',
         element: <QuestsListPage />
+      },
+      {
+        path: '/quests/:questId',
+        element: <QuestDetailsPage />
       },
       {
         path: '/characters/current',

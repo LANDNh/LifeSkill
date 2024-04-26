@@ -1,0 +1,196 @@
+.quest-page-all {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: url('../../../images/page-background-clip.png'), linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(122, 226, 255, 1) 82%, rgba(0, 199, 255, 1) 100%);
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.quest-page-container {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+    height: fit-content;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+}
+
+.quest-page-info {
+    margin-top: 2em;
+    width: 90%;
+    display: grid;
+    grid-template-areas:
+        '. a .'
+        '. b .'
+        'c . d'
+    ;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.quest-page-title {
+    font-family: "M42_FLIGHT 721";
+    font-size: larger;
+    text-decoration: 2px underline;
+    color: #163DFF;
+    grid-area: a;
+    width: max-content;
+    justify-self: center;
+}
+
+.quest-page-difficulty {
+    margin: 0;
+    font-family: "Delta Block";
+    font-size: 20pt;
+    grid-area: b;
+    width: max-content;
+    justify-self: center;
+}
+
+.quest-page-type {
+    font-family: "Delta Block";
+    grid-area: c;
+    width: max-content;
+    text-transform: capitalize;
+}
+
+.quest-page-coins {
+    font-family: "Delta Block";
+    grid-area: d;
+    width: max-content;
+    justify-self: end;
+}
+
+.quest-edit {
+    justify-self: center;
+}
+
+.quest-delete {
+    justify-self: center;
+}
+
+.quest-edit button {
+    margin-top: 1em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 8pt;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    width: max-content;
+}
+
+.quest-delete button {
+    margin-top: 1em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 8pt;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    width: max-content;
+}
+
+.quest-steps {
+    padding: 0;
+    width: 100%;
+}
+
+.quest-step {
+    font-family: "Delta Block";
+    padding: .5em;
+    margin: 1em;
+    border-top: 2px solid #163DFF;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    grid-template-columns: .5fr 2fr 1fr;
+}
+
+.quest-step input {
+    width: 20%;
+    justify-self: center;
+}
+
+.quest-step-complete {
+    margin-right: 3em;
+}
+
+.quest-step-title {
+    text-decoration: 2px underline;
+}
+
+.quest-step-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.quest-step-edit {
+    margin: .5em;
+}
+
+.quest-step-edit button {
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 8pt;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.quest-step-delete button {
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 8pt;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.quest-step-delete {
+    margin: .5em;
+}
+
+.create-quest-step {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-quest-step i {
+    font-size: 50pt;
+    color: #163DFF;
+    margin-top: .25em;
+}
+
+.fa-medal {
+    color: #00C7FF;
+}

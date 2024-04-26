@@ -106,7 +106,9 @@ export const selectAllQuests = createSelector(selectQuests, quests => {
     return quests ? Object.values(quests) : null;
 });
 
-export const selectQuest = state => state.quests.quest;
+export const selectQuest = questId => state => {
+    return state?.quests ? state.quests[questId] : null;
+};
 
 const initialState = {};
 
