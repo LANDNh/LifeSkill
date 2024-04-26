@@ -1,4 +1,4 @@
-.create-quest-modal {
+.edit-quest-modal {
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
     display: flex;
@@ -11,7 +11,7 @@
     box-sizing: border-box;
 }
 
-.create-quest-modal h1 {
+.edit-quest-modal h1 {
     margin: 1em;
     font-family: "M42_FLIGHT 721";
     font-size: larger;
@@ -21,24 +21,24 @@
     text-align: center;
 }
 
-.create-quest-modal form {
+.edit-quest-modal form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 550px;
 }
 
-.create-quest-input {
+.edit-quest-input {
     margin: 1em;
 }
 
-.create-quest-input input {
+.edit-quest-input input {
     font-family: "Delta Block";
     font-size: larger;
     border-radius: 8px;
 }
 
-.create-quest-input textarea {
+.edit-quest-input textarea {
     font-family: "Delta Block";
     font-size: large;
     border-width: 2px;
@@ -47,14 +47,14 @@
     height: 300px;
 }
 
-.create-quest-input select {
+.edit-quest-input select {
     font-family: "Delta Block";
     font-size: large;
     border-width: 2px;
     border-radius: 8px;
 }
 
-.create-quest-submit {
+.edit-quest-submit {
     margin: 1.5em;
     margin-bottom: 2.5em;
     padding: .75em;
@@ -68,7 +68,7 @@
     cursor: pointer;
 }
 
-.create-quest-submit:disabled {
+.edit-quest-submit:disabled {
     background-color: lightgray;
     color: gray;
     border: 2px solid black;
@@ -76,7 +76,7 @@
     cursor: default;
 }
 
-.create-quest-error {
+.edit-quest-error {
     font-family: "Delta Block";
     color: red;
     margin: 0em 1em;

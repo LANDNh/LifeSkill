@@ -4,16 +4,15 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 
 import { fetchUserCharacter, selectCharacter } from '../../store/characterReducer';
-import { fetchQuest, modifyQuest, removeQuest, selectQuest } from '../../store/questReducer';
-import { fetchQuestSteps, modifyQuestStep, removeQuestStep, selectAllQuestSteps } from '../../store/questStepReducer';
+import { fetchQuest, selectQuest } from '../../store/questReducer';
+import { fetchQuestSteps, modifyQuestStep, selectAllQuestSteps } from '../../store/questStepReducer';
 
-import { useModal } from '../../context/Modal';
 import OpenModalButton from '../OpenModalButton';
+import QuestEditModal from '../QuestEditModal';
 import './QuestDetails.css';
 
 function QuestDetailsPage() {
     const { questId } = useParams();
-    const { setModalContent } = useModal();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -94,7 +93,7 @@ function QuestDetailsPage() {
                             <span className='quest-edit'>
                                 <OpenModalButton
                                     buttonText='Edit Quest'
-                                // modalComponent={<QuestStepEditModal questStep={questStep} />}
+                                    modalComponent={<QuestEditModal quest={quest} />}
                                 />
                             </span>
                             <p className='quest-page-title'>{quest?.title}</p>
