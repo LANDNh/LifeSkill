@@ -9,6 +9,7 @@
     border-radius: 15px;
     overflow: hidden;
     box-sizing: border-box;
+    padding: 1em;
 }
 
 .create-quest-modal h1 {
