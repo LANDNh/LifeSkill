@@ -7,7 +7,7 @@ const QuestDeleteModal = ({ quest }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    const handleDelete = e => {
+    const handleDelete = (e) => {
         e.preventDefault();
         return dispatch(removeQuest(quest.id))
             .then(closeModal)

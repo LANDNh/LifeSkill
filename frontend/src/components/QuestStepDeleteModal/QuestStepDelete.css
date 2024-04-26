@@ -1,0 +1,67 @@
+.delete-quest-step-modal {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+.delete-quest-step-modal h1 {
+    margin: 1em;
+    font-family: "M42_FLIGHT 721";
+    font-size: larger;
+    color: #163DFF;
+    border-bottom: 2px solid #163DFF;
+    width: 100%;
+    text-align: center;
+}
+
+.delete-quest-step-modal p {
+    font-family: "Delta Block";
+}
+
+.delete-quest-step-warning {
+    color: red;
+}
+
+.delete-quest-step-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete-quest-step-submit {
+    margin: 1.5em;
+    margin-bottom: 2.5em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 9pt;
+    background-color: red;
+    border: 2px solid rgb(172, 0, 0);
+    box-shadow: 5px 5px 10px rgb(172, 0, 0);
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.delete-quest-step-cancel {
+    margin: 1.5em;
+    margin-bottom: 2.5em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 9pt;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}

@@ -13,6 +13,7 @@ import QuestEditModal from '../QuestEditModal';
 import QuestDeleteModal from '../QuestDeleteModal';
 import QuestStepCreateModal from '../QuestStepCreateModal';
 import QuestStepEditModal from '../QuestStepEditModal';
+import QuestStepDeleteModal from '../QuestStepDeleteModal';
 import './QuestDetails.css';
 
 function QuestDetailsPage() {
@@ -156,7 +157,7 @@ function QuestDetailsPage() {
                                             <span className='quest-step-delete'>
                                                 <OpenModalButton
                                                     buttonText='Delete Step'
-                                                // modalComponent={<QuestStepDeleteModal questStep={questStep} />}
+                                                    modalComponent={<QuestStepDeleteModal questStep={questStep} />}
                                                 />
                                             </span>
                                         </div>
