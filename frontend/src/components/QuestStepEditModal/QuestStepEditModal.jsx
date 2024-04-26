@@ -1,27 +1,30 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import './QuestStepCreate.css'
+import './QuestStepEdit.css'
 
-import { createQuestStep } from '../../store/questStepReducer';
+import { modifyQuestStep } from '../../store/questStepReducer';
 
-function QuestStepCreateModal({ questId }) {
+function QuestStepEditModal({ questStep }) {
     const dispatch = useDispatch();
-    const [title, setTitle] = useState("");
-    const [notes, setNotes] = useState("");
-    const [difficulty, setDifficulty] = useState(1);
-    const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+
+    const [title, setTitle] = useState(questStep.title || "");
+    const [notes, setNotes] = useState(questStep.notes || "");
+    const [difficulty, setDifficulty] = useState(questStep.difficulty || 1);
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let formErrors = {};
 
         return dispatch(
-            createQuestStep(questId, {
+            modifyQuestStep({
+                id: questStep.id,
                 title,
                 notes,
-                difficulty
+                difficulty,
+                complete: false
             })
         )
             .then(closeModal)
@@ -42,20 +45,20 @@ function QuestStepCreateModal({ questId }) {
         5: 'S'
     };
 
-    const disableQuestStepCreate = {}
+    const disableQuestStepEdit = {}
     if (!title ||
         !notes ||
         !difficulty) {
-        disableQuestStepCreate.disabled = true;
+        disableQuestStepEdit.disabled = true;
     } else {
-        disableQuestStepCreate.disabled = false;
+        disableQuestStepEdit.disabled = false;
     }
 
     return (
-        <div className='create-quest-step-modal'>
-            <h1>Create A New Quest Step</h1>
+        <div className='edit-quest-step-modal'>
+            <h1>Edit A Quest Step</h1>
             <form onSubmit={handleSubmit}>
-                <label className='create-quest-step-input'>
+                <label className='edit-quest-step-input'>
                     <input
                         type="text"
                         value={title}
@@ -64,8 +67,8 @@ function QuestStepCreateModal({ questId }) {
                         required
                     />
                 </label>
-                {errors.title && <p className='create-quest-step-error'>{errors.title}</p>}
-                <label className='create-quest-step-input'>
+                {errors.title && <p className='edit-quest-step-error'>{errors.title}</p>}
+                <label className='edit-quest-step-input'>
                     <textarea
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
@@ -73,8 +76,8 @@ function QuestStepCreateModal({ questId }) {
                         required
                     ></textarea>
                 </label>
-                {errors.notes && <p className='create-quest-step-error'>{errors.notes}</p>}
-                <label className='create-quest-step-input'>
+                {errors.notes && <p className='edit-quest-step-error'>{errors.notes}</p>}
+                <label className='edit-quest-step-input'>
                     <select
                         value={difficulty}
                         onChange={(e) => setDifficulty(e.target.value)}
@@ -88,15 +91,15 @@ function QuestStepCreateModal({ questId }) {
                         ))}
                     </select>
                 </label>
-                {errors.difficulty && <p className='create-quest-step-error'>{errors.difficulty}</p>}
+                {errors.difficulty && <p className='edit-quest-step-error'>{errors.difficulty}</p>}
                 <button
-                    className='create-quest-step-submit'
+                    className='edit-quest-step-submit'
                     type='submit'
-                    {...disableQuestStepCreate}
-                >Create Quest Step</button>
+                    {...disableQuestStepEdit}
+                >Edit Quest Step</button>
             </form>
         </div>
     );
 }
 
-export default QuestStepCreateModal;
+export default QuestStepEditModal;

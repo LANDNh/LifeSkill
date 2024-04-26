@@ -88,7 +88,7 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
         });
     }
 
-    difficulty = difficulty || questStep.difficulty;
+    difficulty = Number(difficulty) || Number(questStep.difficulty);
 
     let xp = 5; // Default xp
     if (difficulty === 2) xp = 10;
