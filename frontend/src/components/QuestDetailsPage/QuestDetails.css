@@ -31,6 +31,7 @@
     grid-template-areas:
         '. a .'
         '. b .'
+        'e e e'
         'c . d'
     ;
     grid-template-columns: 1fr 1fr 1fr;
@@ -52,6 +53,12 @@
     font-size: 20pt;
     grid-area: b;
     width: max-content;
+    justify-self: center;
+}
+
+.quest-page-description {
+    font-family: "Delta Block";
+    grid-area: e;
     justify-self: center;
 }
 
@@ -98,9 +105,9 @@
     padding-top: 1.25em;
     font-family: "M42_FLIGHT 721";
     font-size: 8pt;
-    background-color: #00C7FF;
-    border: 2px solid #163DFF;
-    box-shadow: 5px 5px 10px #163DFF;
+    background-color: red;
+    border: 2px solid rgb(172, 0, 0);
+    box-shadow: 5px 5px 10px rgb(172, 0, 0);
     color: white;
     border-radius: 15px;
     cursor: pointer;
@@ -165,9 +172,9 @@
     padding-top: 1.25em;
     font-family: "M42_FLIGHT 721";
     font-size: 8pt;
-    background-color: #00C7FF;
-    border: 2px solid #163DFF;
-    box-shadow: 5px 5px 10px #163DFF;
+    background-color: red;
+    border: 2px solid rgb(172, 0, 0);
+    box-shadow: 5px 5px 10px rgb(172, 0, 0);
     color: white;
     border-radius: 15px;
     cursor: pointer;

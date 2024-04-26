@@ -11,7 +11,7 @@ function QuestEditModal({ quest }) {
 
     useEffect(() => {
         dispatch(fetchQuest(quest.id));
-    }, [dispatch, quest]);
+    }, [dispatch, quest.id]);
 
     const [title, setTitle] = useState(quest.title || "");
     const [description, setDescription] = useState(quest.description || "");
@@ -24,6 +24,7 @@ function QuestEditModal({ quest }) {
 
         return dispatch(
             modifyQuest({
+                id: quest.id,
                 title,
                 description,
                 type,
@@ -46,15 +47,6 @@ function QuestEditModal({ quest }) {
         'weekly': 'Weekly',
         'monthly': 'Monthly'
     };
-
-    const disableQuestEdit = {}
-    if (!title ||
-        !description ||
-        !type) {
-        disableQuestEdit.disabled = true;
-    } else {
-        disableQuestEdit.disabled = false;
-    }
 
     return (
         <div className='edit-quest-modal'>
@@ -97,7 +89,7 @@ function QuestEditModal({ quest }) {
                 <button
                     className='edit-quest-submit'
                     type='submit'
-                    {...disableQuestEdit}
+                    disabled={!title || !description || !type}
                 >Edit Quest</button>
             </form>
         </div>

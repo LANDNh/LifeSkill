@@ -7,12 +7,15 @@ import { fetchUserCharacter, selectCharacter } from '../../store/characterReduce
 import { fetchQuest, selectQuest } from '../../store/questReducer';
 import { fetchQuestSteps, modifyQuestStep, selectAllQuestSteps } from '../../store/questStepReducer';
 
+import { useModal } from '../../context/Modal';
 import OpenModalButton from '../OpenModalButton';
 import QuestEditModal from '../QuestEditModal';
 import QuestDeleteModal from '../QuestDeleteModal';
+import QuestStepCreateModal from '../QuestStepCreateModal';
 import './QuestDetails.css';
 
 function QuestDetailsPage() {
+    const { setModalContent } = useModal();
     const { questId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -85,6 +88,12 @@ function QuestDetailsPage() {
         }
     };
 
+    const handleClick = (e) => {
+        e.preventDefault();
+
+        setModalContent(<QuestStepCreateModal questId={questId} />)
+    }
+
     if (quest) {
         return (
             <>
@@ -101,6 +110,7 @@ function QuestDetailsPage() {
                             <p className={`quest-page-difficulty ${difficultyClass(quest?.difficultyAggregate)}`}>
                                 Class: {difficultyLetter(quest?.difficultyAggregate)}
                             </p>
+                            <p className='quest-page-description'>{quest?.description}</p>
                             <p className='quest-page-type'>Quest Type: {quest?.type}</p>
                             <div className='quest-page-coins'>
                                 {quest?.completionCoins ? (
@@ -154,7 +164,7 @@ function QuestDetailsPage() {
                             })}
                             <div
                                 className='quest-step create-quest-step'
-                            // onClick={}
+                                onClick={handleClick}
                             >
                                 <i className="fa-solid fa-pen-fancy"></i>
                                 <p>Create a New Quest Step</p>

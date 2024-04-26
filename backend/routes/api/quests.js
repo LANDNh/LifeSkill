@@ -65,7 +65,8 @@ const validateQuestStep = [
         }),
     check('difficulty')
         .custom(async val => {
-            if (val < 1 || val > 5) {
+            const num = Number(val);
+            if (!Number.isInteger(num) || num < 1 || num > 5) {
                 throw new Error('Must select difficulty of D, C, B, A or S')
             }
         }),
@@ -251,6 +252,7 @@ router.post('/current', requireAuth, validateQuest, async (req, res) => {
 router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, validateQuestStep, async (req, res) => {
     const quest = await Quest.findByPk(req.params.questId);
     const { title, notes, difficulty } = req.body;
+    const numDiff = Number(difficulty);
     const existingQuestStep = await QuestStep.findOne({
         where: {
             questId: quest.id,
@@ -265,10 +267,10 @@ router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, valida
     }
 
     let xp = 5; // Default xp
-    if (difficulty === 2) xp = 10;
-    else if (difficulty === 3) xp = 20;
-    else if (difficulty === 4) xp = 40;
-    else if (difficulty === 5) xp = 80;
+    if (numDiff === 2) xp = 10;
+    else if (numDiff === 3) xp = 20;
+    else if (numDiff === 4) xp = 40;
+    else if (numDiff === 5) xp = 80;
 
     const newQuestStep = await QuestStep.create({
         questId: quest.id,
