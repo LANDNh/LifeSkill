@@ -6,7 +6,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
-import logo from '../../../images/LifeSkill-logo.png';
+import logo from '../../../public/images/LifeSkill-logo.png';
 
 function LandingPage() {
     const sessionUser = useSelector(state => state.session.user);

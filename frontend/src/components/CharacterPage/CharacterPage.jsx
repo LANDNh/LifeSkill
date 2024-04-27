@@ -38,37 +38,37 @@ function CharacterPage() {
             case 2:
                 switch (userCharacter.eyes) {
                     case 2:
-                        charPic = '../../../images/character/char-tan-blue.png';
+                        charPic = '../../../public/images/character/char-tan-blue.png';
                         break;
                     case 3:
-                        charPic = '../../../images/character/char-tan-green.png';
+                        charPic = '../../../public/images/character/char-tan-green.png';
                         break;
                     default:
-                        charPic = '../../../images/character/char-tan-brown.png';
+                        charPic = '../../../public/images/character/char-tan-brown.png';
                 }
                 break;
             case 3:
                 switch (userCharacter.eyes) {
                     case 2:
-                        charPic = '../../../images/character/char-brown-blue.png';
+                        charPic = '../../../public/images/character/char-brown-blue.png';
                         break;
                     case 3:
-                        charPic = '../../../images/character/char-brown-green.png';
+                        charPic = '../../../public/images/character/char-brown-green.png';
                         break;
                     default:
-                        charPic = '../../../images/character/char-brown-brown.png';
+                        charPic = '../../../public/images/character/char-brown-brown.png';
                 }
                 break;
             default:
                 switch (userCharacter.eyes) {
                     case 2:
-                        charPic = '../../../images/character/char-white-blue.png';
+                        charPic = '../../../public/images/character/char-white-blue.png';
                         break;
                     case 3:
-                        charPic = '../../../images/character/char-white-green.png';
+                        charPic = '../../../public/images/character/char-white-green.png';
                         break;
                     default:
-                        charPic = '../../../images/character/char-white-brown.png';
+                        charPic = '../../../public/images/character/char-white-brown.png';
                 }
         }
     }
