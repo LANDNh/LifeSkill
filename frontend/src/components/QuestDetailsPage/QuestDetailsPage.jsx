@@ -23,7 +23,6 @@ function QuestDetailsPage() {
 
     const character = useSelector(selectCharacter);
     const [isLoading, setIsLoading] = useState(true);
-    const [updateTrigger, setUpdateTrigger] = useState(0);
 
     useEffect(() => {
         if (questId) {
@@ -32,7 +31,7 @@ function QuestDetailsPage() {
             dispatch(fetchQuestSteps(questId))
                 .catch(error => console.error("Failed to fetch quest steps:", error));
         }
-    }, [dispatch, questId, updateTrigger]);
+    }, [dispatch, questId]);
 
     useEffect(() => {
         dispatch(fetchUserCharacter())
@@ -54,11 +53,6 @@ function QuestDetailsPage() {
     const questSteps = useSelector(selectAllQuestSteps);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
-
-    const triggerUpdate = () => {
-        console.log('update')
-        setUpdateTrigger(prev => prev + 1);
-    };
 
     const difficultyClass = (difficulty) => {
         const difficultyClasses = {
@@ -101,13 +95,8 @@ function QuestDetailsPage() {
     const handleClick = (e) => {
         e.preventDefault();
 
-        setModalContent(<QuestStepCreateModal questId={questId} triggerUpdate={triggerUpdate} />)
+        setModalContent(<QuestStepCreateModal questId={questId} />)
     }
-
-    console.log("Quest:", quest);
-    console.log("Is Loading:", isLoading);
-    console.log("Quest ID:", questId);
-
 
     if (quest && !isLoading) {
         return (

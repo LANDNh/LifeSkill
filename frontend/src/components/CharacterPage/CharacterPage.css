@@ -1,0 +1,135 @@
+.character-page-all {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: url('../../../images/page-background.png'), linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(122, 226, 255, 1) 82%, rgba(0, 199, 255, 1) 100%);
+    background-repeat: repeat;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+}
+
+.character-page-container {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+}
+
+.character-info {
+    margin-top: 1em;
+    display: grid;
+    grid-template-areas:
+        'h h . . g g'
+        '. . a a . .'
+        '. . a a . .'
+        '. . b b . .'
+        'e e c c d d'
+        '. f f f f .'
+    ;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.character-pic {
+    grid-area: a;
+    width: 100%;
+}
+
+.character-edit {
+    grid-area: h;
+    display: flex;
+    justify-content: center;
+}
+
+.character-delete {
+    grid-area: g;
+    display: flex;
+    justify-content: center;
+}
+
+.character-edit button {
+    margin-top: 1em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 8pt;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 90%;
+}
+
+.character-delete button {
+    margin-top: 1em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 8pt;
+    background-color: red;
+    border: 2px solid rgb(172, 0, 0);
+    box-shadow: 5px 5px 10px rgb(172, 0, 0);
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+    width: 90%;
+}
+
+.character-name {
+    grid-area: b;
+    justify-self: center;
+    font-family: "Delta Block";
+    color: #163DFF;
+}
+
+.character-lvl {
+    grid-area: c;
+    justify-self: center;
+    font-family: "Delta Block";
+    color: #163DFF;
+}
+
+.character-xp {
+    grid-area: d;
+    justify-self: center;
+    align-self: center;
+    font-family: "Delta Block";
+    color: #163DFF;
+    width: 70%;
+    height: 20px;
+    background-color: #cccccc;
+    border-radius: 5px;
+    position: relative;
+    border: 1px solid #163DFF;
+}
+
+.xp-bar-fill {
+    height: 100%;
+    background-color: #00C7FF;
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.character-coins {
+    grid-area: e;
+    justify-self: center;
+    font-family: "Delta Block";
+    color: #163DFF;
+}
+
+.character-status {
+    grid-area: f;
+    justify-self: center;
+    color: #163DFF;
+    font-family: "Delta Block";
+}

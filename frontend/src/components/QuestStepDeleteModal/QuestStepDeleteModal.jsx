@@ -10,7 +10,10 @@ const QuestStepDeleteModal = ({ questStep }) => {
     const handleDelete = (e) => {
         e.preventDefault();
         return dispatch(removeQuestStep(questStep.id))
-            .then(closeModal)
+            .then(() => {
+                closeModal();
+                window.location.reload();
+            })
     }
 
     return (

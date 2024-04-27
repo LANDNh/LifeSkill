@@ -5,7 +5,7 @@ import './QuestStepCreate.css'
 
 import { createQuestStep } from '../../store/questStepReducer';
 
-function QuestStepCreateModal({ questId, triggerUpdate }) {
+function QuestStepCreateModal({ questId }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [notes, setNotes] = useState("");
@@ -24,7 +24,7 @@ function QuestStepCreateModal({ questId, triggerUpdate }) {
         }))
             .then(() => {
                 closeModal();
-                triggerUpdate();
+                window.location.reload();
             })
             .catch(async res => {
                 const data = await res.json();

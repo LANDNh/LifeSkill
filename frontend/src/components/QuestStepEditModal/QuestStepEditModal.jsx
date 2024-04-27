@@ -27,7 +27,10 @@ function QuestStepEditModal({ questStep }) {
                 complete: false
             })
         )
-            .then(closeModal)
+            .then(() => {
+                closeModal();
+                window.location.reload();
+            })
             .catch(async res => {
                 const data = await res.json();
                 if (data && data?.errors) {

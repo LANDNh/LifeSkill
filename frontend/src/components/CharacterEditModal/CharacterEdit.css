@@ -1,4 +1,4 @@
-.create-character-modal {
+.edit-character-modal {
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
     display: flex;
@@ -12,7 +12,7 @@
     padding: 1em;
 }
 
-.create-character-modal h1 {
+.edit-character-modal h1 {
     margin: 1em;
     font-family: "M42_FLIGHT 721";
     font-size: larger;
@@ -22,24 +22,24 @@
     text-align: center;
 }
 
-.create-character-modal form {
+.edit-character-modal form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 550px;
 }
 
-.create-character-input {
+.edit-character-input {
     margin: 1em;
 }
 
-.create-character-input input {
+.edit-character-input input {
     font-family: "Delta Block";
     font-size: larger;
     border-radius: 8px;
 }
 
-.create-character-input textarea {
+.edit-character-input textarea {
     font-family: "Delta Block";
     font-size: large;
     border-width: 2px;
@@ -48,14 +48,14 @@
     height: 300px;
 }
 
-.create-character-input select {
+.edit-character-input select {
     font-family: "Delta Block";
     font-size: large;
     border-width: 2px;
     border-radius: 8px;
 }
 
-.create-character-submit {
+.edit-character-submit {
     margin: 1.5em;
     margin-bottom: 2.5em;
     padding: .75em;
@@ -69,7 +69,7 @@
     cursor: pointer;
 }
 
-.create-character-submit:disabled {
+.edit-character-submit:disabled {
     background-color: lightgray;
     color: gray;
     border: 2px solid black;
@@ -77,7 +77,7 @@
     cursor: default;
 }
 
-.create-character-error {
+.edit-character-error {
     font-family: "Delta Block";
     color: red;
     margin: 0em 1em;

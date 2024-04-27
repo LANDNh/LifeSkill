@@ -1,27 +1,33 @@
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import './CharacterCreate.css';
+import './CharacterEdit.css';
 
-import { createCharacter } from '../../store/characterReducer';
+import { fetchUserCharacter, modifyCharacter } from '../../store/characterReducer';
 
-function CharacterCreateModal() {
+function CharacterEditModal({ character }) {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
-    const [name, setName] = useState(sessionUser.username);
-    const [skin, setSkin] = useState(1);
-    const [eyes, setEyes] = useState(1);
-    const [status, setStatus] = useState("");
-    const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
+
+    useEffect(() => {
+        dispatch(fetchUserCharacter());
+    }, [dispatch])
+
+    const [name, setName] = useState(character.name || sessionUser.username);
+    const [skin, setSkin] = useState(character.skin || 1);
+    const [eyes, setEyes] = useState(character.eyes || 1);
+    const [status, setStatus] = useState(character.status || "");
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let formErrors = {};
 
         return dispatch(
-            createCharacter({
+            modifyCharacter({
+                id: character.id,
                 name,
                 skin,
                 eyes,
@@ -62,10 +68,10 @@ function CharacterCreateModal() {
     };
 
     return (
-        <div className='create-character-modal'>
-            <h1>Create Your Character</h1>
+        <div className='edit-character-modal'>
+            <h1>Edit Your Character</h1>
             <form onSubmit={handleSubmit}>
-                <label className='create-character-input'>
+                <label className='edit-character-input'>
                     <input
                         type="text"
                         value={name}
@@ -74,8 +80,8 @@ function CharacterCreateModal() {
                         required
                     />
                 </label>
-                {errors.name && <p className='create-character-error'>{errors.name}</p>}
-                <label className='create-character-input'>
+                {errors.name && <p className='edit-character-error'>{errors.name}</p>}
+                <label className='edit-character-input'>
                     <select
                         value={skin}
                         onChange={handleSkinChange}
@@ -89,8 +95,8 @@ function CharacterCreateModal() {
                         ))}
                     </select>
                 </label>
-                {errors.skin && <p className='create-character-error'>{errors.skin}</p>}
-                <label className='create-character-input'>
+                {errors.skin && <p className='edit-character-error'>{errors.skin}</p>}
+                <label className='edit-character-input'>
                     <select
                         value={eyes}
                         onChange={handleEyesChange}
@@ -104,22 +110,22 @@ function CharacterCreateModal() {
                         ))}
                     </select>
                 </label>
-                {errors.eyes && <p className='create-character-error'>{errors.eyes}</p>}
-                <label className='create-character-input'>
+                {errors.eyes && <p className='edit-character-error'>{errors.eyes}</p>}
+                <label className='edit-character-input'>
                     <textarea
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
                         placeholder='Add your status (20-200 characters) here...'
                     ></textarea>
                 </label>
-                {errors.status && <p className='create-character-error'>{errors.status}</p>}
+                {errors.status && <p className='edit-character-error'>{errors.status}</p>}
                 <button
-                    className='create-character-submit'
+                    className='edit-character-submit'
                     type='submit'
-                >Create Character</button>
+                >Edit Character</button>
             </form>
         </div>
     );
 }
 
-export default CharacterCreateModal;
+export default CharacterEditModal;
