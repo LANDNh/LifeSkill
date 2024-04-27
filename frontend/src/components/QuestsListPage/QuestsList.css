@@ -71,7 +71,7 @@
     grid-template-areas:
         '. a .'
         '. b .'
-        'c . d'
+        'c e d'
     ;
     grid-template-columns: 1fr 1fr 1fr;
 }
@@ -92,6 +92,17 @@
     grid-area: c;
     width: auto;
     text-transform: capitalize;
+}
+
+.quest-complete {
+    grid-area: e;
+    display: flex;
+    justify-content: center;
+}
+
+.quest-complete input {
+    width: 80%;
+    height: 80%;
 }
 
 .quest-coins {

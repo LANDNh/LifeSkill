@@ -5,7 +5,7 @@ import './QuestStepCreate.css'
 
 import { createQuestStep } from '../../store/questStepReducer';
 
-function QuestStepCreateModal({ questId }) {
+function QuestStepCreateModal({ questId, triggerUpdate }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [notes, setNotes] = useState("");
@@ -17,17 +17,18 @@ function QuestStepCreateModal({ questId }) {
         e.preventDefault();
         let formErrors = {};
 
-        return dispatch(
-            createQuestStep(questId, {
-                title,
-                notes,
-                difficulty
+        dispatch(createQuestStep(questId, {
+            title,
+            notes,
+            difficulty
+        }))
+            .then(() => {
+                closeModal();
+                triggerUpdate();
             })
-        )
-            .then(closeModal)
             .catch(async res => {
                 const data = await res.json();
-                if (data && data?.errors) {
+                if (data && data.errors) {
                     formErrors = { ...formErrors, ...data.errors }
                     setErrors(formErrors);
                 }

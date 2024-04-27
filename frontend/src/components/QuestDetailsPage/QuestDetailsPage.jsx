@@ -1,4 +1,3 @@
-import { csrfFetch } from '../../store/csrf';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
@@ -22,32 +21,44 @@ function QuestDetailsPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const sessionUser = useSelector(state => state.session.user);
     const character = useSelector(selectCharacter);
-    const quest = useSelector(selectQuest(questId));
-    const questSteps = useSelector(selectAllQuestSteps);
     const [isLoading, setIsLoading] = useState(true);
+    const [updateTrigger, setUpdateTrigger] = useState(0);
 
     useEffect(() => {
-        dispatch(fetchQuest(questId));
-    }, [dispatch, questId]);
-
-    useEffect(() => {
-        dispatch(fetchQuestSteps(questId));
-    }, [dispatch, questId]);
+        if (questId) {
+            dispatch(fetchQuest(questId))
+                .catch(error => console.error("Failed to fetch quest data:", error));
+            dispatch(fetchQuestSteps(questId))
+                .catch(error => console.error("Failed to fetch quest steps:", error));
+        }
+    }, [dispatch, questId, updateTrigger]);
 
     useEffect(() => {
         dispatch(fetchUserCharacter())
-            .finally(() => setIsLoading(false));
+            .finally(() => {
+                setIsLoading(false);
+            });
     }, [dispatch]);
 
     useEffect(() => {
-        if (!isLoading && !character) {
-            navigate('/characters/current')
+        if (!isLoading) {
+            if (!character) {
+                navigate('/characters/current')
+            }
         }
     }, [isLoading, character, navigate]);
 
+    const sessionUser = useSelector(state => state.session.user);
+    const quest = useSelector(selectQuest(questId));
+    const questSteps = useSelector(selectAllQuestSteps);
+
     if (!sessionUser) return <Navigate to='/' replace={true} />;
+
+    const triggerUpdate = () => {
+        console.log('update')
+        setUpdateTrigger(prev => prev + 1);
+    };
 
     const difficultyClass = (difficulty) => {
         const difficultyClasses = {
@@ -71,32 +82,34 @@ function QuestDetailsPage() {
         return difficultyClass[difficulty] || '???';
     }
 
-    const toggleStepComplete = async (questStep) => {
-        const updatedQuestStep = { ...questStep, complete: !questStep.complete };
-        const res = await csrfFetch(`/api/quest-steps/${questStep.id}`, {
-            method: 'PUT',
-            body: JSON.stringify(updatedQuestStep),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+    const toggleStepComplete = (e, questStep) => {
+        e.preventDefault();
 
-        if (res.ok) {
-            const data = await res.json();
-            dispatch(modifyQuestStep(data));
-        } else {
-            const errors = await res.json();
-            console.error('Failed to update:', errors);
-        }
+        return dispatch(
+            modifyQuestStep({
+                id: questStep.id,
+                title: questStep.title,
+                notes: questStep.notes,
+                difficulty: questStep.difficulty,
+                complete: !questStep.complete
+            })
+        ).catch(error => {
+            console.error('Error updating quest step:', error);
+        });
     };
 
     const handleClick = (e) => {
         e.preventDefault();
 
-        setModalContent(<QuestStepCreateModal questId={questId} />)
+        setModalContent(<QuestStepCreateModal questId={questId} triggerUpdate={triggerUpdate} />)
     }
 
-    if (quest) {
+    console.log("Quest:", quest);
+    console.log("Is Loading:", isLoading);
+    console.log("Quest ID:", questId);
+
+
+    if (quest && !isLoading) {
         return (
             <>
                 <div className='quest-page-all'>
@@ -137,7 +150,8 @@ function QuestDetailsPage() {
                                             className='quest-step-complete'
                                             type="checkbox"
                                             checked={questStep.complete}
-                                            onChange={() => toggleStepComplete(questStep)}
+                                            onChange={(e) => toggleStepComplete(e, questStep)}
+                                            disabled={questStep.complete}
                                         />
                                         <div className='quest-step-info'>
                                             <p className='quest-step-title'>{questStep.title}</p>

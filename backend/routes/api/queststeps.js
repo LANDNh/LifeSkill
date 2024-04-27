@@ -128,10 +128,6 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
         }
 
         await character.save();
-
-        return res.json({
-            message: 'Quest Step completed'
-        });
     }
 
     return res.json(questStep);

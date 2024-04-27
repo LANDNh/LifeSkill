@@ -27,7 +27,7 @@ const updateQuestStep = questStep => {
     };
 };
 
-const deleteQuestStep = questStepId => {
+const deleteQuestStep = (questStepId) => {
     return {
         type: DELETE_QUESTSTEP,
         questStepId
@@ -58,15 +58,27 @@ export const createQuestStep = (questId, questStep) => async dispatch => {
 };
 
 export const modifyQuestStep = questStep => async dispatch => {
-    const res = await csrfFetch(`/api/quest-steps/${questStep.id}`, {
-        method: 'PUT',
-        body: JSON.stringify(questStep)
-    });
+    try {
+        const res = await csrfFetch(`/api/quest-steps/${questStep.id}`, {
+            method: 'PUT',
+            body: JSON.stringify(questStep),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    if (res.ok) {
-        const updatedQuestStep = await res.json();
-        dispatch(updateQuestStep(updatedQuestStep));
-        return updatedQuestStep;
+        if (res.ok) {
+            const updatedQuestStep = await res.json();
+            dispatch(updateQuestStep(updatedQuestStep));
+            return updatedQuestStep;
+        } else {
+            const errorData = await res.json();
+            console.error('Failed to update quest step:', errorData);
+            throw new Error('Failed to update quest step');
+        }
+    } catch (error) {
+        console.error('Error in modifyQuestStep:', error);
+        throw error;
     }
 };
 
@@ -88,7 +100,6 @@ const selectQuestSteps = state => state?.questSteps;
 export const selectAllQuestSteps = createSelector(selectQuestSteps, questSteps => {
     return questSteps ? Object.values(questSteps) : null;
 });
-
 
 const initialState = {};
 

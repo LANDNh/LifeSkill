@@ -106,7 +106,6 @@ router.get('/current', requireAuth, async (req, res) => {
         });
         const difficultyAggregate = Math.round(total / quest.QuestSteps.length);
         quest.difficultyAggregate = difficultyAggregate;
-        delete quest.QuestSteps;
 
         switch (quest.type) {
             case 'daily':
@@ -148,9 +147,11 @@ router.get('/current', requireAuth, async (req, res) => {
 
 router.get('/current/:questId', requireAuth, questAuthorize, async (req, res) => {
     const { user } = req;
+    const { questId } = req.params;
     const quest = await Quest.findOne({
         where: {
-            userId: user.id
+            userId: user.id,
+            id: questId
         },
         include: [
             {
@@ -207,7 +208,6 @@ router.get('/current/:questId', requireAuth, questAuthorize, async (req, res) =>
             difficultyAggregate: quest.difficultyAggregate,
             completionCoins: quest.completionCoins
         };
-        delete questObj.QuestSteps;
 
         return res.json(questObj);
     }
@@ -280,57 +280,6 @@ router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, valida
         xp
     });
 
-    const questSteps = await QuestStep.findAll({
-        where: {
-            questId: quest.id
-        }
-    });
-
-    let total = 0;
-    questSteps.forEach(step => {
-        total += step.difficulty;
-    });
-    const difficultyAggregate = Math.round(total / questSteps.length);
-
-
-    let completionCoins;
-    switch (quest.type) {
-        case 'daily':
-            completionCoins = (difficultyAggregate * 5);
-            break;
-        case 'weekly':
-            completionCoins = (difficultyAggregate * 10);
-            break;
-        case 'monthly':
-            completionCoins = (difficultyAggregate * 20);
-            break;
-        default:
-            switch (difficultyAggregate) {
-                case 1:
-                    completionCoins = 5;
-                    break;
-                case 2:
-                    completionCoins = 10;
-                    break;
-                case 3:
-                    completionCoins = 25;
-                    break;
-                case 4:
-                    completionCoins = 50;
-                    break;
-                case 5:
-                    completionCoins = 100;
-                    break;
-                default:
-                    completionCoins = null;
-            }
-    }
-
-    await quest.update({
-        difficultyAggregate: difficultyAggregate,
-        completionCoins: completionCoins
-    });
-
     return res.json(newQuestStep);
 });
 
@@ -367,10 +316,6 @@ router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, asyn
 
         await character.save();
         await quest.destroy();
-
-        return res.json({
-            message: 'Quest completed'
-        });
     }
 
     return res.json(quest);
