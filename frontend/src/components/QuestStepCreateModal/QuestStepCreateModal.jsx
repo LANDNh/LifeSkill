@@ -35,6 +35,7 @@ function QuestStepCreateModal({ questId }) {
             });
     };
 
+
     const difficultyClass = {
         1: 'D',
         2: 'C',
