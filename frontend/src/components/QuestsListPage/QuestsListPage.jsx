@@ -104,7 +104,7 @@ function QuestsListPage() {
                                 >
                                     <div className='quest-prev'>
                                         <img
-                                            src="../../../public/images/quest/LifeSkill-quest.png"
+                                            src="/images/LifeSkill-quest.png"
                                             alt={quest.title}
                                         />
                                     </div>
