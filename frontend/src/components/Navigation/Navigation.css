@@ -1,3 +1,89 @@
 .hidden {
     display: none;
 }
+
+.navbar {
+    display: flex;
+    list-style-type: none;
+    background: linear-gradient(180deg, rgba(0, 199, 255, 1) 0%, rgba(122, 226, 255, 1) 20%, rgba(255, 255, 255, 1) 100%);
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1em;
+    border-bottom: 3px solid #163DFF;
+}
+
+.navbar li {
+    display: flex;
+    padding: 10px 15px;
+    font-family: "Delta Block";
+    color: #163DFF;
+    cursor: pointer;
+    align-items: center;
+}
+
+.navbar li:hover {
+    background-color: lightskyblue;
+}
+
+.navbar .home:hover,
+.navbar .profile:hover {
+    background-color: transparent;
+}
+
+.navbar li.active {
+    background-color: #888;
+}
+
+.home img {
+    width: 150px;
+    height: auto;
+}
+
+.profile {
+    margin-left: auto;
+}
+
+.profile button {
+    padding: .5em 2em 0 2em;
+    font-family: "M42_FLIGHT 721";
+    font-size: 15pt;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.profile-dropdown {
+    font-size: 14pt;
+    position: absolute;
+    top: 3.5em;
+    right: 1.5em;
+    list-style-type: none;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 65%, rgba(205, 205, 205, 1) 100%);
+    border: 2px solid #163DFF;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #163DFF;
+    padding: .5em;
+    margin-top: .25em;
+    cursor: default;
+}
+
+.profile-dropdown li:hover {
+    background-color: transparent;
+    cursor: default;
+}
+
+.user-info {
+    cursor: default;
+}
+
+.navbar a {
+    color: #163DFF;
+    text-decoration: none;
+}
+
+.navbar a.active {
+    color: #163DFF;
+}

@@ -12,14 +12,38 @@ function Navigation({ isLoaded }) {
     }
 
     return (
-        <ul>
-            <li>
-                <NavLink to="/">Home</NavLink>
+        <ul className='navbar'>
+            <li className='home'>
+                <NavLink to="/">
+                    <img src="../../images/LifeSkill-home.png" alt="LifeSkill" />
+                </NavLink>
             </li>
             {isLoaded && (
-                <li>
-                    <ProfileButton user={sessionUser} />
-                </li>
+                <>
+                    <li className='shop-nav'
+                        onClick={() => window.alert('Coming soon!')}
+                    >
+                        Shop
+                    </li>
+                    <li className='users-nav'
+                        onClick={() => window.alert('Coming soon!')}
+                    >
+                        Users
+                    </li>
+                    <li className='friends-nav'
+                        onClick={() => window.alert('Coming soon!')}
+                    >
+                        Friends
+                    </li>
+                    <li className='character-nav'>
+                        <NavLink to="/characters/current">
+                            Character
+                        </NavLink>
+                    </li>
+                    <li className='profile'>
+                        <ProfileButton user={sessionUser} />
+                    </li>
+                </>
             )}
         </ul>
     );
