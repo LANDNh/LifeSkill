@@ -341,6 +341,53 @@ router.post('/current', requireAuth, validateCharacter, async (req, res) => {
     }
 });
 
+// Send a friend request to a different character
+router.post('/:characterId', requireAuth, async (req, res) => {
+    const { user } = req;
+    const addresseeChar = await Character.findByPk(req.params.characterId);
+
+    if (!addresseeChar) {
+        return res.status(404).json({
+            message: 'Character could not be found'
+        });
+    }
+
+    const sentFriend = await Friend.findOne({
+        where: {
+            addresserId: user.id,
+            addresseeId: addresseeChar.userId,
+            status: {
+                [Op.or]: ['accepted', 'pending']
+            }
+        }
+    });
+    const recievedFriend = await Friend.findOne({
+        where: {
+            addresserId: addresseeChar.userId,
+            addresseeId: user.id,
+            status: {
+                [Op.or]: ['accepted', 'pending']
+            }
+        }
+    });
+
+    if (sentFriend || recievedFriend) {
+        return res.status(400).json({
+            message: 'Requested character is either already on friend list or has a request pending'
+        });
+    }
+
+    const requestData = {
+        addresserId: user.id,
+        addresseeId: addresseeChar.userId,
+        status: 'pending'
+    };
+
+    const newRequest = await Friend.create(requestData);
+
+    return res.json(newRequest);
+});
+
 // Edit character for current user
 router.put('/current', requireAuth, validateCharacter, async (req, res) => {
     const { user } = req;
