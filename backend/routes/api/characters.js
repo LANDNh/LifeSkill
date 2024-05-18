@@ -97,7 +97,7 @@ router.get('/current', requireAuth, async (req, res) => {
 router.get('/friends', requireAuth, async (req, res) => {
     const { user } = req;
 
-    // Get friends that current user has sent a request to
+    // Get friends that current character has sent a request to
     const addressedFriends = await Friend.findAll({
         where: {
             addresserId: user.id,
@@ -118,7 +118,7 @@ router.get('/friends', requireAuth, async (req, res) => {
         ]
     });
 
-    // Get friends that sent request to current user
+    // Get friends that sent request to current character
     const addressingFriends = await Friend.findAll({
         where: {
             addresseeId: user.id,
@@ -144,19 +144,101 @@ router.get('/friends', requireAuth, async (req, res) => {
 
     addressedFriends.forEach(friend => {
         friend = friend.toJSON();
-        friendChar = friend.Addressee.Character;
+        const friendChar = friend.Addressee.Character;
         friendList.push(friendChar);
     });
 
     addressingFriends.forEach(friend => {
         friend = friend.toJSON();
-        friendChar = friend.Addresser.Character;
+        const friendChar = friend.Addresser.Character;
         friendList.push(friendChar);
     });
 
     friendObj.Friends = friendList;
 
     return res.json(friendObj);
+});
+
+// Get all friend requests for current character, both recieved and sent
+router.get('/requests', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    // Get requests that current character has sent
+    const sentRequests = await Friend.findAll({
+        where: {
+            addresserId: user.id,
+            status: 'pending'
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addressee',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
+    });
+
+    // Get requests that have been sent to current character
+    const recievedRequests = await Friend.findAll({
+        where: {
+            addresseeId: user.id,
+            status: 'pending'
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addresser',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
+    });
+
+    const requestObj = {};
+    const requestList = [];
+
+    sentRequests.forEach(request => {
+        request = request.toJSON();
+        const requestChar = request.Addressee.Character;
+        const reqObj = {
+            id: request.id,
+            addresserId: request.addresserId,
+            addresseeId: request.addresseeId,
+            status: request.status,
+            Character: requestChar
+        };
+
+        requestList.push(reqObj);
+    });
+
+    recievedRequests.forEach(request => {
+        request = request.toJSON();
+        const requestChar = request.Addresser.Character;
+        const reqObj = {
+            id: request.id,
+            addresserId: request.addresserId,
+            addresseeId: request.addresseeId,
+            status: request.status,
+            Character: requestChar
+        };
+
+        requestList.push(reqObj);
+    });
+
+    requestObj.Requests = requestList;
+
+    return res.json(requestObj);
 });
 
 // Get character by id
