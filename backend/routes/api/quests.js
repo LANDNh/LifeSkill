@@ -145,6 +145,7 @@ router.get('/current', requireAuth, async (req, res) => {
     return res.json(questObj);
 });
 
+// Get details of quest specified by id
 router.get('/current/:questId', requireAuth, questAuthorize, async (req, res) => {
     const { user } = req;
     const { questId } = req.params;
@@ -213,6 +214,7 @@ router.get('/current/:questId', requireAuth, questAuthorize, async (req, res) =>
     }
 });
 
+// Get all quest steps of quest specified by id
 router.get('/current/:questId/quest-steps', requireAuth, questAuthorize, async (req, res) => {
     const quest = await Quest.findByPk(req.params.questId);
     const questSteps = await QuestStep.findAll({
@@ -249,6 +251,7 @@ router.post('/current', requireAuth, validateQuest, async (req, res) => {
     return res.json(newQuest);
 });
 
+// Create a new quest step for quest specified by id
 router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, validateQuestStep, async (req, res) => {
     const quest = await Quest.findByPk(req.params.questId);
     const { title, notes, difficulty } = req.body;
@@ -283,6 +286,7 @@ router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, valida
     return res.json(newQuestStep);
 });
 
+// Edit quest specified by id
 router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, async (req, res) => {
     const { title, description, type, complete } = req.body;
     const quest = await Quest.findByPk(req.params.questId);
@@ -296,6 +300,7 @@ router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, asyn
 
     await quest.save();
 
+    // Add coins to user character upon completion and remove quest
     if (quest.complete) {
         const { user } = req;
         const character = await Character.findOne({
@@ -321,6 +326,7 @@ router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, asyn
     return res.json(quest);
 });
 
+// Delete quest specified by id
 router.delete('/current/:questId', requireAuth, questAuthorize, async (req, res) => {
     const quest = await Quest.findByPk(req.params.questId);
 

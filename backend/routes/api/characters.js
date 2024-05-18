@@ -1,10 +1,10 @@
 const express = require('express');
 const { check } = require('express-validator');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { Character, CustomizationItem, CharacterCustomization, RetainedAttribute } = require('../../db/models');
+const { User, Friend, Character, CustomizationItem, CharacterCustomization, RetainedAttribute } = require('../../db/models');
 
 const router = express.Router();
 
@@ -93,6 +93,72 @@ router.get('/current', requireAuth, async (req, res) => {
     }
 });
 
+//Get all characters that are friends with current character
+router.get('/friends', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    // Get friends that current user has sent a request to
+    const addressedFriends = await Friend.findAll({
+        where: {
+            addresserId: user.id,
+            status: 'accepted'
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addressee',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
+    });
+
+    // Get friends that sent request to current user
+    const addressingFriends = await Friend.findAll({
+        where: {
+            addresseeId: user.id,
+            status: 'accepted'
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addresser',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
+    });
+
+    const friendObj = {};
+    const friendList = [];
+
+    addressedFriends.forEach(friend => {
+        friend = friend.toJSON();
+        friendChar = friend.Addressee.Character;
+        friendList.push(friendChar);
+    });
+
+    addressingFriends.forEach(friend => {
+        friend = friend.toJSON();
+        friendChar = friend.Addresser.Character;
+        friendList.push(friendChar);
+    });
+
+    friendObj.Friends = friendList;
+
+    return res.json(friendObj);
+});
+
 // Get character by id
 router.get('/:characterId', requireAuth, async (req, res) => {
     const character = await Character.findByPk(req.params.characterId, {
@@ -161,6 +227,8 @@ router.post('/current', requireAuth, validateCharacter, async (req, res) => {
         status
     }
 
+    // If user previously deleted as character, certain attributes are retained for new character
+    // Transfers any owned items to current character id as unequipped and creates new database entries
     if (retainedAttributes) {
         charData = {
             ...charData,
@@ -273,6 +341,7 @@ router.delete('/current', requireAuth, async (req, res) => {
             message: 'Character could not be found'
         });
     } else {
+        // Store certain attributes and owned items with user id, remove join table entries linking character and items
         await RetainedAttribute.create({
             userId: character.userId,
             level: character.level,

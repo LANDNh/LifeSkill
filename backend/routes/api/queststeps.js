@@ -1,6 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
-const { Op, where } = require('sequelize');
+const { Op } = require('sequelize');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
@@ -69,6 +69,7 @@ const validateQuestStep = [
     handleValidationErrors
 ];
 
+// Edit quest step
 router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, async (req, res) => {
     const questStep = await QuestStep.findByPk(req.params.questStepId);
     const { title, notes, complete } = req.body;
@@ -78,6 +79,7 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
             id: {
                 [Op.ne]: req.params.questStepId
             },
+            questId: questStep.questId,
             title: title
         },
     });
@@ -106,6 +108,7 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
 
     await questStep.save();
 
+    // Add xp to user character upon completion
     if (questStep.complete) {
         const { user } = req;
         const character = await Character.findOne({
@@ -133,6 +136,7 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
     return res.json(questStep);
 });
 
+// Delete quest step
 router.delete('/:questStepId', requireAuth, questStepAuthorize, async (req, res) => {
     const questStep = await QuestStep.findByPk(req.params.questStepId);
 

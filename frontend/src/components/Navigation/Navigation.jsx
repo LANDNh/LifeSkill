@@ -23,17 +23,17 @@ function Navigation({ isLoaded }) {
                     <li className='shop-nav'
                         onClick={() => window.alert('Coming soon!')}
                     >
-                        Shop
+                        Item Shop
                     </li>
                     <li className='users-nav'
                         onClick={() => window.alert('Coming soon!')}
                     >
-                        Users
+                        Find Friends
                     </li>
                     <li className='friends-nav'
                         onClick={() => window.alert('Coming soon!')}
                     >
-                        Friends
+                        Friends List
                     </li>
                     <li className='character-nav'>
                         <NavLink to="/characters/current">

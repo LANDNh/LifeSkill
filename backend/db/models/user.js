@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       });
       User.hasMany(models.Friend, {
         foreignKey: 'addresserId',
-        as: 'Addresser'
+        as: 'SentRequests'
       });
       User.hasMany(models.Friend, {
         foreignKey: 'addresseeId',
-        as: 'Addressee'
+        as: 'RecievedRequests'
       });
     }
   }
