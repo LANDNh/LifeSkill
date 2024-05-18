@@ -42,4 +42,38 @@ router.put('/:requestId', requireAuth, async (req, res) => {
     }
 });
 
+// Delete character from friends list
+router.delete('/:friendId', requireAuth, async (req, res) => {
+    const { user } = req;
+    const sentFriend = await Friend.findOne({
+        where: {
+            id: req.params.friendId,
+            addresserId: user.id,
+            status: 'accepted'
+        }
+    });
+    const recievedFriend = await Friend.findOne({
+        where: {
+            id: req.params.friendId,
+            addresseeId: user.id,
+            status: 'accepted'
+        }
+    });
+
+    if (!sentFriend && !recievedFriend) {
+        return res.status(404).json({
+            message: 'Character is not on friend list'
+        });
+    } else if (sentFriend) {
+        await sentFriend.destroy();
+        return res.json({
+            message: 'Successfully deleted'
+        });
+    } else if (recievedFriend) {
+        await recievedFriend.destroy();
+        return res.json({
+            message: 'Successfully deleted'
+        });
+    }
+});
 module.exports = router;
