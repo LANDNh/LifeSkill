@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import './CharactersPage.css'
 
 import { fetchCharacters, selectAllCharacters } from '../../store/characterReducer';
 
@@ -33,8 +34,8 @@ function CharactersListPage() {
                             >
                                 <div className='character-tile-info'>
                                     <p className='char-name'>Name: {character.name}</p>
-                                    <p className='char-status'>{character.status}</p>
                                     <p className='char-level'>Level: {character.level}</p>
+                                    <p className='char-status'>{character.status}</p>
                                 </div>
                             </div>
                         ))}
