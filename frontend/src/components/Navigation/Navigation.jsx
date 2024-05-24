@@ -25,10 +25,10 @@ function Navigation({ isLoaded }) {
                     >
                         Item Shop
                     </li>
-                    <li className='users-nav'
-                        onClick={() => window.alert('Coming soon!')}
-                    >
-                        Find Friends
+                    <li className='users-nav'>
+                        <NavLink to='/characters'>
+                            Find Friends
+                        </NavLink>
                     </li>
                     <li className='friends-nav'
                         onClick={() => window.alert('Coming soon!')}

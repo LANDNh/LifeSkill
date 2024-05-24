@@ -116,7 +116,7 @@ export const removeCharacter = () => async dispatch => {
     }
 };
 
-const selectCharacters = state => state?.characters;
+const selectCharacters = state => state?.characters.characters;
 
 export const selectAllCharacters = createSelector(selectCharacters, characters => {
     return characters ? Object.values(characters) : null;

@@ -7,6 +7,7 @@ import LandingPage from './components/LandingPage';
 import CharacterPage from './components/CharacterPage';
 import QuestsListPage from './components/QuestsListPage';
 import QuestDetailsPage from './components/QuestDetailsPage';
+import CharactersListPage from './components/CharactersListPage';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
         path: '/characters/current',
         element: <CharacterPage />
       },
+      {
+        path: '/characters',
+        element: <CharactersListPage />
+      }
     ]
   }
 ]);
