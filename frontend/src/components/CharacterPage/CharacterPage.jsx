@@ -10,6 +10,51 @@ import CharacterCreateModal from '../CharacterCreateModal';
 import CharacterEditModal from '../CharacterEditModal';
 import CharacterDeleteModal from '../CharacterDeleteModal';
 
+export const characterPic = character => {
+    let charPic;
+
+    if (character) {
+        switch (character.skin) {
+            case 2:
+                switch (character.eyes) {
+                    case 2:
+                        charPic = '/images/char-tan-blue.png';
+                        break;
+                    case 3:
+                        charPic = '/images/char-tan-green.png';
+                        break;
+                    default:
+                        charPic = '/images/char-tan-brown.png';
+                }
+                break;
+            case 3:
+                switch (character.eyes) {
+                    case 2:
+                        charPic = '/images/char-brown-blue.png';
+                        break;
+                    case 3:
+                        charPic = '/images/char-brown-green.png';
+                        break;
+                    default:
+                        charPic = '/images/char-brown-brown.png';
+                }
+                break;
+            default:
+                switch (character.eyes) {
+                    case 2:
+                        charPic = '/images/char-white-blue.png';
+                        break;
+                    case 3:
+                        charPic = '/images/char-white-green.png';
+                        break;
+                    default:
+                        charPic = '/images/char-white-brown.png';
+                }
+        }
+    }
+    return charPic;
+};
+
 function CharacterPage() {
     const { setModalContent } = useModal();
     const dispatch = useDispatch();
@@ -31,48 +76,6 @@ function CharacterPage() {
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
-    let charPic;
-
-    if (userCharacter) {
-        switch (userCharacter.skin) {
-            case 2:
-                switch (userCharacter.eyes) {
-                    case 2:
-                        charPic = '/images/char-tan-blue.png';
-                        break;
-                    case 3:
-                        charPic = '/images/char-tan-green.png';
-                        break;
-                    default:
-                        charPic = '/images/char-tan-brown.png';
-                }
-                break;
-            case 3:
-                switch (userCharacter.eyes) {
-                    case 2:
-                        charPic = '/images/char-brown-blue.png';
-                        break;
-                    case 3:
-                        charPic = '/images/char-brown-green.png';
-                        break;
-                    default:
-                        charPic = '/images/char-brown-brown.png';
-                }
-                break;
-            default:
-                switch (userCharacter.eyes) {
-                    case 2:
-                        charPic = '/images/char-white-blue.png';
-                        break;
-                    case 3:
-                        charPic = '/images/char-white-green.png';
-                        break;
-                    default:
-                        charPic = '/images/char-white-brown.png';
-                }
-        }
-    }
-
     if (userCharacter) {
         return (
             <div className='character-page-all'>
@@ -84,7 +87,7 @@ function CharacterPage() {
                                 modalComponent={<CharacterEditModal character={userCharacter} />}
                             />
                         </span>
-                        <img className='character-pic' src={charPic} alt={`Character ${userCharacter.name}`} />
+                        <img className='character-pic' src={characterPic(userCharacter)} alt={`Character ${userCharacter.name}`} />
                         <span className='character-delete'>
                             <OpenModalButton
                                 buttonText='Delete Character'

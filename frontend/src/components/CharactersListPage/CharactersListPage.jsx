@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { characterPic } from '../CharacterPage/CharacterPage';
 import './CharactersPage.css'
 
 import { fetchCharacters, selectAllCharacters } from '../../store/characterReducer';
@@ -32,11 +33,17 @@ function CharactersListPage() {
                                 }}
                                 key={character.id}
                             >
+                                <img className='char-pic' src={characterPic(character)} alt={`Character ${character.name}`} />
                                 <div className='character-tile-info'>
                                     <p className='char-name'>Name: {character.name}</p>
                                     <p className='char-level'>Level: {character.level}</p>
                                     <p className='char-status'>{character.status}</p>
                                 </div>
+                                <button
+                                    className='add-friend'
+                                >
+                                    Add Friend?
+                                </button>
                             </div>
                         ))}
                     </ul>

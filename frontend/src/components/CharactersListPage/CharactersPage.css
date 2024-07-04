@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 80%;
+    width: 60%;
     height: fit-content;
     border: 2px solid #163DFF;
     border-radius: 15px;
@@ -32,4 +32,25 @@
 
 .character-tile-info {
     width: 100%;
+    font-family: "Delta Block";
+    font-size: large;
+    color: #163DFF;
+}
+
+.char-pic {
+    max-height: 8em;
+}
+
+.add-friend {
+    margin: 1.5em;
+    margin-bottom: 2.5em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
 }
