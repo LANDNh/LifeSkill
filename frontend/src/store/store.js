@@ -5,12 +5,14 @@ import sessionReducer from './session';
 import characterReducer from './characterReducer';
 import questReducer from './questReducer';
 import questStepReducer from './questStepReducer';
+import requestReducer from './requestReducer';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     characters: characterReducer,
     quests: questReducer,
     questSteps: questStepReducer,
+    requests: requestReducer,
 });
 
 let enhancer;

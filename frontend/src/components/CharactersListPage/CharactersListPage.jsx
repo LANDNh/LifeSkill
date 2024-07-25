@@ -5,6 +5,7 @@ import { characterPic } from '../CharacterPage/CharacterPage';
 import './CharactersPage.css'
 
 import { fetchCharacters, selectAllCharacters } from '../../store/characterReducer';
+import { createRequest } from '../../store/requestReducer';
 
 function CharactersListPage() {
     const dispatch = useDispatch();
@@ -15,8 +16,6 @@ function CharactersListPage() {
     useEffect(() => {
         dispatch(fetchCharacters());
     }, [dispatch]);
-
-    console.log(characters)
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
@@ -41,6 +40,11 @@ function CharactersListPage() {
                                 </div>
                                 <button
                                     className='add-friend'
+                                    onClick={e => {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        return dispatch(createRequest(character))
+                                    }}
                                 >
                                     Add Friend?
                                 </button>

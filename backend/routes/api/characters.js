@@ -27,7 +27,7 @@ const validateCharacter = [
     handleValidationErrors
 ]
 
-// Get all user characters besides current user
+// Get all user characters besides current user besides friends/requests
 router.get('/', requireAuth, async (req, res) => {
     const { user } = req;
     const characters = await Character.findAll({
