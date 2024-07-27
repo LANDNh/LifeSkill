@@ -30,10 +30,29 @@ const validateCharacter = [
 // Get all user characters besides current user besides friends/requests
 router.get('/', requireAuth, async (req, res) => {
     const { user } = req;
+
+    // Find all friends relationships
+    const friends = await Friend.findAll({
+        where: {
+            [Op.or]: [
+                { addresserId: user.id },
+                { addresseeId: user.id }
+            ]
+        },
+        attributes: ['addresserId', 'addresseeId']
+    });
+
+    // Extract friend IDs
+    const friendIds = friends.map(friend => {
+        return friend.addresserId === user.id ? friend.addresseeId : friend.addresserId;
+    });
+
+    // Get characters of users with no friend relationships 
     const characters = await Character.findAll({
         where: {
             userId: {
-                [Op.ne]: user.id
+                [Op.ne]: user.id,
+                [Op.notIn]: friendIds
             }
         },
         attributes: ['id', 'userId', 'name', 'status', 'level']
@@ -185,7 +204,7 @@ router.get('/requests', requireAuth, async (req, res) => {
     });
 
     // Get requests that have been sent to current character
-    const recievedRequests = await Friend.findAll({
+    const receivedRequests = await Friend.findAll({
         where: {
             addresseeId: user.id,
             status: 'pending'
@@ -216,13 +235,14 @@ router.get('/requests', requireAuth, async (req, res) => {
             addresserId: request.addresserId,
             addresseeId: request.addresseeId,
             status: request.status,
-            Character: requestChar
+            Character: requestChar,
+            type: 'sent'
         };
 
         requestList.push(reqObj);
     });
 
-    recievedRequests.forEach(request => {
+    receivedRequests.forEach(request => {
         request = request.toJSON();
         const requestChar = request.Addresser.Character;
         const reqObj = {
@@ -230,7 +250,8 @@ router.get('/requests', requireAuth, async (req, res) => {
             addresserId: request.addresserId,
             addresseeId: request.addresseeId,
             status: request.status,
-            Character: requestChar
+            Character: requestChar,
+            type: 'received'
         };
 
         requestList.push(reqObj);
