@@ -122,8 +122,6 @@ export const selectAllCharacters = createSelector(selectCharacters, characters =
     return characters ? Object.values(characters) : null;
 });
 
-export const selectAllNoRequestChars = createSelector(selectCharacters)
-
 export const selectCharacter = state => state.characters.userCharacter;
 
 const initialState = {};

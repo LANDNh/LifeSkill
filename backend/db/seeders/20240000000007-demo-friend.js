@@ -25,7 +25,12 @@ module.exports = {
       {
         addresserId: 2,
         addresseeId: 3,
-        status: 'rejected'
+        status: 'pending'
+      },
+      {
+        addresserId: 5,
+        addresseeId: 1,
+        status: 'pending'
       },
     ], { validate: true });
   },

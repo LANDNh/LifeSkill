@@ -87,3 +87,10 @@
 .navbar a.active {
     color: #163DFF;
 }
+
+.tab-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}

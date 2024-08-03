@@ -1,30 +1,34 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { characterPic } from '../CharacterPage/CharacterPage';
-import './CharactersPage.css'
+import './CharactersList.css'
 
 import { fetchCharacters, selectAllCharacters } from '../../store/characterReducer';
-import { createRequest } from '../../store/requestReducer';
+import { createRequest, fetchRequests } from '../../store/requestReducer';
 
 function CharactersListPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
     const characters = useSelector(selectAllCharacters);
+    const [requestedCharacters, setRequestedCharacters] = useState([]);
 
     useEffect(() => {
         dispatch(fetchCharacters());
+        dispatch(fetchRequests());
     }, [dispatch]);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
+
+    const filteredCharacters = characters?.filter(character => !requestedCharacters.includes(character.id));
 
     return (
         <>
             <div className='character-list-all'>
                 <div className='character-list-container'>
                     <ul className='all-characters'>
-                        {characters && characters.map(character => (
+                        {filteredCharacters && filteredCharacters.map(character => (
                             <div
                                 className='character-tile'
                                 onClick={() => {
@@ -43,7 +47,8 @@ function CharactersListPage() {
                                     onClick={e => {
                                         e.stopPropagation();
                                         e.preventDefault();
-                                        return dispatch(createRequest(character))
+                                        dispatch(createRequest(character));
+                                        setRequestedCharacters([...requestedCharacters, character.id]);
                                     }}
                                 >
                                     Add Friend?
@@ -51,8 +56,8 @@ function CharactersListPage() {
                             </div>
                         ))}
                     </ul>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     )
 }

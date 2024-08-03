@@ -26,17 +26,17 @@ function Navigation({ isLoaded }) {
                         Item Shop
                     </li>
                     <li className='users-nav'>
-                        <NavLink to='/characters'>
+                        <NavLink to='/characters' className='tab-link'>
                             Find Friends
                         </NavLink>
                     </li>
-                    <li className='friends-nav'
-                        onClick={() => window.alert('Coming soon!')}
-                    >
-                        Friends List
+                    <li className='friends-nav'>
+                        <NavLink to='/friends' className='tab-link'>
+                            Friends List
+                        </NavLink>
                     </li>
                     <li className='character-nav'>
-                        <NavLink to="/characters/current">
+                        <NavLink to="/characters/current" className='tab-link'>
                             Character
                         </NavLink>
                     </li>

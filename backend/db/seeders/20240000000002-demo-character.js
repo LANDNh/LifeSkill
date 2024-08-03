@@ -40,6 +40,13 @@ module.exports = {
         eyes: 3,
         status: 'I love being the third fake user!'
       },
+      {
+        userId: 5,
+        name: 'JDoe',
+        skin: 3,
+        eyes: 3,
+        status: 'Hello virtual world!'
+      },
     ], { validate: true })
   },
 

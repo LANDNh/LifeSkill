@@ -6,6 +6,7 @@ import characterReducer from './characterReducer';
 import questReducer from './questReducer';
 import questStepReducer from './questStepReducer';
 import requestReducer from './requestReducer';
+import friendReducer from './friendReducer';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     quests: questReducer,
     questSteps: questStepReducer,
     requests: requestReducer,
+    friends: friendReducer,
 });
 
 let enhancer;

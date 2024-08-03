@@ -8,7 +8,167 @@ const { User, Friend, Character } = require('../../db/models');
 
 const router = express.Router();
 
-// Accept or reject a friend request
+//Get all characters that are friends with current character
+router.get('/', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    // Get friends that current character has sent a request to
+    const addressedFriends = await Friend.findAll({
+        where: {
+            addresserId: user.id,
+            status: 'accepted'
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addressee',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
+    });
+
+    // Get friends that sent request to current character
+    const addressingFriends = await Friend.findAll({
+        where: {
+            addresseeId: user.id,
+            status: 'accepted'
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addresser',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
+    });
+
+    const friendObj = {};
+    const friendList = [];
+
+    addressedFriends.forEach(friend => {
+        friend = friend.toJSON();
+        const friendChar = friend.Addressee.Character;
+        const frObj = {
+            id: friend.id,
+            status: friend.status,
+            Character: friendChar
+        };
+        friendList.push(frObj);
+    });
+
+    addressingFriends.forEach(friend => {
+        friend = friend.toJSON();
+        const friendChar = friend.Addresser.Character;
+        const frObj = {
+            id: friend.id,
+            status: friend.status,
+            Character: friendChar
+        };
+        friendList.push(frObj);
+    });
+
+    friendObj.Friends = friendList;
+
+    return res.json(friendObj);
+});
+
+// Get all friend requests for current character, both recieved and sent
+router.get('/requests', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    // Get requests that current character has sent
+    const sentRequests = await Friend.findAll({
+        where: {
+            addresserId: user.id,
+            status: 'pending'
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addressee',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
+    });
+
+    // Get requests that have been sent to current character
+    const receivedRequests = await Friend.findAll({
+        where: {
+            addresseeId: user.id,
+            status: 'pending'
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addresser',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
+    });
+
+    const requestObj = {};
+    const requestList = [];
+
+    sentRequests.forEach(request => {
+        request = request.toJSON();
+        const requestChar = request.Addressee.Character;
+        const reqObj = {
+            id: request.id,
+            addresserId: request.addresserId,
+            addresseeId: request.addresseeId,
+            status: request.status,
+            Character: requestChar,
+            type: 'sent'
+        };
+
+        requestList.push(reqObj);
+    });
+
+    receivedRequests.forEach(request => {
+        request = request.toJSON();
+        const requestChar = request.Addresser.Character;
+        const reqObj = {
+            id: request.id,
+            addresserId: request.addresserId,
+            addresseeId: request.addresseeId,
+            status: request.status,
+            Character: requestChar,
+            type: 'received'
+        };
+
+        requestList.push(reqObj);
+    });
+
+    requestObj.Requests = requestList;
+
+    return res.json(requestObj);
+});
+
+// Accept a friend request
 router.put('/:requestId', requireAuth, async (req, res) => {
     const { user } = req;
     const { status } = req.body;
@@ -16,8 +176,21 @@ router.put('/:requestId', requireAuth, async (req, res) => {
         where: {
             id: req.params.requestId,
             addresseeId: user.id,
-            status: 'pending'
-        }
+            status: 'pending',
+        },
+        include: [
+            {
+                model: User,
+                as: 'Addresser',
+                attributes: ['id'],
+                include: [
+                    {
+                        model: Character,
+                        attributes: ['id', 'name', 'status', 'level']
+                    }
+                ]
+            }
+        ]
     });
 
     if (!friendRequest) {
@@ -26,37 +199,42 @@ router.put('/:requestId', requireAuth, async (req, res) => {
         });
     }
 
-    if (status === 'rejected') {
-        await friendRequest.destroy();
-        return res.json({
-            message: 'Successfully rejected'
-        });
-    } else {
-        friendRequest.set({
-            status: status || friendRequest.status
-        });
+    friendRequest.set({
+        status: status || friendRequest.status
+    });
 
-        await friendRequest.save();
+    await friendRequest.save();
 
-        return res.json(friendRequest);
-    }
+    const friendRequestChar = {
+        id: friendRequest.id,
+        addresseeId: friendRequest.addresseeId,
+        addresserId: friendRequest.addresserId,
+        status: friendRequest.status,
+        Character: friendRequest.Addresser.Character
+    };
+
+    return res.json(friendRequestChar);
 });
 
-// Delete character from friends list
+// Reject a friend request or delete character from friends list
 router.delete('/:friendId', requireAuth, async (req, res) => {
     const { user } = req;
     const sentFriend = await Friend.findOne({
         where: {
             id: req.params.friendId,
             addresserId: user.id,
-            status: 'accepted'
+            status: {
+                [Op.in]: ['accepted', 'pending']
+            }
         }
     });
     const recievedFriend = await Friend.findOne({
         where: {
             id: req.params.friendId,
             addresseeId: user.id,
-            status: 'accepted'
+            status: {
+                [Op.in]: ['accepted', 'pending']
+            }
         }
     });
 

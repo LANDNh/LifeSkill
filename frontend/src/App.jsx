@@ -8,6 +8,7 @@ import CharacterPage from './components/CharacterPage';
 import QuestsListPage from './components/QuestsListPage';
 import QuestDetailsPage from './components/QuestDetailsPage';
 import CharactersListPage from './components/CharactersListPage';
+import FriendsListPage from './components/FriendsListPage';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -51,7 +52,11 @@ const router = createBrowserRouter([
       {
         path: '/characters',
         element: <CharactersListPage />
-      }
+      },
+      {
+        path: '/friends',
+        element: <FriendsListPage />
+      },
     ]
   }
 ]);
