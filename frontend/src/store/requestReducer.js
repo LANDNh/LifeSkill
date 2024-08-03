@@ -79,9 +79,9 @@ export const confirmRequest = request => async dispatch => {
             status: acceptedRequest.status,
             Character: acceptedRequest.Character
         }
-        dispatch({ type: 'friend/addFriend', friend });
+        dispatch({ type: 'friend/addFriend', friend }); // Adds to state.friends
 
-        dispatch(removeRequest(request.id))
+        dispatch(removeRequest(request.id)); // Removes from state.requests
     }
 };
 
