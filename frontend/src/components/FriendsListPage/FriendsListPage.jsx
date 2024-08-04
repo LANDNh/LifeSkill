@@ -25,7 +25,8 @@ function FriendsListPage() {
         <>
             <div className='friend-list-all'>
                 <div className='friend-list-container'>
-                    {requests.length && <ul className='all-requests'>
+                    {requests.length > 0 && <ul className='all-requests'>
+                        <p className='list-header'>Requests</p>
                         {requests && requests.map(request => {
                             const character = request.Character;
 
@@ -76,6 +77,7 @@ function FriendsListPage() {
                     </ul>
                     }
                     <ul className='all-friends'>
+                        <p className='list-header'>Friends</p>
                         {friends && friends.map(friend => {
                             const character = friend.Character;
 

@@ -256,7 +256,11 @@ router.post('/:characterId', requireAuth, async (req, res) => {
 
     const newRequest = await Friend.create(requestData);
 
-    return res.json(newRequest);
+    const newReqChar = await Friend.findByPk(newRequest.id, {
+        include: { model: Character, as: 'Character' }
+    });
+
+    return res.json(newReqChar);
 });
 
 // Edit character for current user

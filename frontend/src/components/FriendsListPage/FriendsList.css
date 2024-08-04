@@ -117,3 +117,17 @@
     border-radius: 50px;
     cursor: pointer;
 }
+
+.list-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "M42_FLIGHT 721";
+    color: #163DFF;
+    text-decoration: underline 4px #163DFF;
+    padding: 1em;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+}
