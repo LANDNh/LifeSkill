@@ -1,7 +1,7 @@
 import { csrfFetch } from "./csrf";
 import { createSelector } from 'reselect';
 
-const LOAD_CHARACTERS = 'characters/loadCharacters';
+const LOAD_CHARACTERS = 'character/loadCharacters';
 const LOAD_CHARACTER = 'character/loadCharacter';
 const LOAD_USER_CHARACTER = 'character/loadUserCharacter';
 const ADD_CHARACTER = 'character/addCharacter';
@@ -122,7 +122,12 @@ export const selectAllCharacters = createSelector(selectCharacters, characters =
     return characters ? Object.values(characters) : null;
 });
 
-export const selectCharacter = state => state.characters.userCharacter;
+export const selectCharacter = (state, characterId) => {
+    if (characterId === 'current') {
+        return state.characters.userCharacter;
+    }
+    return state.characters.character;
+};
 
 const initialState = {};
 

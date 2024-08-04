@@ -55,7 +55,7 @@ router.get('/', requireAuth, async (req, res) => {
                 [Op.notIn]: friendIds
             }
         },
-        attributes: ['id', 'userId', 'name', 'status', 'level']
+        attributes: ['id', 'userId', 'name', 'status', 'level', 'skin', 'eyes']
     });
     const charObj = {};
     const charList = [];
@@ -257,7 +257,14 @@ router.post('/:characterId', requireAuth, async (req, res) => {
     const newRequest = await Friend.create(requestData);
 
     const newReqChar = await Friend.findByPk(newRequest.id, {
-        include: { model: Character, as: 'Character' }
+        include: {
+            model: User,
+            as: 'Addressee',
+            include: {
+                model: Character,
+                as: 'Character'
+            }
+        }
     });
 
     return res.json(newReqChar);

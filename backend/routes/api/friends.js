@@ -26,7 +26,7 @@ router.get('/', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: Character,
-                        attributes: ['id', 'name', 'status', 'level']
+                        attributes: ['id', 'name', 'status', 'level', 'skin', 'eyes']
                     }
                 ]
             }
@@ -47,7 +47,7 @@ router.get('/', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: Character,
-                        attributes: ['id', 'name', 'status', 'level']
+                        attributes: ['id', 'name', 'status', 'level', 'skin', 'eyes']
                     }
                 ]
             }
@@ -102,7 +102,7 @@ router.get('/requests', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: Character,
-                        attributes: ['id', 'name', 'status', 'level']
+                        attributes: ['id', 'name', 'status', 'level', 'skin', 'eyes']
                     }
                 ]
             }
@@ -123,7 +123,7 @@ router.get('/requests', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: Character,
-                        attributes: ['id', 'name', 'status', 'level']
+                        attributes: ['id', 'name', 'status', 'level', 'skin', 'eyes']
                     }
                 ]
             }
@@ -135,13 +135,12 @@ router.get('/requests', requireAuth, async (req, res) => {
 
     sentRequests.forEach(request => {
         request = request.toJSON();
-        const requestChar = request.Addressee.Character;
         const reqObj = {
             id: request.id,
             addresserId: request.addresserId,
             addresseeId: request.addresseeId,
             status: request.status,
-            Character: requestChar,
+            Addressee: request.Addressee,
             type: 'sent'
         };
 
@@ -150,13 +149,12 @@ router.get('/requests', requireAuth, async (req, res) => {
 
     receivedRequests.forEach(request => {
         request = request.toJSON();
-        const requestChar = request.Addresser.Character;
         const reqObj = {
             id: request.id,
             addresserId: request.addresserId,
             addresseeId: request.addresseeId,
             status: request.status,
-            Character: requestChar,
+            Addresser: request.Addresser,
             type: 'received'
         };
 
@@ -186,7 +184,7 @@ router.put('/:requestId', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: Character,
-                        attributes: ['id', 'name', 'status', 'level']
+                        attributes: ['id', 'name', 'status', 'level', 'skin', 'eyes']
                     }
                 ]
             }

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import { fetchUserCharacter, selectCharacter } from '../../store/characterReducer';
+import { Navigate, useParams, useLocation } from 'react-router-dom';
+import { fetchUserCharacter, fetchCharacter, selectCharacter } from '../../store/characterReducer';
 import { useEffect, useState } from 'react';
 import './CharacterPage.css';
 
@@ -58,57 +58,65 @@ export const characterPic = character => {
 function CharacterPage() {
     const { setModalContent } = useModal();
     const dispatch = useDispatch();
+    const { characterId } = useParams();
+    const location = useLocation();
     const sessionUser = useSelector(state => state.session.user);
-    const userCharacter = useSelector(selectCharacter);
+    const isCurrentUserCharacter = location.pathname === '/characters/current';
+    const character = useSelector(state => selectCharacter(state, characterId || (isCurrentUserCharacter ? 'current' : null)));
     const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(() => {
+        if (isCurrentUserCharacter) {
+            dispatch(fetchUserCharacter())
+                .finally(() => setIsLoading(false));
+        } else if (characterId) {
+            dispatch(fetchCharacter(characterId))
+                .finally(() => setIsLoading(false));
+        }
+    }, [dispatch, characterId, isCurrentUserCharacter]);
 
     useEffect(() => {
-        dispatch(fetchUserCharacter())
-            .finally(() => setIsLoading(false));
-    }, [dispatch]);
-
-    useEffect(() => {
-        if (!isLoading && !userCharacter) {
+        if (!isLoading && !character && isCurrentUserCharacter) {
             setModalContent(<CharacterCreateModal />);
         }
-    }, [userCharacter, isLoading, setModalContent]);
+    }, [character, isLoading, setModalContent, isCurrentUserCharacter]);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
-    if (userCharacter) {
+    if (character) {
         return (
             <div className='character-page-all'>
                 <div className='character-page-container'>
                     <div className='character-info'>
-                        <span className='character-edit'>
+                        {isCurrentUserCharacter && <span className='character-edit'>
                             <OpenModalButton
                                 buttonText='Edit Character'
-                                modalComponent={<CharacterEditModal character={userCharacter} />}
+                                modalComponent={<CharacterEditModal character={character} />}
                             />
-                        </span>
-                        <img className='character-pic' src={characterPic(userCharacter)} alt={`Character ${userCharacter.name}`} />
-                        <span className='character-delete'>
+                        </span>}
+                        <img className='character-pic' src={characterPic(character)} alt={`Character ${character.name}`} />
+                        {isCurrentUserCharacter && <span className='character-delete'>
                             <OpenModalButton
                                 buttonText='Delete Character'
                                 modalComponent={<CharacterDeleteModal />}
                             />
-                        </span>
-                        <p className='character-name'>Name: {userCharacter.name}</p>
-                        <p className='character-lvl'>Level: {userCharacter.level}</p>
+                        </span>}
+                        <p className='character-name'>Name: {character.name}</p>
+                        <p className='character-lvl'>Level: {character.level}</p>
                         <div className='character-xp'>
-                            <div className='xp-bar-fill' style={{ width: `${Math.min(userCharacter.totalXp, 100)}%` }}>
-                                <span className='xp-text'>{userCharacter.totalXp} XP</span>
+                            <div className='xp-bar-fill' style={{ width: `${Math.min(character.totalXp, 100)}%` }}>
+                                <span className='xp-text'>{character.totalXp} XP</span>
                             </div>
                         </div>
-                        <p className='character-coins'>Coins: {userCharacter.totalCoins}</p>
-                        <p className='character-status'>{userCharacter.status}</p>
+                        <p className='character-coins'>Coins: {character.totalCoins}</p>
+                        <p className='character-status'>{character.status}</p>
                     </div>
                 </div>
             </div>
         )
     }
 
+    return null;
 }
 
 export default CharacterPage;

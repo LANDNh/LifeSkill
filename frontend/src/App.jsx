@@ -50,6 +50,10 @@ const router = createBrowserRouter([
         element: <CharacterPage />
       },
       {
+        path: '/characters/:characterId',
+        element: <CharacterPage />
+      },
+      {
         path: '/characters',
         element: <CharactersListPage />
       },
