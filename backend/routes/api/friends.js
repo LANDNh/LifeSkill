@@ -167,7 +167,7 @@ router.get('/requests', requireAuth, async (req, res) => {
 });
 
 // Accept a friend request
-router.put('/:requestId', requireAuth, async (req, res) => {
+router.put('/requests/:requestId', requireAuth, async (req, res) => {
     const { user } = req;
     const { status } = req.body;
     const friendRequest = await Friend.findOne({

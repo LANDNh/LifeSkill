@@ -65,7 +65,7 @@ export const createRequest = requestChar => async dispatch => {
 };
 
 export const confirmRequest = request => async dispatch => {
-    const res = await csrfFetch(`/api/friends/${request.id}`, {
+    const res = await csrfFetch(`/api/friends/requests/${request.id}`, {
         method: 'PUT',
         body: JSON.stringify(request)
     });
