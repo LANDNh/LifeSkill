@@ -1,0 +1,103 @@
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-family: "M42_FLIGHT 721";
+    color: #163DFF;
+    border-top: 3px solid #163DFF;
+    background: linear-gradient(180deg, rgba(0, 199, 255, 1) 0%, rgba(122, 226, 255, 1) 20%, rgba(255, 255, 255, 1) 100%);
+
+}
+
+.footer-heading {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: auto;
+    width: 90vw;
+    /* Full viewport width */
+    justify-items: center;
+    padding-top: 20px;
+}
+
+.dev-heading {
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    align-items: center;
+    font-weight: bolder;
+}
+
+.devs {
+    display: grid;
+    grid-template-columns: auto;
+    column-gap: 10px;
+    font-size: 10px;
+    padding-top: 7px;
+}
+
+
+.backend {
+    padding-top: 7px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    column-gap: 10px;
+    row-gap: 10px;
+    margin: .15em;
+}
+
+.backend a {
+    display: flex;
+    align-items: center;
+    padding: .25em;
+}
+
+.backend a :first-child {
+    color: #163DFF;
+    font-size: 12pt;
+    height: max-content;
+}
+
+.names {
+    font-weight: bold;
+}
+
+.docs {
+    padding-top: 7px;
+    display: flex;
+    flex-direction: column;
+}
+
+.postgres {
+    font-size: 20px;
+}
+
+.docs-links {
+    color: #163DFF;
+    font-weight: bold;
+    font-size: 10px;
+    margin: .15em;
+    justify-content: center;
+}
+
+.aDev {
+    display: flex;
+    column-gap: 10px;
+    margin: .15em;
+}
+
+.devLogos {
+    width: fit-content;
+    display: flex;
+    gap: 5px;
+}
+
+.icons {
+    color: #163DFF;
+    font-size: 10pt;
+}

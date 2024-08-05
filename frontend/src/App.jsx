@@ -9,6 +9,7 @@ import QuestsListPage from './components/QuestsListPage';
 import QuestDetailsPage from './components/QuestDetailsPage';
 import CharactersListPage from './components/CharactersListPage';
 import FriendsListPage from './components/FriendsListPage';
+import AboutLinks from './components/AboutLinks';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -25,6 +26,7 @@ function Layout() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Outlet />}
+      {isLoaded && <AboutLinks />}
     </>
   );
 }

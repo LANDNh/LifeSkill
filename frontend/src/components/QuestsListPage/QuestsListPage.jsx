@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { fetchUserCharacter, selectCharacter } from '../../store/characterReducer';
+import { fetchUserCharacter } from '../../store/characterReducer';
 import { fetchQuests, modifyQuest, selectAllQuests } from '../../store/questReducer';
 
 import { useModal } from '../../context/Modal';
@@ -14,7 +14,6 @@ function QuestsListPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
-    const character = useSelector(selectCharacter);
     const quests = useSelector(selectAllQuests);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -26,12 +25,6 @@ function QuestsListPage() {
         dispatch(fetchUserCharacter())
             .finally(() => setIsLoading(false));
     }, [dispatch]);
-
-    useEffect(() => {
-        if (!isLoading && !character) {
-            navigate('/characters/current')
-        }
-    }, [isLoading, character, navigate]);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
