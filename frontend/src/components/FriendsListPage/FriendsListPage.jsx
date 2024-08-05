@@ -28,7 +28,7 @@ function FriendsListPage() {
                     {requests.length > 0 && <ul className='all-requests'>
                         <p className='list-header'>Requests</p>
                         {requests && requests.map(request => {
-                            const character = request.Addressee.Character || request.Addresser.Character;
+                            const character = request.Addressee?.Character || request.Addresser?.Character;
 
                             return (
                                 <div
