@@ -1,4 +1,32 @@
-.signup-modal {
+.signup-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.requirements {
+    font-family: "Delta Block";
+    margin-right: 5em;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #163DFF;
+}
+
+.requirement {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.requirement p {
+    margin: .25em 0;
+}
+
+.signup-modal,
+.requirements {
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
     display: flex;
@@ -12,12 +40,19 @@
 }
 
 .signup-modal h1 {
-    margin: 1em 0em;
+    margin: 1em 0 .5em 0;
     font-family: "M42_FLIGHT 721";
     color: #163DFF;
     border-bottom: 2px solid #163DFF;
     width: 100%;
     text-align: center;
+}
+
+.signup-title {
+    font-family: "Delta Block";
+    color: #163DFF;
+    margin: .5em 1em;
+    font-size: large;
 }
 
 .signup-modal form {
@@ -28,13 +63,15 @@
 }
 
 .signup-input {
-    margin: 1em;
+    margin: .75em;
+    width: 80%;
 }
 
 .signup-input input {
     font-family: "Delta Block";
-    font-size: larger;
+    font-size: medium;
     border-radius: 8px;
+    width: 100%;
 }
 
 .signup-submit {

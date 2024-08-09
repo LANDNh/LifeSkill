@@ -63,7 +63,24 @@ const validateSignup = [
     check('password')
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
+        .withMessage('Password must be 6 characters or more.')
+        .custom(value => {
+            const errors = [];
+
+            if (!/\d/.test(value)) {
+                errors.push('Password must contain at least one number.');
+            }
+
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+                errors.push('Password must contain at least one special character.');
+            }
+
+            if (errors.length > 0) {
+                throw new Error(errors.join(' '));
+            }
+
+            return true;
+        }),
     handleValidationErrors
 ];
 

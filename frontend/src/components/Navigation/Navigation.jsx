@@ -20,11 +20,11 @@ function Navigation({ isLoaded }) {
             </li>
             {isLoaded && (
                 <>
-                    <li className='shop-nav'
+                    {/* <li className='shop-nav'
                         onClick={() => window.alert('Coming soon!')}
                     >
                         Item Shop
-                    </li>
+                    </li> */}
                     <li className='users-nav'>
                         <NavLink to='/characters' className='tab-link'>
                             Find Friends
