@@ -118,6 +118,7 @@ function CharacterPage() {
         ).then(() => {
             setEquippedItems(prev => ({ ...prev, [type]: customization }));
             setDropdownVisible(prev => ({ ...prev, [type]: false }));
+            dispatch(fetchUserCharacter());
         });
     };
 

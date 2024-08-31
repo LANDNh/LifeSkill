@@ -306,20 +306,25 @@ router.put('/current', requireAuth, validateCharacter, async (req, res) => {
     });
 
     if (customizations && Array.isArray(customizations)) {
+        // Track what type needs updated
+        const typesToUpdate = {};
         // id = CharacterCustomization.id, equip is desired equipped state, true or false
         customizations.forEach(({ id, equip }) => {
             const customization = character.CharacterCustomizations.find(c => c.id === id);
             if (customization) {
                 if (equip) {
-                    // Unequip all items of the same type
-                    character.CharacterCustomizations.forEach(c => {
-                        if (c.CustomizationItem.type === customization.CustomizationItem.type) {
-                            c.equipped = false;
-                        }
-                    });
-                    customization.equipped = true; // Equip the intended item
-                } else {
-                    customization.equipped = false; // Directly set equipped to false
+                    // Mark this type for updating
+                    typesToUpdate[customization.CustomizationItem.type] = true;
+                }
+                customization.equipped = equip;
+            }
+        });
+
+        // Unequip any other items of the same type
+        character.CharacterCustomizations.forEach(c => {
+            if (typesToUpdate[c.CustomizationItem.type]) {
+                if (!customizations.find(custom => custom.id === c.id)) {
+                    c.equipped = false;
                 }
             }
         });
