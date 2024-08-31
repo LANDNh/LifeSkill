@@ -31,6 +31,7 @@
         '. . b b . .'
         'e e c c d d'
         '. f f f f .'
+        '. i i i i .'
     ;
     grid-template-columns: repeat(6, 1fr);
 }
@@ -132,4 +133,31 @@
     justify-self: center;
     color: #163DFF;
     font-family: "Delta Block";
+}
+
+.character-customizations {
+    grid-area: i;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #163DFF;
+    font-family: "Delta Block";
+}
+
+.character-customizations h2 {
+    font-family: "M42_FLIGHT 721";
+    font-size: medium;
+}
+
+.items-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.customization-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: .5em;
 }

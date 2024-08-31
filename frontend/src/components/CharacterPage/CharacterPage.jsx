@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useParams, useLocation } from 'react-router-dom';
-import { fetchUserCharacter, fetchCharacter, selectCharacter } from '../../store/characterReducer';
+import { fetchUserCharacter, fetchCharacter, selectCharacter, modifyCharacter } from '../../store/characterReducer';
 import { useEffect, useState } from 'react';
 import './CharacterPage.css';
 
@@ -64,6 +64,8 @@ function CharacterPage() {
     const isCurrentUserCharacter = location.pathname === '/characters/current';
     const character = useSelector(state => selectCharacter(state, characterId || (isCurrentUserCharacter ? 'current' : null)));
     const [isLoading, setIsLoading] = useState(true);
+    const [dropdownVisible, setDropdownVisible] = useState({});
+    const [equippedItems, setEquippedItems] = useState({});
 
     useEffect(() => {
         if (isCurrentUserCharacter) {
@@ -81,9 +83,56 @@ function CharacterPage() {
         }
     }, [character, isLoading, setModalContent, isCurrentUserCharacter]);
 
+    useEffect(() => {
+        if (character) {
+            // Initialize equipped items state
+            const initialEquippedItems = {};
+            character.CharacterCustomizations.forEach(customization => {
+                if (customization.equipped) {
+                    initialEquippedItems[customization.CustomizationItem.type] = customization;
+                }
+            });
+            setEquippedItems(initialEquippedItems);
+        }
+    }, [character]);
+
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
+    const handleEquipCustomization = (type, customization) => {
+        const customPayload = character.CharacterCustomizations.map((c) => {
+            if (c.CustomizationItem.type === type) {
+                return { ...c, equip: c.id === customization.id };
+            }
+            return c;
+        });
+
+        dispatch(
+            modifyCharacter({
+                id: character.id,
+                name: character.name,
+                skin: character.skin,
+                eyes: character.eyes,
+                status: character.status,
+                customizations: customPayload.map(({ id, equip }) => ({ id, equip }))
+            })
+        ).then(() => {
+            setEquippedItems(prev => ({ ...prev, [type]: customization }));
+            setDropdownVisible(prev => ({ ...prev, [type]: false }));
+        });
+    };
+
+    const toggleDropdown = (type) => {
+        setDropdownVisible((prev) => ({ ...prev, [type]: !prev[type] }));
+    };
+
     if (character) {
+        const groupedCustomizations = character.CharacterCustomizations.reduce((acc, customization) => {
+            const type = customization.CustomizationItem.type;
+            if (!acc[type]) acc[type] = [];
+            acc[type].push(customization);
+            return acc;
+        }, {});
+
         return (
             <div className='character-page-all'>
                 <div className='character-page-container'>
@@ -110,9 +159,38 @@ function CharacterPage() {
                         </div>
                         <p className='character-coins'>Coins: {character.totalCoins}</p>
                         <p className='character-status'>{character.status}</p>
+
+                        <div className="character-customizations">
+                            <h2>Equip Customizations</h2>
+                            <div className='items-container'>
+                                {Object.keys(groupedCustomizations).map((type) => {
+                                    const equipped = equippedItems[type];
+                                    return (
+                                        <div key={type} className="customization-item">
+                                            {type[0].toUpperCase() + type.slice(1)}
+                                            <button onClick={() => toggleDropdown(type)}>
+                                                {equipped ? equipped.CustomizationItem.description : `Select ${type}`}
+                                            </button>
+                                            {dropdownVisible[type] && (
+                                                <div className="dropdown-menu">
+                                                    {groupedCustomizations[type].map((customization) => (
+                                                        <div key={customization.id} >
+                                                            <button onClick={() => handleEquipCustomization(type, customization)}>
+                                                                {customization.CustomizationItem.description}
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )
+                                            }
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 

@@ -103,6 +103,8 @@ const itemReducer = (state = initialState, action) => {
             delete newState[action.itemId];
             return newState;
         }
+        default:
+            return state;
     }
 };
 
