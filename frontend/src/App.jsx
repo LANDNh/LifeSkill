@@ -11,6 +11,7 @@ import CharactersListPage from './components/CharactersListPage';
 import FriendsListPage from './components/FriendsListPage';
 import AboutLinks from './components/AboutLinks';
 import * as sessionActions from './store/session';
+import ItemShopPage from './components/ItemShop';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: '/friends',
         element: <FriendsListPage />
+      },
+      {
+        path: '/items',
+        element: <ItemShopPage />
       },
     ]
   }
