@@ -89,7 +89,6 @@ const itemReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_ITEMS: {
             const itemsState = {};
-            console.log(action.items)
             action.items.Items.forEach(item => {
                 itemsState[item.id] = item;
             });

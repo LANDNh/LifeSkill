@@ -11,7 +11,7 @@ const router = express.Router();
 // Get all items available for purchase
 router.get('/', requireAuth, async (req, res) => {
     const items = await CustomizationItem.findAll({
-        attributes: ['id', 'type', 'description', 'color', 'levelRequirement', 'price', 'available']
+        attributes: ['id', 'type', 'description', 'color', 'levelRequirement', 'price', 'available', 'url']
     });
 
     const itemObj = {};
@@ -33,7 +33,7 @@ router.get('/:itemId', requireAuth, async (req, res) => {
         where: {
             id: itemId
         },
-        attributes: ['id', 'type', 'description', 'color', 'levelRequirement', 'price', 'available']
+        attributes: ['id', 'type', 'description', 'color', 'levelRequirement', 'price', 'available', 'url']
     });
 
     if (!item) {

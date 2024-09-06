@@ -32,13 +32,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     levelRequirement: {
       type: DataTypes.INTEGER,
+      allowNull: false
     },
     price: {
       type: DataTypes.INTEGER,
+      allowNull: false
     },
     available: {
       type: DataTypes.BOOLEAN,
-    }
+    },
+    url: {
+      type: DataTypes.STRING,
+    },
   }, {
     sequelize,
     modelName: 'CustomizationItem',

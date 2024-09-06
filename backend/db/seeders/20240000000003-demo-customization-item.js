@@ -18,7 +18,8 @@ module.exports = {
         color: null,
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: '/images/ls-glasses.png'
       },
       {
         type: 'head',
@@ -50,7 +51,8 @@ module.exports = {
         color: null,
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: '/images/ls-robe.png'
       },
       {
         type: 'body',
