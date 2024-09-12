@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 
-import { fetchUserCharacter, selectCharacter } from '../../store/characterReducer';
+import { fetchUserCharacter } from '../../store/characterReducer';
 import { fetchQuest, selectQuest } from '../../store/questReducer';
 import { fetchQuestSteps, modifyQuestStep, selectAllQuestSteps } from '../../store/questStepReducer';
 
@@ -20,8 +20,10 @@ function QuestDetailsPage() {
     const { questId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const character = useSelector(selectCharacter);
+    const character = useSelector(state => state.characters.userCharacter);
+    const sessionUser = useSelector(state => state.session.user);
+    const quest = useSelector(selectQuest(questId));
+    const questSteps = useSelector(selectAllQuestSteps);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -48,9 +50,6 @@ function QuestDetailsPage() {
         }
     }, [isLoading, character, navigate]);
 
-    const sessionUser = useSelector(state => state.session.user);
-    const quest = useSelector(selectQuest(questId));
-    const questSteps = useSelector(selectAllQuestSteps);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 

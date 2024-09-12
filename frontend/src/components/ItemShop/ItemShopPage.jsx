@@ -1,14 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './ItemShop.css';
 
 import { fetchItems, selectAllItems, purchaseItem } from '../../store/itemReducer';
+import ItemErrorModal from './ItemErrorModal';
+import { useModal } from '../../context/Modal';
 
 function ItemShopPage() {
+    const { setModalContent } = useModal();
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const items = useSelector(selectAllItems);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         dispatch(fetchItems());
@@ -28,7 +32,9 @@ function ItemShopPage() {
                                 key={item.id}
                             >
                                 {url && (
-                                    <img className='item-pic' src={url} alt={`${item.description}`} />
+                                    <div className='pic-container'>
+                                        <img className='item-pic' src={url} alt={`${item.description}`} />
+                                    </div>
                                 )}
                                 <div className='item-tile-info'>
                                     <p className='item-type'>Type: {item.type}</p>
@@ -46,7 +52,17 @@ function ItemShopPage() {
                                     className='buy-item'
                                     onClick={e => {
                                         e.preventDefault();
-                                        dispatch(purchaseItem(item.id));
+                                        let formErrors = {};
+
+                                        dispatch(purchaseItem(item.id))
+                                            .catch(async res => {
+                                                const data = await res.json();
+                                                if (data && data?.message) {
+                                                    formErrors = { ...errors, [item.id]: data.message };
+                                                    setErrors(formErrors);
+                                                    setModalContent(<ItemErrorModal errors={formErrors} itemId={item.id} />)
+                                                }
+                                            });
                                     }}
                                 >
                                     Buy
@@ -55,7 +71,7 @@ function ItemShopPage() {
                         )
                     })}
                 </div>
-            </div>
+            </div >
         </>
     )
 }

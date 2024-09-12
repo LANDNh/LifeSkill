@@ -135,7 +135,7 @@ router.get('/current', requireAuth, async (req, res) => {
                         quest.completionCoins = 100;
                         break;
                     default:
-                        quest.completionCoins = null;
+                        quest.completionCoins = 0;
                 }
         }
     });
@@ -235,6 +235,7 @@ router.get('/current/:questId/quest-steps', requireAuth, questAuthorize, async (
     return res.json(stepObj);
 });
 
+// Create a new quest
 router.post('/current', requireAuth, validateQuest, async (req, res) => {
     const { user } = req;
     const { title, description, type } = req.body;
@@ -244,8 +245,8 @@ router.post('/current', requireAuth, validateQuest, async (req, res) => {
         title,
         description,
         type,
-        difficultyAggregate: null,
-        completionCoins: null
+        difficultyAggregate: 0,
+        completionCoins: 0
     });
 
     return res.json(newQuest);
@@ -253,7 +254,16 @@ router.post('/current', requireAuth, validateQuest, async (req, res) => {
 
 // Create a new quest step for quest specified by id
 router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, validateQuestStep, async (req, res) => {
-    const quest = await Quest.findByPk(req.params.questId);
+    const quest = await Quest.findOne({
+        where: {
+            id: req.params.questId
+        },
+        include: [
+            {
+                model: QuestStep
+            }
+        ]
+    });
     const { title, notes, difficulty } = req.body;
     const numDiff = Number(difficulty);
     const existingQuestStep = await QuestStep.findOne({
@@ -282,6 +292,46 @@ router.post('/current/:questId/quest-steps', requireAuth, questAuthorize, valida
         difficulty,
         xp
     });
+
+    let total = 0;
+    quest.QuestSteps.forEach(step => {
+        total += step.difficulty;
+    });
+    const difficultyAggregate = Math.round(total / quest.QuestSteps.length);
+    quest.difficultyAggregate = difficultyAggregate;
+
+    switch (quest.type) {
+        case 'daily':
+            quest.completionCoins = (quest.difficultyAggregate * 5);
+            break;
+        case 'weekly':
+            quest.completionCoins = (quest.difficultyAggregate * 10);
+            break;
+        case 'monthly':
+            quest.completionCoins = (quest.difficultyAggregate * 20);
+            break;
+        default:
+            switch (quest.difficultyAggregate) {
+                case 1:
+                    quest.completionCoins = 5;
+                    break;
+                case 2:
+                    quest.completionCoins = 10;
+                    break;
+                case 3:
+                    quest.completionCoins = 25;
+                    break;
+                case 4:
+                    quest.completionCoins = 50;
+                    break;
+                case 5:
+                    quest.completionCoins = 100;
+                    break;
+                default:
+                    quest.completionCoins = null;
+            }
+    }
+    await quest.save();
 
     return res.json(newQuestStep);
 });

@@ -1,3 +1,4 @@
+import { fetchUserCharacter } from "./characterReducer";
 import { csrfFetch } from "./csrf";
 import { createSelector } from 'reselect';
 
@@ -60,6 +61,7 @@ export const purchaseItem = itemId => async dispatch => {
     if (res.ok) {
         const data = await res.json();
         dispatch(buyItem(data));
+        dispatch(fetchUserCharacter());
         return data;
     }
 };
@@ -97,7 +99,7 @@ const itemReducer = (state = initialState, action) => {
         case LOAD_ITEM:
             return { ...state, [action.item.id]: action.item };
         case BUY_ITEM:
-            return { ...state, [action.item.id]: action.item };
+            return { ...state };
         case SELL_ITEM: {
             const newState = { ...state };
             delete newState[action.itemId];

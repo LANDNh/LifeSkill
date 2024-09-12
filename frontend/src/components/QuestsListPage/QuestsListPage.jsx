@@ -67,7 +67,7 @@ function QuestsListPage() {
                 type: quest.type,
                 complete: !quest.complete
             }));
-            dispatch(fetchQuests());
+            await dispatch(fetchQuests());
         } catch (error) {
             console.error('Error updating quest:', error);
         }

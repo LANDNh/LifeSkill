@@ -57,7 +57,7 @@ router.post('/:itemId', requireAuth, async (req, res) => {
         where: {
             userId: user.id
         },
-        attributes: ['level', 'totalCoins'],
+        attributes: ['id', 'level', 'totalCoins'],
         include: [
             {
                 model: CharacterCustomization,
@@ -108,12 +108,15 @@ router.post('/:itemId', requireAuth, async (req, res) => {
             totalCoins: userChar.totalCoins - item.price
         });
 
+        console.log(userChar)
         const charItemData = {
             characterId: userChar.id,
             itemId: item.id
         }
 
         const newItem = await CharacterCustomization.create(charItemData);
+
+        await userChar.save();
 
         return res.json(newItem);
     }
