@@ -33,7 +33,7 @@ router.get('/google/callback', passport.authenticate('google', {
 
     await setTokenCookie(res, user);
 
-    res.redirect('/');
+    res.redirect('http://localhost:5173');
 });
 
 // Restore session user
@@ -97,13 +97,19 @@ router.post(
 );
 
 // Log out
-router.delete('/', (_req, res) => {
+router.delete('/', (req, res) => {
     if (req.isAuthenticated()) {
-        req.logout();
+        req.logout((err) => {
+            if (err) {
+                return next(err);
+            }
+            res.clearCookie('token');
+            return res.json({ message: 'success' });
+        });
+    } else {
+        res.clearCookie('token');
+        return res.json({ message: 'success' });
     }
-
-    res.clearCookie('token');
-    return res.json({ message: 'success' });
 }
 );
 

@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import './LandingPage.css';
 
@@ -7,9 +7,16 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
 import logo from '/images/LifeSkill-logo.png';
+import { useEffect } from 'react';
+import { restoreUser } from '../../store/session';
 
 function LandingPage() {
+    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+
+    useEffect(() => {
+        dispatch(restoreUser());
+    });
 
     if (sessionUser) return <Navigate to='/quests' replace={true} />;
 
