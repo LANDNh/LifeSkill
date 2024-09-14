@@ -11,17 +11,22 @@ passport.use(new GoogleStrategy({
     scope: ['profile', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        let user = await User.findOne({ where: { googleId: profile.id } });
+        const email = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
 
-        if (!user) {
-            user = await User.create({
-                googleId: profile.id,
+        if (!email) {
+            return done(new Error("Google account has no associated email"));
+        }
+
+        // Find or create the user in the database
+        const [user, created] = await User.findOrCreate({
+            where: { email },   // Use the email to find or create the user
+            defaults: {
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
-                email: profile.emails[0].value,
+                email: email,
                 username: profile.displayName
-            });
-        }
+            }
+        });
         return done(null, user);
     } catch (e) {
         return done(e);

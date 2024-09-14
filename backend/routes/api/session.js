@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
@@ -21,6 +21,8 @@ const validateLogin = [
     handleValidationErrors
 ];
 
+const isProduction = process.env.NODE_ENV === "production";
+
 // Google OAuth routes
 router.get('/google', passport.authenticate('google', {
     scope: ['profile', 'email'],
@@ -31,9 +33,15 @@ router.get('/google/callback', passport.authenticate('google', {
 }), async (req, res) => {
     const user = req.user;
 
+    console.log(user)
+
     await setTokenCookie(res, user);
 
-    res.redirect('http://localhost:5173');
+    if (!isProduction) {
+        res.redirect('http://localhost:5173');
+    } else {
+        res.redirect('https://lifeskill.onrender.com')
+    }
 });
 
 // Restore session user
@@ -49,9 +57,12 @@ router.get(
                 email: user.email,
                 username: user.username,
             };
-            return res.json({
-                user: safeUser
-            });
+
+            if (safeUser) {
+                return res.json({
+                    user: safeUser
+                });
+            }
         } else return res.json({ user: null });
     }
 );
@@ -88,11 +99,13 @@ router.post(
             username: user.username,
         };
 
-        await setTokenCookie(res, safeUser);
+        if (safeUser) {
+            await setTokenCookie(res, safeUser);
 
-        return res.json({
-            user: safeUser
-        });
+            return res.json({
+                user: safeUser
+            });
+        }
     }
 );
 

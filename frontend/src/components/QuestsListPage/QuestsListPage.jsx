@@ -14,6 +14,7 @@ function QuestsListPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
+    const userChar = useSelector(state => state.characters.userCharacter);
     const quests = useSelector(selectAllQuests);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -27,6 +28,8 @@ function QuestsListPage() {
     }, [dispatch]);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
+
+    if (!isLoading && !userChar) return <Navigate to='/characters/current' replace={true} />
 
     const handleClick = (e) => {
         e.preventDefault();
