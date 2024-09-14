@@ -8,6 +8,7 @@ import { fetchQuests, modifyQuest, selectAllQuests } from '../../store/questRedu
 import { useModal } from '../../context/Modal';
 import QuestCreateModal from '../QuestCreateModal';
 import './QuestsList.css';
+import { restoreUser } from '../../store/session';
 
 function QuestsListPage() {
     const { setModalContent } = useModal();
@@ -20,6 +21,7 @@ function QuestsListPage() {
 
     useEffect(() => {
         dispatch(fetchQuests());
+        dispatch(restoreUser());
     }, [dispatch]);
 
     useEffect(() => {

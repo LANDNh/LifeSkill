@@ -12,7 +12,6 @@ passport.use(new GoogleStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         const email = profile.emails && profile.emails.length > 0 ? profile.emails[0].value : null;
-
         if (!email) {
             return done(new Error("Google account has no associated email"));
         }
@@ -21,11 +20,13 @@ passport.use(new GoogleStrategy({
         const [user, created] = await User.findOrCreate({
             where: { email },   // Use the email to find or create the user
             defaults: {
+                googleId: profile.id,
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
                 email: email,
                 username: profile.displayName
-            }
+            },
+            attributes: ['id', 'firstName', 'lastName', 'email', 'username', 'googleId']
         });
         return done(null, user);
     } catch (e) {
@@ -35,8 +36,14 @@ passport.use(new GoogleStrategy({
 
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
-    const user = await User.findByPk(id);
-    done(null, user);
+    try {
+        const user = await User.findByPk(id, {
+            attributes: ['id', 'firstName', 'lastName', 'email', 'username', 'googleId'],
+        });
+        done(null, user);
+    } catch (err) {
+        done(err);
+    }
 });
 
 const { secret, expiresIn } = jwtConfig;
@@ -102,16 +109,6 @@ const restoreUser = (req, res, next) => {
         return next();
     });
 };
-
-// const requireAuth = function (req, _res, next) {
-//     if (req.user) return next();
-
-//     const err = new Error('Authentication required');
-//     err.title = 'Authentication required';
-//     err.errors = { message: 'Authentication required' };
-//     err.status = 401;
-//     return next(err);
-// };
 
 const requireAuth = (req, res, next) => {
     // Check if the user is authenticated via OAuth
