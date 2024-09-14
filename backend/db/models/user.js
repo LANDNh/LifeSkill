@@ -64,11 +64,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
-      allowNull: false,
+      allowNull: true,
       validate: {
         len: [60, 60]
       }
-    }
+    },
+    googleId: { // For Google OAuth
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true
+    },
   }, {
     sequelize,
     modelName: 'User',

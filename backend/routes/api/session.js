@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
@@ -19,6 +20,21 @@ const validateLogin = [
         .withMessage('Please provide a password.'),
     handleValidationErrors
 ];
+
+// Google OAuth routes
+router.get('/google', passport.authenticate('google', {
+    scope: ['profile', 'email'],
+}));
+
+router.get('/google/callback', passport.authenticate('google', {
+    failureRedirect: '/login',
+}), async (req, res) => {
+    const user = req.user;
+
+    await setTokenCookie(res, user);
+
+    res.redirect('/');
+});
 
 // Restore session user
 router.get(
@@ -81,12 +97,14 @@ router.post(
 );
 
 // Log out
-router.delete(
-    '/',
-    (_req, res) => {
-        res.clearCookie('token');
-        return res.json({ message: 'success' });
+router.delete('/', (_req, res) => {
+    if (req.isAuthenticated()) {
+        req.logout();
     }
+
+    res.clearCookie('token');
+    return res.json({ message: 'success' });
+}
 );
 
 module.exports = router;
