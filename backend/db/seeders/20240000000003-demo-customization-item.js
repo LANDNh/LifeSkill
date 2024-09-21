@@ -33,14 +33,16 @@ module.exports = {
         description: 'Simple Cap',
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: '/images/ls-cap.png'
       },
       {
         type: 'head',
         description: 'Special Cap',
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: '/images/ls-cap2.png'
       },
       {
         type: 'body',

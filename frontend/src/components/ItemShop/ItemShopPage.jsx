@@ -23,6 +23,9 @@ function ItemShopPage() {
     return (
         <>
             <div className='items-list-all'>
+                <h1 className='item-limited'>
+                    <i className="fa-solid fa-triangle-exclamation"></i> indicates a limited item!
+                </h1>
                 <div className='item-list-container'>
                     {items && items.map(item => {
                         const url = item.url;
@@ -31,22 +34,18 @@ function ItemShopPage() {
                                 className='item-tile'
                                 key={item.id}
                             >
-                                {url && (
-                                    <div className='pic-container'>
-                                        <img className='item-pic' src={url} alt={`${item.description}`} />
-                                    </div>
-                                )}
-                                <div className='item-tile-info'>
-                                    <p className='item-type'>Type: {item.type}</p>
-                                    <p className='item-description'>{item.description}</p>
-                                    <p className='item-color'>{item.color}</p>
-                                    <p className='item-level'>Level: {item.levelRequirement}</p>
-                                    <p className='item-price'><i className="fa-solid fa-cedi-sign"></i>: {item.price}</p>
-                                    {item.available && (
-                                        <p className='item-available'>
-                                            <i className="fa-solid fa-triangle-exclamation"></i>
-                                        </p>
+                                <div className='item-pic-type'>
+                                    {url && (
+                                        <div className='pic-container'>
+                                            <img className='item-pic' src={url} alt={`${item.description}`} />
+                                        </div>
                                     )}
+                                    <p className='item-level'>Level: {item.levelRequirement}</p>
+                                    <p className='item-type'>Type: {item.type[0].toUpperCase() + item.type.slice(1)}</p>
+                                </div>
+                                <div className='item-tile-info'>
+                                    <p className='item-description'>{item.description}</p>
+                                    <p className='item-price'><i className="fa-solid fa-cedi-sign"></i>: {item.price}</p>
                                 </div>
                                 <button
                                     className='buy-item'
@@ -66,6 +65,11 @@ function ItemShopPage() {
                                     }}
                                 >
                                     Buy
+                                    {item.available && (
+                                        <p className='item-available'>
+                                            <i className="fa-solid fa-triangle-exclamation"></i>
+                                        </p>
+                                    )}
                                 </button>
                             </div>
                         )

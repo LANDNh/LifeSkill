@@ -9,8 +9,31 @@
     flex-direction: column;
 }
 
+.item-limited {
+    margin: 0;
+    align-self: center;
+    justify-content: center;
+    width: fit-content;
+    font-family: "Delta Block";
+    font-size: larger;
+    color: #163DFF;
+    margin: 1em 0;
+    padding: 1em;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+}
+
+.item-limited .fa-triangle-exclamation {
+    padding-right: .5em;
+}
+
 .item-list-container {
-    padding: 2em;
+    /* padding: 2em; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,23 +47,25 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 60%;
+    width: 40%;
     height: fit-content;
     border: 2px solid #163DFF;
     border-radius: 15px;
 }
 
-.item-tile-info {
-    width: 100%;
+.item-pic-type {
+    padding: 0;
+    margin-right: .5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: "Delta Block";
-    font-size: large;
+    font-size: larger;
     color: #163DFF;
 }
 
 .pic-container {
     padding: .5em;
-    margin: 1em;
-    margin-left: 0;
     border: 2px solid #163DFF;
     border-radius: 10px;
     display: flex;
@@ -52,6 +77,36 @@
     height: 4em;
     width: 4em;
     object-fit: contain;
+}
+
+.item-level {
+    padding: .25em;
+    margin: 0;
+}
+
+.item-type {
+    width: 100%;
+    padding: .25em;
+    margin: 0;
+}
+
+.item-tile-info {
+    width: 100%;
+    font-family: "Delta Block";
+    font-size: larger;
+    color: #163DFF;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.item-price {
+    justify-self: right;
+}
+
+.item-available {
+    padding: 0;
+    margin: 0;
 }
 
 .buy-item {
