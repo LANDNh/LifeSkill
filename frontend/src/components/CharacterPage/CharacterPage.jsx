@@ -138,12 +138,14 @@ function CharacterPage() {
             <div className='character-page-all'>
                 <div className='character-page-container'>
                     <div className='character-info'>
-                        {isCurrentUserCharacter && <span className='character-edit'>
-                            <OpenModalButton
-                                buttonText='Edit Character'
-                                modalComponent={<CharacterEditModal character={character} />}
-                            />
-                        </span>}
+                        {isCurrentUserCharacter &&
+                            <span className='character-edit'>
+                                <OpenModalButton
+                                    buttonText='Edit Character'
+                                    modalComponent={<CharacterEditModal character={character} />}
+                                />
+                            </span>
+                        }
                         <img className='character-pic' src={characterPic(character)} alt={`Character ${character.name}`} />
                         {isCurrentUserCharacter && <span className='character-delete'>
                             <OpenModalButton
@@ -160,35 +162,44 @@ function CharacterPage() {
                         </div>
                         <p className='character-coins'>Coins: {character.totalCoins}</p>
                         <p className='character-status'>{character.status}</p>
-
-                        <div className="character-customizations">
-                            <h2>Equip Customizations</h2>
-                            <div className='items-container'>
-                                {Object.keys(groupedCustomizations).map((type) => {
-                                    const equipped = equippedItems[type];
-                                    return (
-                                        <div key={type} className="customization-item">
-                                            {type[0].toUpperCase() + type.slice(1)}
-                                            <button onClick={() => toggleDropdown(type)}>
-                                                {equipped ? equipped.CustomizationItem.description : `Select ${type}`}
-                                            </button>
-                                            {dropdownVisible[type] && (
-                                                <div className="dropdown-menu">
-                                                    {groupedCustomizations[type].map((customization) => (
-                                                        <div key={customization.id} >
-                                                            <button onClick={() => handleEquipCustomization(type, customization)}>
-                                                                {customization.CustomizationItem.description}
-                                                            </button>
-                                                        </div>
-                                                    ))}
+                        {isCurrentUserCharacter &&
+                            <div className="character-customizations">
+                                <h2>Equip Customizations</h2>
+                                <div className='items-container'>
+                                    {Object.keys(groupedCustomizations).map((type) => {
+                                        const equipped = equippedItems[type];
+                                        return (
+                                            <div key={type} className="customization-item">
+                                                {type[0].toUpperCase() + type.slice(1)}
+                                                <div className='char-item-pic-container'>
+                                                    <img
+                                                        className='char-item-pic'
+                                                        src={equipped ? equipped.CustomizationItem.url : `Select ${type}`}
+                                                        onClick={() => toggleDropdown(type)}>
+                                                    </img>
                                                 </div>
-                                            )
-                                            }
-                                        </div>
-                                    );
-                                })}
+                                                {dropdownVisible[type] && (
+                                                    <div className="item-dropdown-menu">
+                                                        {groupedCustomizations[type].map((customization) => (
+                                                            <div
+                                                                className='char-item-pic-container'
+                                                                key={customization.id} >
+                                                                <img
+                                                                    className='char-item-pic'
+                                                                    src={customization.CustomizationItem.url}
+                                                                    onClick={() => handleEquipCustomization(type, customization)}>
+                                                                </img>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )
+                                                }
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
             </div >

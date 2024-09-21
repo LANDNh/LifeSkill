@@ -161,9 +161,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: .5em;
+    margin: 1em 2em;
 }
 
 .customization-item button {
     margin-top: .5em;
+}
+
+.item-dropdown-menu {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+    padding: .5em;
+    position: absolute;
+}
+
+.char-item-pic-container {
+    padding: .5em;
+    border: 2px solid #163DFF;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.char-item-pic {
+    height: 4em;
+    width: 4em;
+    object-fit: contain;
 }

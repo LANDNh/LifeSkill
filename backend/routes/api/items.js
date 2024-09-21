@@ -98,6 +98,13 @@ router.post('/:itemId', requireAuth, async (req, res) => {
         });
     }
 
+    // Check item availability
+    if (item.available !== null && item.available === false) {
+        return res.status(400).json({
+            message: 'Item is not available'
+        });
+    }
+
     // Make sure character has enough coins
     if (userChar.totalCoins - item.price < 0) {
         return res.status(400).json({
@@ -108,15 +115,19 @@ router.post('/:itemId', requireAuth, async (req, res) => {
             totalCoins: userChar.totalCoins - item.price
         });
 
-        console.log(userChar)
         const charItemData = {
             characterId: userChar.id,
             itemId: item.id
         }
 
+        if (item.available !== null && item.available === true) {
+            item.available = !item.available;
+        }
+
         const newItem = await CharacterCustomization.create(charItemData);
 
         await userChar.save();
+        await item.save();
 
         return res.json(newItem);
     }
@@ -138,7 +149,7 @@ router.delete('/:itemId', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: CustomizationItem,
-                        attributes: ['type', 'description', 'levelRequirement']
+                        attributes: ['type', 'description', 'levelRequirement', 'available']
                     }
                 ]
             }
@@ -173,6 +184,10 @@ router.delete('/:itemId', requireAuth, async (req, res) => {
                 itemId: item.id
             }
         });
+
+        if (item.available !== null && item.available === false) {
+            item.available = !item.available;
+        }
 
         userChar.set({
             totalCoins: userChar.totalCoins += (price / 2)

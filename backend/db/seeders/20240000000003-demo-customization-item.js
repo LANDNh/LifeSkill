@@ -65,42 +65,48 @@ module.exports = {
         description: 'Simple Armor',
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: '/images/ls-armor.png'
       },
       {
         type: 'body',
         description: 'Special Armor',
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: '/images/ls-armor2.png'
       },
       {
         type: 'hand',
         description: 'Simple Staff',
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: '/images/ls-staff.png'
       },
       {
         type: 'hand',
         description: 'Special Staff',
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: '/images/ls-staff2.png'
       },
       {
         type: 'hand',
         description: 'Simple Sword',
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: '/images/ls-sword.png'
       },
       {
         type: 'hand',
         description: 'Special Sword',
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: '/images/ls-sword2.png'
       },
     ], { validate: true });
   },

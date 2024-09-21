@@ -24,8 +24,21 @@ function ItemShopPage() {
         <>
             <div className='items-list-all'>
                 <h1 className='item-limited'>
-                    <i className="fa-solid fa-triangle-exclamation"></i> indicates a limited item!
+                    <p>
+                        <i className="fa-solid fa-triangle-exclamation"></i> indicates a limited item!
+                    </p>
+                    <p>
+                        <button
+                            id='example'
+                            className='buy-item'
+                            disabled={true}
+                        >
+                            Buy
+                        </button>
+                        indicates sold out!
+                    </p>
                 </h1>
+
                 <div className='item-list-container'>
                     {items && items.map(item => {
                         const url = item.url;
@@ -36,7 +49,7 @@ function ItemShopPage() {
                             >
                                 <div className='item-pic-type'>
                                     {url && (
-                                        <div className='pic-container'>
+                                        <div className='item-pic-container'>
                                             <img className='item-pic' src={url} alt={`${item.description}`} />
                                         </div>
                                     )}
@@ -49,6 +62,7 @@ function ItemShopPage() {
                                 </div>
                                 <button
                                     className='buy-item'
+                                    disabled={item.available !== null && item.available === false}
                                     onClick={e => {
                                         e.preventDefault();
                                         let formErrors = {};
@@ -61,7 +75,8 @@ function ItemShopPage() {
                                                     setErrors(formErrors);
                                                     setModalContent(<ItemErrorModal errors={formErrors} itemId={item.id} />)
                                                 }
-                                            });
+                                            })
+                                        dispatch(fetchItems());
                                     }}
                                 >
                                     Buy
