@@ -83,7 +83,7 @@ router.get('/current', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: CustomizationItem,
-                        attributes: ['type', 'description', 'color', 'levelRequirement']
+                        attributes: ['type', 'description', 'levelRequirement']
                     }
                 ]
             }
@@ -122,7 +122,7 @@ router.get('/:characterId', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: CustomizationItem,
-                        attributes: ['type', 'description', 'color', 'levelRequirement']
+                        attributes: ['type', 'description', 'levelRequirement']
                     }
                 ]
             }

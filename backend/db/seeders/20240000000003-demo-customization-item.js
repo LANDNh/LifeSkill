@@ -15,7 +15,6 @@ module.exports = {
       {
         type: 'head',
         description: 'Simple Glasses',
-        color: null,
         levelRequirement: 1,
         price: 5,
         available: null,
@@ -24,15 +23,14 @@ module.exports = {
       {
         type: 'head',
         description: 'Special Glasses',
-        color: null,
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: '/images/ls-glasses2.png'
       },
       {
         type: 'head',
         description: 'Simple Cap',
-        color: null,
         levelRequirement: 1,
         price: 5,
         available: null
@@ -40,7 +38,6 @@ module.exports = {
       {
         type: 'head',
         description: 'Special Cap',
-        color: null,
         levelRequirement: 2,
         price: 5,
         available: true
@@ -48,7 +45,6 @@ module.exports = {
       {
         type: 'body',
         description: 'Simple Robe',
-        color: null,
         levelRequirement: 1,
         price: 5,
         available: null,
@@ -57,15 +53,14 @@ module.exports = {
       {
         type: 'body',
         description: 'Special Robe',
-        color: null,
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: '/images/ls-robe2.png'
       },
       {
         type: 'body',
         description: 'Simple Armor',
-        color: null,
         levelRequirement: 1,
         price: 5,
         available: null
@@ -73,7 +68,6 @@ module.exports = {
       {
         type: 'body',
         description: 'Special Armor',
-        color: null,
         levelRequirement: 2,
         price: 5,
         available: true
@@ -81,7 +75,6 @@ module.exports = {
       {
         type: 'hand',
         description: 'Simple Staff',
-        color: null,
         levelRequirement: 1,
         price: 5,
         available: null
@@ -89,7 +82,6 @@ module.exports = {
       {
         type: 'hand',
         description: 'Special Staff',
-        color: null,
         levelRequirement: 2,
         price: 5,
         available: true
@@ -97,7 +89,6 @@ module.exports = {
       {
         type: 'hand',
         description: 'Simple Sword',
-        color: null,
         levelRequirement: 1,
         price: 5,
         available: null
@@ -105,7 +96,6 @@ module.exports = {
       {
         type: 'hand',
         description: 'Special Sword',
-        color: null,
         levelRequirement: 2,
         price: 5,
         available: true

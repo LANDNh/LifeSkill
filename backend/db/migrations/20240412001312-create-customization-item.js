@@ -24,9 +24,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      color: {
-        type: Sequelize.INTEGER
-      },
       levelRequirement: {
         type: Sequelize.INTEGER,
         allowNull: false

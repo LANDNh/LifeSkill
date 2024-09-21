@@ -11,7 +11,7 @@ const router = express.Router();
 // Get all items available for purchase
 router.get('/', requireAuth, async (req, res) => {
     const items = await CustomizationItem.findAll({
-        attributes: ['id', 'type', 'description', 'color', 'levelRequirement', 'price', 'available', 'url']
+        attributes: ['id', 'type', 'description', 'levelRequirement', 'price', 'available', 'url']
     });
 
     const itemObj = {};
@@ -33,7 +33,7 @@ router.get('/:itemId', requireAuth, async (req, res) => {
         where: {
             id: itemId
         },
-        attributes: ['id', 'type', 'description', 'color', 'levelRequirement', 'price', 'available', 'url']
+        attributes: ['id', 'type', 'description', 'levelRequirement', 'price', 'available', 'url']
     });
 
     if (!item) {
@@ -65,7 +65,7 @@ router.post('/:itemId', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: CustomizationItem,
-                        attributes: ['type', 'description', 'color', 'levelRequirement']
+                        attributes: ['type', 'description', 'levelRequirement']
                     }
                 ]
             }
@@ -76,7 +76,7 @@ router.post('/:itemId', requireAuth, async (req, res) => {
         where: {
             id: itemId
         },
-        attributes: ['id', 'type', 'description', 'color', 'levelRequirement', 'price', 'available']
+        attributes: ['id', 'type', 'description', 'levelRequirement', 'price', 'available']
     });
 
     if (!userChar) {
@@ -138,7 +138,7 @@ router.delete('/:itemId', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: CustomizationItem,
-                        attributes: ['type', 'description', 'color', 'levelRequirement']
+                        attributes: ['type', 'description', 'levelRequirement']
                     }
                 ]
             }
@@ -149,7 +149,7 @@ router.delete('/:itemId', requireAuth, async (req, res) => {
         where: {
             id: itemId
         },
-        attributes: ['id', 'type', 'description', 'color', 'levelRequirement', 'price', 'available']
+        attributes: ['id', 'type', 'description', 'levelRequirement', 'price', 'available']
     });
 
     if (!userChar) {

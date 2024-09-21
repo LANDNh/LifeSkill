@@ -33,8 +33,6 @@ router.get('/google/callback', passport.authenticate('google', {
 }), async (req, res) => {
     const user = req.user;
 
-    console.log(user)
-
     await setTokenCookie(res, user);
 
     if (!isProduction) {
