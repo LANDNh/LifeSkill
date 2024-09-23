@@ -35,6 +35,7 @@
 #example {
     margin: 0;
     margin-right: .75em;
+    padding: .25em;
 }
 
 .item-limited p {
@@ -138,6 +139,15 @@
     border: 2px solid black;
     box-shadow: 5px 5px 10px black;
     cursor: default;
+}
+
+.item-buy-text {
+    margin: 0;
+}
+
+.item-out-text {
+    margin: 0;
+    font-size: smaller;
 }
 
 .item-error-container {

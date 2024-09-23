@@ -33,9 +33,11 @@ function ItemShopPage() {
                             className='buy-item'
                             disabled={true}
                         >
-                            Buy
+                            <p className='item-out-text'>
+                                Sold <br /> Out
+                            </p>
                         </button>
-                        indicates sold out!
+                        indicates limited item sold out!
                     </p>
                 </h1>
 
@@ -68,6 +70,9 @@ function ItemShopPage() {
                                         let formErrors = {};
 
                                         dispatch(purchaseItem(item.id))
+                                            .then(() => {
+                                                dispatch(fetchItems());
+                                            })
                                             .catch(async res => {
                                                 const data = await res.json();
                                                 if (data && data?.message) {
@@ -75,14 +80,23 @@ function ItemShopPage() {
                                                     setErrors(formErrors);
                                                     setModalContent(<ItemErrorModal errors={formErrors} itemId={item.id} />)
                                                 }
-                                            })
-                                        dispatch(fetchItems());
+                                            });
                                     }}
                                 >
-                                    Buy
-                                    {item.available && (
-                                        <p className='item-available'>
-                                            <i className="fa-solid fa-triangle-exclamation"></i>
+                                    {item.available || item.available === null ? (
+                                        <>
+                                            <p className='item-buy-text'>
+                                                Buy
+                                            </p>
+                                            {item.available && (
+                                                <p className='item-available'>
+                                                    <i className="fa-solid fa-triangle-exclamation"></i>
+                                                </p>
+                                            )}
+                                        </>
+                                    ) : (
+                                        <p className='item-out-text'>
+                                            Sold Out
                                         </p>
                                     )}
                                 </button>
