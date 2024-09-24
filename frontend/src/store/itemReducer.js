@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 import { createSelector } from 'reselect';
 
 const LOAD_ITEMS = 'item/loadItems';
+const LOAD_USER_ITEMS = 'item/loadUserItems';
 const LOAD_ITEM = 'item/loadItem';
 const BUY_ITEM = 'item/buyItem';
 const SELL_ITEM = 'item/sellItem';
@@ -10,6 +11,13 @@ const SELL_ITEM = 'item/sellItem';
 const loadItems = items => {
     return {
         type: LOAD_ITEMS,
+        items
+    };
+};
+
+const loadUserItems = items => {
+    return {
+        type: LOAD_USER_ITEMS,
         items
     };
 };
@@ -44,6 +52,15 @@ export const fetchItems = () => async dispatch => {
     }
 };
 
+export const fetchUserItems = () => async dispatch => {
+    const res = await csrfFetch('/api/items/sell');
+
+    if (res.ok) {
+        const data = await res.json();
+        dispatch(loadUserItems(data));
+    }
+};
+
 export const fetchItem = itemId => async dispatch => {
     const res = await csrfFetch(`/api/items/${itemId}`);
 
@@ -67,42 +84,74 @@ export const purchaseItem = itemId => async dispatch => {
 };
 
 export const exchangeItem = itemId => async dispatch => {
-    const res = csrfFetch(`/api/items/${itemId}`, {
+    const res = await csrfFetch(`/api/items/${itemId}`, {
         method: 'DELETE'
     });
 
     if (res.ok) {
         dispatch(sellItem(itemId));
+        await dispatch(fetchUserCharacter());
     } else {
         const errors = await res.json();
         return errors;
     }
 };
 
-const selectItems = state => state?.items;
+const selectAvailableItems = state => state?.items.availableItems;
 
-export const selectAllItems = createSelector(selectItems, items => {
+export const selectAllAvailableItems = createSelector(selectAvailableItems, items => {
     return items ? Object.values(items) : null;
 });
 
-const initialState = {};
+const selectUserItems = state => state?.items.userItems;
+
+export const selectAllUserItems = createSelector(selectUserItems, items => {
+    return items ? Object.values(items) : null;
+});
+
+const initialState = {
+    availableItems: {},
+    userItems: {}
+};
 
 const itemReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_ITEMS: {
-            const itemsState = {};
+            const availableItemsState = {};
             action.items.Items.forEach(item => {
-                itemsState[item.id] = item;
+                availableItemsState[item.id] = item;
             });
-            return itemsState;
+            return {
+                ...state,
+                availableItems: availableItemsState
+            };
+        }
+        case LOAD_USER_ITEMS: {
+            const userItemsState = {};
+            action.items.Items.forEach(item => {
+                userItemsState[item.id] = item;
+            });
+            return {
+                ...state,
+                userItems: userItemsState
+            };
         }
         case LOAD_ITEM:
-            return { ...state, [action.item.id]: action.item };
+            return {
+                ...state,
+                availableItems: {
+                    ...state.availableItems,
+                    [action.item.id]: action.item
+                }
+            }
         case BUY_ITEM:
             return { ...state };
         case SELL_ITEM: {
-            const newState = { ...state };
-            delete newState[action.itemId];
+            const newState = {
+                ...state,
+                userItems: { ...state.userItems }
+            };
+            delete newState.userItems[action.itemId];
             return newState;
         }
         default:

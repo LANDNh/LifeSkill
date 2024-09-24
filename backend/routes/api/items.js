@@ -26,6 +26,42 @@ router.get('/', requireAuth, async (req, res) => {
     return res.json(itemObj);
 });
 
+// Get all owned items available for sale
+router.get('/sell', requireAuth, async (req, res) => {
+    const { user } = req;
+    const userChar = await Character.findOne({
+        where: {
+            userId: user.id
+        },
+        attributes: ['id', 'level', 'totalCoins'],
+        include: [
+            {
+                model: CharacterCustomization,
+                attributes: ['id', 'characterId', 'itemId', 'equipped'],
+                include: [
+                    {
+                        model: CustomizationItem,
+                        attributes: ['id', 'type', 'description', 'levelRequirement', 'price', 'available', 'url']
+                    }
+                ]
+            }
+        ]
+    });
+    const customizations = userChar.CharacterCustomizations;
+    const items = customizations.map(customization => customization.CustomizationItem);
+
+    const itemObj = {};
+    const itemList = [];
+
+    items.forEach(item => {
+        itemList.push(item.toJSON());
+    });
+
+    itemObj.Items = itemList;
+
+    return res.json(itemObj);
+});
+
 // Get details of item specified by id
 router.get('/:itemId', requireAuth, async (req, res) => {
     const { itemId } = req.params;
@@ -141,7 +177,7 @@ router.delete('/:itemId', requireAuth, async (req, res) => {
         where: {
             userId: user.id
         },
-        attributes: ['level', 'totalCoins'],
+        attributes: ['id', 'level', 'totalCoins'],
         include: [
             {
                 model: CharacterCustomization,
@@ -149,7 +185,7 @@ router.delete('/:itemId', requireAuth, async (req, res) => {
                 include: [
                     {
                         model: CustomizationItem,
-                        attributes: ['type', 'description', 'levelRequirement', 'available']
+                        attributes: ['id', 'type', 'description', 'levelRequirement', 'price', 'available']
                     }
                 ]
             }
@@ -185,12 +221,18 @@ router.delete('/:itemId', requireAuth, async (req, res) => {
             }
         });
 
+        // When selling a limited item make it available again
         if (item.available !== null && item.available === false) {
-            item.available = !item.available;
+            item.available = true;
+            await item.save();
         }
 
-        userChar.set({
-            totalCoins: userChar.totalCoins += Math.floor(price / 2)
+
+        userChar.totalCoins += Math.floor(price / 2)
+        userChar.save();
+
+        return res.json({
+            message: 'Successfully sold'
         });
     } catch (e) {
         return res.json({

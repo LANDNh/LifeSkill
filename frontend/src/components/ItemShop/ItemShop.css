@@ -29,7 +29,8 @@
     border-radius: 15px;
 }
 
-.item-limited .fa-triangle-exclamation {
+.item-limited .fa-triangle-exclamation,
+.item-selling .fa-triangle-exclamation {
     padding-right: .5em;
 }
 
@@ -44,6 +45,14 @@
 .item-selling p {
     margin: .5em;
     padding: .5em;
+}
+
+.item-selling :nth-child(1) {
+    margin-bottom: 0;
+}
+
+.item-selling :nth-child(2) {
+    margin-top: 0;
 }
 
 .item-list-container {
@@ -144,7 +153,8 @@
     cursor: default;
 }
 
-.item-buy-text {
+.item-buy-text,
+.item-sell-text {
     margin: 0;
 }
 

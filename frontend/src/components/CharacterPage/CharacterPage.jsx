@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useParams, useLocation } from 'react-router-dom';
 import { fetchUserCharacter, fetchCharacter, selectCharacter, modifyCharacter } from '../../store/characterReducer';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './CharacterPage.css';
 
 import { useModal } from '../../context/Modal';
@@ -60,6 +60,7 @@ function CharacterPage() {
     const dispatch = useDispatch();
     const { characterId } = useParams();
     const location = useLocation();
+    const dropdownRefs = useRef({});
     const sessionUser = useSelector(state => state.session.user);
     const isCurrentUserCharacter = location.pathname === '/characters/current';
     const character = useSelector(state => selectCharacter(state, characterId || (isCurrentUserCharacter ? 'current' : null)));
@@ -95,6 +96,23 @@ function CharacterPage() {
             setEquippedItems(initialEquippedItems);
         }
     }, [character]);
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            const dropdownKeys = Object.keys(dropdownVisible);
+            for (let key of dropdownKeys) {
+                const dropdownElement = dropdownRefs.current[key];
+                if (dropdownVisible[key] && dropdownElement && !dropdownElement.contains(e.target)) {
+                    setDropdownVisible(prev => ({ ...prev, [key]: false }));
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownVisible]);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
@@ -174,12 +192,16 @@ function CharacterPage() {
                                                 <div className='char-item-pic-container'>
                                                     <img
                                                         className='char-item-pic'
-                                                        src={equipped ? equipped.CustomizationItem.url : `Select ${type}`}
+                                                        src={equipped && equipped.CustomizationItem.url}
+                                                        alt='Empty'
                                                         onClick={() => toggleDropdown(type)}>
                                                     </img>
                                                 </div>
                                                 {dropdownVisible[type] && (
-                                                    <div className="item-dropdown-menu">
+                                                    <div
+                                                        className="item-dropdown-menu"
+                                                        ref={el => dropdownRefs.current[type] = el}
+                                                    >
                                                         {groupedCustomizations[type].map((customization) => (
                                                             <div
                                                                 className='char-item-pic-container'
