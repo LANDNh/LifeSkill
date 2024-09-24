@@ -9,7 +9,8 @@
     flex-direction: column;
 }
 
-.item-limited {
+.item-limited,
+.item-selling {
     margin: 0;
     align-self: center;
     justify-content: center;
@@ -32,13 +33,15 @@
     padding-right: .5em;
 }
 
-#example {
+#so-example,
+#sell-example {
     margin: 0;
     margin-right: .75em;
-    padding: .25em;
+    padding: .25em .25em 0 .25em;
 }
 
-.item-limited p {
+.item-limited p,
+.item-selling p {
     margin: .5em;
     padding: .5em;
 }
@@ -181,4 +184,25 @@
     color: white;
     border-radius: 15px;
     cursor: pointer;
+}
+
+.sell-item {
+    margin: 1.5em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    background-color: red;
+    border: 2px solid rgb(172, 0, 0);
+    box-shadow: 5px 5px 10px rgb(172, 0, 0);
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#sell-example {
+    margin-bottom: 1em;
+}
+
+.sell-item:disabled {
+    cursor: default;
 }

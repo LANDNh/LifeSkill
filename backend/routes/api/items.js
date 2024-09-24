@@ -133,7 +133,7 @@ router.post('/:itemId', requireAuth, async (req, res) => {
     }
 });
 
-// Sell an item for half coins back
+// Sell an item for about half coins back
 router.delete('/:itemId', requireAuth, async (req, res) => {
     const { user } = req;
     const { itemId } = req.params;
@@ -190,7 +190,7 @@ router.delete('/:itemId', requireAuth, async (req, res) => {
         }
 
         userChar.set({
-            totalCoins: userChar.totalCoins += (price / 2)
+            totalCoins: userChar.totalCoins += Math.floor(price / 2)
         });
     } catch (e) {
         return res.json({
