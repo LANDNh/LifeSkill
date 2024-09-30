@@ -38,13 +38,13 @@ function ItemShopPage() {
                 <div className='shop-tabs'>
                     <span
                         onClick={() => setActiveTab('buy')}
-                        className={activeTab === 'buy' ? 'active' : ''}
+                        className={activeTab === 'buy' ? 'buy-tab active' : 'buy-tab'}
                     >
                         Buy
                     </span>
                     <span
                         onClick={() => setActiveTab('sell')}
-                        className={activeTab === 'sell' ? 'active' : ''}
+                        className={activeTab === 'sell' ? 'sell-tab active' : 'sell-tab'}
                     >
                         Sell
                     </span>
