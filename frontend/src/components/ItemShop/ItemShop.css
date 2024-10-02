@@ -11,7 +11,7 @@
 
 .shop-tabs {
     margin: 5em 0;
-    margin-left: 5em;
+    margin-left: 2em;
     padding: 1em;
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
@@ -23,7 +23,7 @@
     width: 15em;
     border: 2px solid #163DFF;
     border-radius: 15px;
-    position: absolute;
+    position: fixed;
 }
 
 .shop-tabs span {
@@ -48,14 +48,6 @@
     text-decoration: underline 5px solid #163DFF;
 }
 
-/* .buy-tab {
-    border-bottom: 1px solid #163DFF;
-}
-
-.sell-tab {
-    border-top: 1px solid #163DFF;
-} */
-
 .item-limited,
 .item-selling {
     margin: 0;
@@ -66,7 +58,6 @@
     font-size: larger;
     color: #163DFF;
     margin: 1em 0;
-    /* padding: 1em; */
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
     display: flex;
@@ -103,7 +94,6 @@
 }
 
 .item-list-container {
-    /* padding: 2em; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -118,6 +108,7 @@
     flex-direction: row;
     align-items: center;
     width: 40%;
+    min-width: 450px;
     height: fit-content;
     border: 2px solid #163DFF;
     border-radius: 15px;
@@ -262,4 +253,44 @@
 
 .sell-item:disabled {
     cursor: default;
+}
+
+@media only screen and (max-width: 1200px) {
+    .shop-tabs {
+        position: relative;
+        align-self: center;
+        margin: 0;
+        height: auto;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .shop-tabs {
+        font-size: smaller;
+    }
+
+    .item-tile {
+        width: 400px;
+        min-width: 400px;
+        height: auto;
+        min-height: auto;
+        padding: .5em;
+        margin: .5em 0;
+        font-size: small;
+    }
+
+    .item-selling,
+    .item-limited {
+        font-size: smaller;
+    }
+
+    .item-limited p {
+        margin: .25em .5em;
+    }
+
+    .buy-item,
+    .sell-item {
+        margin-right: 0;
+        font-size: smaller;
+    }
 }
