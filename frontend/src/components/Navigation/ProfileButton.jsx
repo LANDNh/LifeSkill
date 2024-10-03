@@ -7,7 +7,7 @@ import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, isScreenSmall }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -38,7 +38,7 @@ function ProfileButton({ user }) {
         dispatch(sessionActions.logoutUser());
     };
 
-    const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+    const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden") + (isScreenSmall ? " small-dropdown" : "");
 
     return (
         <>
