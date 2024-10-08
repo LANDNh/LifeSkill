@@ -57,7 +57,7 @@
 
 .small-nav-dropdown {
     color: #163DFF;
-    font-size: 40pt;
+    font-size: 30pt;
     background-color: transparent;
     border: none;
 }
@@ -78,7 +78,7 @@
 }
 
 .small-home img {
-    height: 100px;
+    height: 60px;
     width: auto;
 }
 
@@ -102,7 +102,7 @@
     padding: .5em;
     padding-bottom: 0;
     font-family: "M42_FLIGHT 721";
-    font-size: 30pt;
+    font-size: 20pt;
     background-color: #00C7FF;
     border: 2px solid #163DFF;
     box-shadow: 5px 5px 10px #163DFF;
@@ -201,5 +201,9 @@
         width: 100%;
         background-color: transparent;
         cursor: unset;
+    }
+
+    .navbar {
+        height: 80px;
     }
 }
