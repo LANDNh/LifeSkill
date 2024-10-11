@@ -18,7 +18,7 @@ module.exports = {
         levelRequirement: 1,
         price: 5,
         available: null,
-        url: '/images/ls-glasses.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-glasses.png'
       },
       {
         type: 'head',
@@ -26,7 +26,7 @@ module.exports = {
         levelRequirement: 2,
         price: 5,
         available: true,
-        url: '/images/ls-glasses2.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-glasses2.png'
       },
       {
         type: 'head',
@@ -34,7 +34,7 @@ module.exports = {
         levelRequirement: 1,
         price: 5,
         available: null,
-        url: '/images/ls-cap.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-cap.png'
       },
       {
         type: 'head',
@@ -42,7 +42,7 @@ module.exports = {
         levelRequirement: 2,
         price: 5,
         available: true,
-        url: '/images/ls-cap2.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-cap2.png'
       },
       {
         type: 'body',
@@ -50,7 +50,7 @@ module.exports = {
         levelRequirement: 1,
         price: 5,
         available: null,
-        url: '/images/ls-robe.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-robe.png'
       },
       {
         type: 'body',
@@ -58,7 +58,7 @@ module.exports = {
         levelRequirement: 2,
         price: 5,
         available: true,
-        url: '/images/ls-robe2.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-robe2.png'
       },
       {
         type: 'body',
@@ -66,7 +66,7 @@ module.exports = {
         levelRequirement: 1,
         price: 5,
         available: null,
-        url: '/images/ls-armor.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-armor.png'
       },
       {
         type: 'body',
@@ -74,7 +74,7 @@ module.exports = {
         levelRequirement: 2,
         price: 5,
         available: true,
-        url: '/images/ls-armor2.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-armor2.png'
       },
       {
         type: 'hand',
@@ -82,7 +82,7 @@ module.exports = {
         levelRequirement: 1,
         price: 5,
         available: null,
-        url: '/images/ls-staff.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-staff.png'
       },
       {
         type: 'hand',
@@ -90,7 +90,7 @@ module.exports = {
         levelRequirement: 2,
         price: 5,
         available: true,
-        url: '/images/ls-staff2.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-staff2.png'
       },
       {
         type: 'hand',
@@ -98,7 +98,7 @@ module.exports = {
         levelRequirement: 1,
         price: 5,
         available: null,
-        url: '/images/ls-sword.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-sword.png'
       },
       {
         type: 'hand',
@@ -106,7 +106,7 @@ module.exports = {
         levelRequirement: 2,
         price: 5,
         available: true,
-        url: '/images/ls-sword2.png'
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-sword2.png'
       },
     ], { validate: true });
   },

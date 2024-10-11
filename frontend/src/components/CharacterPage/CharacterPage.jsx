@@ -18,37 +18,37 @@ export const characterPic = character => {
             case 2:
                 switch (character.eyes) {
                     case 2:
-                        charPic = '/images/char-tan-blue.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-tan-blue.png';
                         break;
                     case 3:
-                        charPic = '/images/char-tan-green.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-tan-green.png';
                         break;
                     default:
-                        charPic = '/images/char-tan-brown.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-tan-brown.png';
                 }
                 break;
             case 3:
                 switch (character.eyes) {
                     case 2:
-                        charPic = '/images/char-brown-blue.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-brown-blue.png';
                         break;
                     case 3:
-                        charPic = '/images/char-brown-green.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-brown-green.png';
                         break;
                     default:
-                        charPic = '/images/char-brown-brown.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-brown-brown.png';
                 }
                 break;
             default:
                 switch (character.eyes) {
                     case 2:
-                        charPic = '/images/char-white-blue.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-white-blue.png';
                         break;
                     case 3:
-                        charPic = '/images/char-white-green.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-white-green.png';
                         break;
                     default:
-                        charPic = '/images/char-white-brown.png';
+                        charPic = 'https://lifeskill-bucket.s3.amazonaws.com/images/char-white-brown.png';
                 }
         }
     }

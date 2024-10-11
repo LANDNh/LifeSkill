@@ -102,7 +102,7 @@ function QuestsListPage() {
                                 >
                                     <div className='quest-prev'>
                                         <img
-                                            src="/images/LifeSkill-quest.png"
+                                            src="https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-quest.png"
                                             alt={quest.title}
                                         />
                                     </div>

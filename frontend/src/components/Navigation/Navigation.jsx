@@ -66,14 +66,14 @@ function Navigation({ isLoaded }) {
                         <>
                             <li className='small-home'>
                                 <NavLink to="/">
-                                    <img src="/images/LifeSkill-logo.png" alt="LifeSkill" />
+                                    <img src="https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-logo.png" alt="LifeSkill" />
                                 </NavLink>
                             </li>
                         </>
                     ) : (
                         <li className='home'>
                             <NavLink to="/">
-                                <img src="/images/LifeSkill-home.png" alt="LifeSkill" />
+                                <img src="https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-home.png" alt="LifeSkill" />
                             </NavLink>
                         </li>
                     )}
