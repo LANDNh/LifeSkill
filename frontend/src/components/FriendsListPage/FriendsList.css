@@ -25,6 +25,7 @@
     flex-direction: row;
     align-items: center;
     width: 60%;
+    min-width: 625px;
     height: fit-content;
     border: 2px solid #163DFF;
     border-radius: 15px;
@@ -70,6 +71,7 @@
     flex-direction: row;
     align-items: center;
     width: 60%;
+    min-width: 625px;
     height: fit-content;
     border: 2px solid #163DFF;
     border-radius: 15px;
@@ -90,7 +92,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin: 0 1.5em 0 0;
+    margin: 0 1em 0 0;
     padding: 0;
     font-family: "M42_FLIGHT 721";
     background-color: red;
@@ -106,7 +108,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin: 0 1.5em 0 0;
+    margin: 0 1em 0 0;
     padding: 0;
     font-family: "M42_FLIGHT 721";
     background-color: #00C7FF;
@@ -130,4 +132,60 @@
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
     border: 2px solid #163DFF;
     border-radius: 15px;
+}
+
+@media only screen and (max-width: 900px) {
+
+    .friend-tile,
+    .request-tile {
+        width: 550px;
+        min-width: 550px;
+        height: auto;
+        min-height: auto;
+        padding: .5em;
+        margin: .5em 0;
+        font-size: small;
+    }
+
+    .friend-tile-info,
+    .request-tile-info {
+        font-size: 12pt;
+    }
+
+    .accept-request,
+    .reject-request {
+        font-size: 30pt;
+    }
+
+    .remove-friend {
+        font-size: 8pt;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+
+    .friend-tile,
+    .request-tile {
+        width: 400px;
+        min-width: 400px;
+        height: auto;
+        min-height: auto;
+        padding: .5em;
+        margin: .5em 0;
+        font-size: x-small;
+    }
+
+    .friend-tile-info,
+    .request-tile-info {
+        font-size: small;
+    }
+
+    .accept-request,
+    .reject-request {
+        font-size: 25pt;
+    }
+
+    .remove-friend {
+        font-size: smaller;
+    }
 }

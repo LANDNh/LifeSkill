@@ -25,6 +25,7 @@
     flex-direction: row;
     align-items: center;
     width: 60%;
+    min-width: 625px;
     height: fit-content;
     border: 2px solid #163DFF;
     border-radius: 15px;
@@ -39,6 +40,8 @@
 
 .char-pic {
     max-height: 8em;
+    height: auto;
+    width: auto;
 }
 
 .add-friend {
@@ -52,4 +55,44 @@
     color: white;
     border-radius: 15px;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) {
+    .character-tile {
+        width: 550px;
+        min-width: 550px;
+        height: auto;
+        min-height: auto;
+        padding: .5em;
+        margin: .5em 0;
+        font-size: small;
+    }
+
+    .character-tile-info {
+        font-size: 12pt;
+    }
+
+    .add-friend {
+        font-size: 8pt;
+    }
+}
+
+@media only screen and (max-width: 575px) {
+    .character-tile {
+        width: 400px;
+        min-width: 400px;
+        height: auto;
+        min-height: auto;
+        padding: .5em;
+        margin: .5em 0;
+        font-size: x-small;
+    }
+
+    .character-tile-info {
+        font-size: small;
+    }
+
+    .add-friend {
+        font-size: smaller;
+    }
 }
