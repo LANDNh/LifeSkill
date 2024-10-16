@@ -65,3 +65,25 @@
     border-radius: 15px;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 850px) {
+    .delete-quest-step-buttons {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .delete-quest-step-modal h1 {
+        font-size: 12pt;
+    }
+
+    .delete-quest-step-modal p {
+        text-align: center;
+    }
+
+    .delete-quest-step-buttons button {
+        font-family: "Delta Block";
+        font-size: 12pt;
+        padding: .75em;
+    }
+}

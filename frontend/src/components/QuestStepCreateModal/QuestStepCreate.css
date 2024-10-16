@@ -44,8 +44,10 @@
     font-size: large;
     border-width: 2px;
     border-radius: 8px;
-    width: 500px;
-    height: 300px;
+    max-width: 500px;
+    min-width: 500px;
+    max-height: 300px;
+    min-height: 300px;
 }
 
 .create-quest-step-input select {
@@ -81,4 +83,58 @@
     font-family: "Delta Block";
     color: red;
     margin: 0em 1em;
+}
+
+@media only screen and (max-width: 675px) {
+    .create-quest-step-modal form {
+        width: auto;
+    }
+
+    .create-quest-step-input textarea {
+        max-width: 300px;
+        min-width: 300px;
+    }
+
+    .create-quest-step-submit {
+        font-family: "Delta Block";
+        font-size: 16pt;
+        padding: .5em;
+        margin: 1em;
+    }
+}
+
+@media only screen and (max-height: 800px) {
+    .create-quest-step-modal h1 {
+        font-size: 14pt;
+    }
+
+    .create-quest-step-input textarea {
+        max-height: 200px;
+        min-height: 200px;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    .create-quest-step-modal h1 {
+        font-size: 12pt;
+    }
+
+    .create-quest-step-input {
+        margin: .5em;
+    }
+
+    .create-quest-step-input input,
+    .create-quest-step-input textarea,
+    .create-quest-step-input select {
+        font-size: 12pt;
+    }
+
+    .create-quest-step-input textarea {
+        max-height: 100px;
+        min-height: 100px;
+    }
+
+    .create-quest-step-submit {
+        margin: .75em;
+    }
 }
