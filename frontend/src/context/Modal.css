@@ -22,3 +22,15 @@
 #modal-content {
     position: absolute;
 }
+
+@media only screen and (max-width: 850px) {
+    #modal-content {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-height: 800px) {
+    #modal-content {
+        height: auto;
+    }
+}

@@ -82,3 +82,46 @@
     color: red;
     margin: 0em 1em;
 }
+
+@media only screen and (max-width: 675px) {
+    .create-quest-modal form {
+        width: auto;
+    }
+
+    .create-quest-input textarea {
+        width: auto;
+    }
+
+    .create-quest-submit {
+        font-family: "Delta Block";
+        font-size: 16pt;
+        padding: .5em;
+        margin: 1em;
+    }
+}
+
+@media only screen and (max-height: 800px) {
+    .create-quest-input textarea {
+        height: auto;
+    }
+}
+
+@media only screen and (max-height: 525px) {
+    .create-quest-modal h1 {
+        font-size: 12pt;
+    }
+
+    .create-quest-input {
+        margin: .5em;
+    }
+
+    .create-quest-input input,
+    .create-quest-input textarea,
+    .create-quest-input select {
+        font-size: 12pt;
+    }
+
+    .create-quest-submit {
+        margin: .75em;
+    }
+}

@@ -23,6 +23,7 @@
 
 .requirement p {
     margin: .25em 0;
+    align-self: start;
 }
 
 .signup-modal,
@@ -100,4 +101,54 @@
     font-family: "Delta Block";
     color: red;
     margin: 0em 1em;
+}
+
+@media only screen and (max-width: 850px) {
+    .requirements {
+        padding: .5em;
+        margin-right: 2em;
+        min-width: 150px;
+    }
+
+    .signup-modal h1 {
+        font-size: 16pt;
+    }
+
+    .signup-input {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .requirements {
+        font-size: 10pt;
+    }
+}
+
+@media only screen and (max-width: 525px) {
+    .requirements {
+        margin-right: .75em;
+    }
+
+    .signup-modal h1 {
+        font-size: 12pt;
+    }
+
+    .signup-title {
+        font-size: 12pt;
+        text-align: center;
+    }
+
+    .signup-input input {
+        width: auto;
+        font-size: 10pt;
+    }
+
+    .signup-submit {
+        font-family: "Delta Block";
+        font-size: 16pt;
+        padding: .5em;
+        margin: 1em;
+        margin-top: .5em;
+    }
 }
