@@ -18,7 +18,7 @@ function Navigation({ isLoaded }) {
     const queryParams = new URLSearchParams(location.search);
     const activeTabFromQuery = queryParams.get('tab');
     const [activeTab, setActiveTab] = useState(
-        validTabs.includes(activeTabFromQuery) ? activeTabFromQuery : 'buy'
+        validTabs.includes(activeTabFromQuery) ? activeTabFromQuery : null
     );
 
     const toggleSticky = () => {
@@ -64,14 +64,20 @@ function Navigation({ isLoaded }) {
                 <ul className='navbar'>
                     {isScreenSmall ? (
                         <>
-                            <li className='small-home'>
+                            <li
+                                onClick={() => setActiveTab(null)}
+                                className='small-home'
+                            >
                                 <NavLink to="/">
                                     <img src="https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-logo.png" alt="LifeSkill" />
                                 </NavLink>
                             </li>
                         </>
                     ) : (
-                        <li className='home'>
+                        <li
+                            onClick={() => setActiveTab(null)}
+                            className='home'
+                        >
                             <NavLink to="/">
                                 <img src="https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-home.png" alt="LifeSkill" />
                             </NavLink>
