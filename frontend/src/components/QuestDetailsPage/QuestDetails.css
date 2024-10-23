@@ -12,39 +12,45 @@
 }
 
 .quest-page-container {
+    margin: 0 0 1em 0;
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    width: 50%;
+    width: 70%;
     height: fit-content;
     border: 2px solid #163DFF;
     border-radius: 15px;
 }
 
 .quest-page-info {
-    margin-top: 2em;
-    width: 90%;
+    margin-top: 1em;
+    padding: 1em;
     display: grid;
     grid-template-areas:
-        '. a .'
-        '. b .'
-        'e e e'
-        'c . d'
+        'g g . . h h'
+        '. a a a . .'
+        '. b b b . .'
+        'e e e e e e'
+        'c c . . d d'
     ;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
 }
 
 .quest-page-title {
+    margin: .75em;
     font-family: "M42_FLIGHT 721";
-    font-size: larger;
+    font-size: 16pt;
     text-decoration: 2px underline;
     color: #163DFF;
     grid-area: a;
-    width: max-content;
+    width: 100%;
+    text-align: center;
     justify-self: center;
+    align-self: center;
 }
 
 .quest-page-difficulty {
@@ -61,7 +67,7 @@
     grid-area: e;
     justify-self: center;
     display: inline-block;
-    width: 100%;
+    width: auto;
     overflow-wrap: break-word;
     word-wrap: break-word;
     hyphens: auto;
@@ -82,11 +88,17 @@
 }
 
 .quest-edit {
-    justify-self: center;
+    width: fit-content;
+    grid-area: g;
+    display: flex;
+    justify-content: center;
 }
 
 .quest-delete {
-    justify-self: center;
+    width: fit-content;
+    grid-area: h;
+    display: flex;
+    justify-content: center;
 }
 
 .quest-edit button {
@@ -101,7 +113,7 @@
     color: white;
     border-radius: 15px;
     cursor: pointer;
-    width: max-content;
+    width: 90%;
 }
 
 .quest-delete button {
@@ -116,7 +128,7 @@
     color: white;
     border-radius: 15px;
     cursor: pointer;
-    width: max-content;
+    width: 90%;
 }
 
 .quest-steps {
@@ -203,4 +215,100 @@
 
 .fa-medal {
     color: #00C7FF;
+}
+
+@media only screen and (max-width: 1200px) {
+    .quest-page-title {
+        font-size: 12pt;
+    }
+
+    .quest-page-difficulty {
+        font-size: 16pt;
+    }
+
+    .quest-edit button,
+    .quest-delete button,
+    .quest-step-edit button,
+    .quest-step-delete button {
+        font-size: 6pt;
+    }
+}
+
+@media only screen and (max-width: 875px) {
+    .quest-page-info {
+        max-width: 90%;
+    }
+
+    .quest-edit button,
+    .quest-delete button,
+    .quest-step-edit button,
+    .quest-step-delete button {
+        padding: .5em;
+        font-family: "Delta Block";
+        font-size: 12pt;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .quest-page-info {
+        width: 100%;
+        grid-template-areas:
+            'g g . . h h'
+            'a a a a a a'
+            'b b b b b b'
+            'e e e e e e'
+            'c c . . d d'
+        ;
+    }
+
+    .quest-page-title {
+        margin-top: 1em;
+    }
+
+    .quest-step input {
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .quest-page-title {
+        margin: .5em;
+        font-family: "Delta Block";
+        font-size: 18pt;
+    }
+
+    .quest-page-info {
+        padding: .5em;
+    }
+
+    .quest-page-description,
+    .quest-page-type,
+    .coins,
+    .quest-step-info p {
+        font-size: 10pt;
+    }
+
+    .quest-edit button,
+    .quest-delete button,
+    .quest-step-edit button,
+    .quest-step-delete button {
+        padding: .25em;
+        font-size: 10pt;
+    }
+
+    .quest-step {
+        margin: .5em;
+    }
+
+    .quest-step input {
+        width: 40%;
+    }
+
+    .create-quest-step p {
+        font-size: 10pt;
+    }
+
+    .create-quest-step i {
+        font-size: 30pt;
+    }
 }
