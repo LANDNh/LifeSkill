@@ -7,6 +7,8 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { environment } = require('./config');
 const { ValidationError } = require('sequelize');
+const passport = require('passport');
+const session = require('express-session');
 
 const isProduction = environment === 'production';
 
@@ -16,10 +18,22 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
+app.use(session({
+    secret: process.env.OAUTH_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Security Middleware
 if (!isProduction) {
     // enable cors only in development
-    app.use(cors());
+    app.use(cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+    }));
 }
 
 // helmet helps set a variety of headers to better secure your app

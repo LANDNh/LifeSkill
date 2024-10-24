@@ -17,8 +17,12 @@ const validateSignup = [
         .custom(async val => {
             const user = await User.findOne({ where: { email: val } });
 
+            if (user && user.googleId) {
+                throw new Error('Email is already associated with a Google account');
+            }
+
             if (user) {
-                throw new Error('User with that email already exists')
+                throw new Error('User with that email already exists');
             }
         }),
     check('username')
@@ -27,7 +31,7 @@ const validateSignup = [
     check('username')
         .custom(async val => {
             if (!val || val.length < 4 || val.length > 50) {
-                throw new Error('Username must be between 4 and 50 characters')
+                throw new Error('Username must be between 4 and 50 characters');
             }
         }),
     check('username')
@@ -39,7 +43,7 @@ const validateSignup = [
             const user = await User.findOne({ where: { username: val } });
 
             if (user) {
-                throw new Error('User with that username already exists')
+                throw new Error('User with that username already exists');
             }
         }),
     check('firstName')
@@ -48,7 +52,7 @@ const validateSignup = [
     check('firstName')
         .custom(async val => {
             if (!val || val.length < 3 || val.length > 50) {
-                throw new Error('First name must be between 3 and 50 characters')
+                throw new Error('First name must be between 3 and 50 characters');
             }
         }),
     check('lastName')
@@ -57,7 +61,7 @@ const validateSignup = [
     check('lastName')
         .custom(async val => {
             if (!val || val.length < 3 || val.length > 50) {
-                throw new Error('Last name must be between 3 and 50 characters')
+                throw new Error('Last name must be between 3 and 50 characters');
             }
         }),
     check('password')

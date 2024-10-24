@@ -15,98 +15,98 @@ module.exports = {
       {
         type: 'head',
         description: 'Simple Glasses',
-        color: null,
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-glasses.png'
       },
       {
         type: 'head',
         description: 'Special Glasses',
-        color: null,
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-glasses2.png'
       },
       {
         type: 'head',
         description: 'Simple Cap',
-        color: null,
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-cap.png'
       },
       {
         type: 'head',
         description: 'Special Cap',
-        color: null,
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-cap2.png'
       },
       {
         type: 'body',
         description: 'Simple Robe',
-        color: null,
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-robe.png'
       },
       {
         type: 'body',
         description: 'Special Robe',
-        color: null,
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-robe2.png'
       },
       {
         type: 'body',
         description: 'Simple Armor',
-        color: null,
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-armor.png'
       },
       {
         type: 'body',
         description: 'Special Armor',
-        color: null,
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-armor2.png'
       },
       {
         type: 'hand',
         description: 'Simple Staff',
-        color: null,
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-staff.png'
       },
       {
         type: 'hand',
         description: 'Special Staff',
-        color: null,
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-staff2.png'
       },
       {
         type: 'hand',
         description: 'Simple Sword',
-        color: null,
         levelRequirement: 1,
         price: 5,
-        available: null
+        available: null,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-sword.png'
       },
       {
         type: 'hand',
         description: 'Special Sword',
-        color: null,
         levelRequirement: 2,
         price: 5,
-        available: true
+        available: true,
+        url: 'https://lifeskill-bucket.s3.amazonaws.com/images/ls-sword2.png'
       },
     ], { validate: true });
   },

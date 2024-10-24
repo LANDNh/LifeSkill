@@ -71,3 +71,46 @@
     color: red;
     margin: 0em 1em;
 }
+
+@media only screen and (max-width: 850px) {
+    .login-modal h1 {
+        font-size: 16pt;
+    }
+
+    .login-input {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 525px) {
+    .login-modal h1 {
+        font-size: 12pt;
+    }
+
+    .login-title {
+        font-size: 12pt;
+        text-align: center;
+    }
+
+    .login-input input {
+        width: auto;
+        font-size: 12pt;
+    }
+
+    .login-submit {
+        font-family: "Delta Block";
+        font-size: 16pt;
+        padding: .5em;
+        margin: .5em;
+    }
+
+    .demo {
+        width: fit-content;
+        padding: .4em;
+        border-radius: 15px;
+    }
+
+    .google-login {
+        margin-bottom: 1em;
+    }
+}

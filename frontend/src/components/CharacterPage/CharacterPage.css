@@ -3,7 +3,7 @@
     margin: 0;
     width: 100%;
     min-height: 100vh;
-    background: url('../../../images/page-background-clip.png'), linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(122, 226, 255, 1) 82%, rgba(0, 199, 255, 1) 100%);
+    background: url('https://lifeskill-bucket.s3.amazonaws.com/images/page-background-clip.png'), linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(122, 226, 255, 1) 82%, rgba(0, 199, 255, 1) 100%);
     background-repeat: repeat;
     display: flex;
     justify-content: center;
@@ -15,7 +15,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 40%;
+    width: 50%;
     border: 2px solid #163DFF;
     border-radius: 15px;
     margin-bottom: 1em;
@@ -31,8 +31,10 @@
         '. . b b . .'
         'e e c c d d'
         '. f f f f .'
+        '. i i i i .'
     ;
     grid-template-columns: repeat(6, 1fr);
+    height: 100%;
 }
 
 .character-pic {
@@ -85,6 +87,7 @@
 .character-name {
     grid-area: b;
     justify-self: center;
+    align-self: center;
     font-family: "Delta Block";
     color: #163DFF;
 }
@@ -92,6 +95,7 @@
 .character-lvl {
     grid-area: c;
     justify-self: center;
+    align-self: center;
     font-family: "Delta Block";
     color: #163DFF;
 }
@@ -123,6 +127,7 @@
 .character-coins {
     grid-area: e;
     justify-self: center;
+    align-self: center;
     font-family: "Delta Block";
     color: #163DFF;
 }
@@ -130,6 +135,151 @@
 .character-status {
     grid-area: f;
     justify-self: center;
+    align-self: center;
     color: #163DFF;
     font-family: "Delta Block";
+}
+
+.character-customizations {
+    grid-area: i;
+    justify-self: center;
+    align-self: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #163DFF;
+    font-family: "Delta Block";
+    margin-bottom: 1em;
+}
+
+.character-customizations h2 {
+    font-family: "M42_FLIGHT 721";
+    font-size: medium;
+    margin-bottom: 0;
+}
+
+.items-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.customization-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1em 2em;
+}
+
+.customization-item button {
+    margin-top: .5em;
+}
+
+.item-dropdown-menu {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    max-width: calc(3 * 6em + 3 * .5em);
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+    padding: .5em;
+    position: absolute;
+}
+
+.char-item-pic-container {
+    padding: .5em;
+    border: 2px solid #163DFF;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-dropdown-menu .char-item-pic-container {
+    margin: .5em;
+}
+
+.char-item-pic {
+    height: 4em;
+    width: 4em;
+    object-fit: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 1080px) {
+    .character-page-container {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 775px) {
+    .character-page-all {
+        font-size: 10pt;
+    }
+
+    .character-info {
+        grid-template-areas:
+            'h h . . g g'
+            '. . . . . .'
+            '. a a a a .'
+            '. a a a a .'
+            '. a a a a .'
+            '. . b b . .'
+            'e e c c d d'
+            '. f f f f .'
+            '. i i i i .'
+        ;
+    }
+
+    .character-pic {
+        width: 75%;
+        justify-self: center;
+    }
+
+    .character-edit button,
+    .character-delete button {
+        width: 100%;
+        height: 50%;
+        margin-top: .75em;
+        padding: 1em .75em;
+        font-family: "Delta Block";
+        font-size: 12pt;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .character-edit button {
+        margin-left: 1em;
+    }
+
+    .character-delete button {
+        margin-right: 1em;
+    }
+
+    .character-name {
+        width: 10em;
+        margin-top: 0;
+        text-align: center;
+    }
+
+    .character-customizations {
+        margin-top: 3em;
+    }
+
+    .character-customizations h2 {
+        font-family: "Delta Block";
+        font-size: 12pt;
+    }
+
+    .customization-item {
+        margin-left: 1em;
+        margin-right: 1em;
+    }
 }

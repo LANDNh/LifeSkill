@@ -1,0 +1,295 @@
+.items-list-all {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: url('https://lifeskill-bucket.s3.amazonaws.com/images/page-background-clip.png'), linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(122, 226, 255, 1) 82%, rgba(0, 199, 255, 1) 100%);
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-tabs {
+    margin: 5em 0 10em 2em;
+    padding: 1em;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 10em;
+    width: 15em;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+    position: fixed;
+}
+
+.shop-tabs span {
+    width: 100%;
+    height: 40%;
+    padding-top: .5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "M42_FLIGHT 721";
+    color: #163DFF;
+}
+
+.shop-tabs span:hover {
+    color: white;
+    text-decoration: underline 5px solid white;
+    background-color: #163DFF;
+    cursor: pointer;
+}
+
+.shop-tabs .active {
+    text-decoration: underline 5px solid #163DFF;
+}
+
+.item-limited,
+.item-selling {
+    margin: 0;
+    align-self: center;
+    justify-content: center;
+    width: fit-content;
+    font-family: "Delta Block";
+    font-size: larger;
+    color: #163DFF;
+    margin: 1em 0;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+}
+
+.item-limited .fa-triangle-exclamation,
+.item-selling .fa-triangle-exclamation {
+    padding-right: .5em;
+}
+
+#so-example,
+#sell-example {
+    margin: 0;
+    margin-right: .75em;
+    padding: .25em .25em 0 .25em;
+}
+
+.item-limited p,
+.item-selling p {
+    margin: .5em;
+    padding: .5em;
+}
+
+.item-selling :nth-child(1) {
+    margin-bottom: 0;
+}
+
+.item-selling :nth-child(2) {
+    margin-top: 0;
+}
+
+.item-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-tile {
+    margin: 1em 0;
+    padding: 1em;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 40%;
+    min-width: 450px;
+    height: fit-content;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+}
+
+.item-pic-type {
+    padding: 0;
+    margin-right: .5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Delta Block";
+    font-size: larger;
+    color: #163DFF;
+}
+
+.item-pic-container {
+    padding: .5em;
+    border: 2px solid #163DFF;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-pic {
+    height: 4em;
+    width: 4em;
+    object-fit: contain;
+}
+
+.item-level {
+    padding: .25em;
+    margin: 0;
+}
+
+.item-type {
+    width: 100%;
+    padding: .25em;
+    margin: 0;
+}
+
+.item-tile-info {
+    width: 100%;
+    font-family: "Delta Block";
+    font-size: larger;
+    color: #163DFF;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.item-price {
+    justify-self: right;
+}
+
+.item-available {
+    padding: 0;
+    margin: 0;
+}
+
+.buy-item {
+    margin: 1.5em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.buy-item:disabled {
+    background-color: lightgray;
+    color: gray;
+    border: 2px solid black;
+    box-shadow: 5px 5px 10px black;
+    cursor: default;
+}
+
+.item-buy-text,
+.item-sell-text {
+    margin: 0;
+}
+
+.item-out-text {
+    margin: 0;
+    font-size: smaller;
+}
+
+.item-error-container {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+.item-error-message {
+    font-family: "Delta Block";
+    font-size: large;
+    color: red;
+}
+
+.item-error-button {
+    margin: 1.5em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    background-color: red;
+    border: 2px solid rgb(172, 0, 0);
+    box-shadow: 5px 5px 10px rgb(172, 0, 0);
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.sell-item {
+    margin: 1.5em;
+    padding: .75em;
+    padding-top: 1.25em;
+    font-family: "M42_FLIGHT 721";
+    background-color: red;
+    border: 2px solid rgb(172, 0, 0);
+    box-shadow: 5px 5px 10px rgb(172, 0, 0);
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#sell-example {
+    margin-bottom: 1em;
+}
+
+.sell-item:disabled {
+    cursor: default;
+}
+
+@media only screen and (max-width: 1200px) {
+    .shop-tabs {
+        position: relative;
+        align-self: center;
+        margin: 0;
+        height: auto;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .shop-tabs {
+        font-size: smaller;
+    }
+
+    .item-tile {
+        width: 400px;
+        min-width: 400px;
+        height: auto;
+        min-height: auto;
+        padding: .5em;
+        margin: .5em 0;
+        font-size: small;
+    }
+
+    .item-selling,
+    .item-limited {
+        font-size: smaller;
+    }
+
+    .item-limited p {
+        margin: .25em .5em;
+    }
+
+    .buy-item,
+    .sell-item {
+        margin-right: 0;
+        font-size: smaller;
+    }
+}

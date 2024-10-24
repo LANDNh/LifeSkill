@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { removeQuestStep } from "../../store/questStepReducer";
 import './QuestStepDelete.css';
+import { fetchQuest } from "../../store/questReducer";
 
 const QuestStepDeleteModal = ({ questStep }) => {
     const dispatch = useDispatch();
@@ -11,8 +12,8 @@ const QuestStepDeleteModal = ({ questStep }) => {
         e.preventDefault();
         return dispatch(removeQuestStep(questStep.id))
             .then(() => {
+                dispatch(fetchQuest(questStep.questId));
                 closeModal();
-                window.location.reload();
             })
     }
 

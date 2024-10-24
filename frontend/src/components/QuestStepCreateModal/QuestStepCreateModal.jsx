@@ -4,6 +4,7 @@ import { useModal } from '../../context/Modal';
 import './QuestStepCreate.css'
 
 import { createQuestStep } from '../../store/questStepReducer';
+import { fetchQuest } from '../../store/questReducer';
 
 function QuestStepCreateModal({ questId }) {
     const dispatch = useDispatch();
@@ -23,8 +24,8 @@ function QuestStepCreateModal({ questId }) {
             difficulty
         }))
             .then(() => {
+                dispatch(fetchQuest(questId));
                 closeModal();
-                window.location.reload();
             })
             .catch(async res => {
                 const data = await res.json();

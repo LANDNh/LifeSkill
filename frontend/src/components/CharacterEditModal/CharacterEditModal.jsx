@@ -10,16 +10,15 @@ function CharacterEditModal({ character }) {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const { closeModal } = useModal();
-
-    useEffect(() => {
-        dispatch(fetchUserCharacter());
-    }, [dispatch])
-
     const [name, setName] = useState(character.name || sessionUser.username);
     const [skin, setSkin] = useState(character.skin || 1);
     const [eyes, setEyes] = useState(character.eyes || 1);
     const [status, setStatus] = useState(character.status || "");
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        dispatch(fetchUserCharacter());
+    }, [dispatch])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,7 +40,7 @@ function CharacterEditModal({ character }) {
             .catch(async res => {
                 const data = await res.json();
                 if (data && data?.errors) {
-                    formErrors = { ...formErrors, ...data.errors }
+                    formErrors = { ...errors, ...data.errors }
                     setErrors(formErrors);
                 }
             });

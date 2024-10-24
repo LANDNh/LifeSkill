@@ -1,6 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
-const { Op } = require('sequelize');
+const { Op, where, Model } = require('sequelize');
 
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
@@ -83,6 +83,16 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
             title: title
         },
     });
+    const quest = await Quest.findOne({
+        where: {
+            id: questStep.questId
+        },
+        include: [
+            {
+                model: QuestStep
+            }
+        ]
+    });
 
     if (existingQuestStep) {
         return res.status(400).json({
@@ -107,6 +117,47 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
     });
 
     await questStep.save();
+
+    let total = 0;
+    quest.QuestSteps.forEach(step => {
+        total += step.difficulty;
+    });
+    const difficultyAggregate = Math.round(total / quest.QuestSteps.length);
+    quest.difficultyAggregate = difficultyAggregate;
+
+    switch (quest.type) {
+        case 'daily':
+            quest.completionCoins = (quest.difficultyAggregate * 5);
+            break;
+        case 'weekly':
+            quest.completionCoins = (quest.difficultyAggregate * 10);
+            break;
+        case 'monthly':
+            quest.completionCoins = (quest.difficultyAggregate * 20);
+            break;
+        default:
+            switch (quest.difficultyAggregate) {
+                case 1:
+                    quest.completionCoins = 5;
+                    break;
+                case 2:
+                    quest.completionCoins = 10;
+                    break;
+                case 3:
+                    quest.completionCoins = 25;
+                    break;
+                case 4:
+                    quest.completionCoins = 50;
+                    break;
+                case 5:
+                    quest.completionCoins = 100;
+                    break;
+                default:
+                    quest.completionCoins = null;
+            }
+    }
+
+    await quest.save();
 
     // Add xp to user character upon completion
     if (questStep.complete) {
@@ -139,8 +190,59 @@ router.put('/:questStepId', requireAuth, questStepAuthorize, validateQuestStep, 
 // Delete quest step
 router.delete('/:questStepId', requireAuth, questStepAuthorize, async (req, res) => {
     const questStep = await QuestStep.findByPk(req.params.questStepId);
+    const quest = await Quest.findOne({
+        where: {
+            id: questStep.questId
+        },
+        include: [
+            {
+                model: QuestStep
+            }
+        ]
+    });
 
     await questStep.destroy();
+
+    let total = 0;
+    quest.QuestSteps.forEach(step => {
+        total += step.difficulty;
+    });
+    const difficultyAggregate = Math.round(total / quest.QuestSteps.length);
+    quest.difficultyAggregate = difficultyAggregate;
+
+    switch (quest.type) {
+        case 'daily':
+            quest.completionCoins = (quest.difficultyAggregate * 5);
+            break;
+        case 'weekly':
+            quest.completionCoins = (quest.difficultyAggregate * 10);
+            break;
+        case 'monthly':
+            quest.completionCoins = (quest.difficultyAggregate * 20);
+            break;
+        default:
+            switch (quest.difficultyAggregate) {
+                case 1:
+                    quest.completionCoins = 5;
+                    break;
+                case 2:
+                    quest.completionCoins = 10;
+                    break;
+                case 3:
+                    quest.completionCoins = 25;
+                    break;
+                case 4:
+                    quest.completionCoins = 50;
+                    break;
+                case 5:
+                    quest.completionCoins = 100;
+                    break;
+                default:
+                    quest.completionCoins = null;
+            }
+    }
+
+    await quest.save();
 
     return res.json({
         message: 'Successfully deleted'

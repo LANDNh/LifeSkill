@@ -8,17 +8,20 @@ import { fetchQuests, modifyQuest, selectAllQuests } from '../../store/questRedu
 import { useModal } from '../../context/Modal';
 import QuestCreateModal from '../QuestCreateModal';
 import './QuestsList.css';
+import { restoreUser } from '../../store/session';
 
 function QuestsListPage() {
     const { setModalContent } = useModal();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
+    const userChar = useSelector(state => state.characters.userCharacter);
     const quests = useSelector(selectAllQuests);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         dispatch(fetchQuests());
+        dispatch(restoreUser());
     }, [dispatch]);
 
     useEffect(() => {
@@ -27,6 +30,8 @@ function QuestsListPage() {
     }, [dispatch]);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
+
+    if (!isLoading && !userChar) return <Navigate to='/characters/current' replace={true} />
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -67,7 +72,7 @@ function QuestsListPage() {
                 type: quest.type,
                 complete: !quest.complete
             }));
-            dispatch(fetchQuests());
+            await dispatch(fetchQuests());
         } catch (error) {
             console.error('Error updating quest:', error);
         }
@@ -97,7 +102,7 @@ function QuestsListPage() {
                                 >
                                     <div className='quest-prev'>
                                         <img
-                                            src="/images/LifeSkill-quest.png"
+                                            src="https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-quest.png"
                                             alt={quest.title}
                                         />
                                     </div>

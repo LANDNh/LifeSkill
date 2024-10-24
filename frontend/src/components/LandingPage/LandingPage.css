@@ -8,7 +8,7 @@ body {
     margin: 0;
     width: 100%;
     min-height: 100vh;
-    background: url('../../../images/page-background-clip.png'), linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(122, 226, 255, 1) 82%, rgba(0, 199, 255, 1) 100%);
+    background: url('https://lifeskill-bucket.s3.amazonaws.com/images/page-background-clip.png'), linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(122, 226, 255, 1) 82%, rgba(0, 199, 255, 1) 100%);
     background-repeat: repeat;
     display: flex;
     justify-content: center;
@@ -67,4 +67,73 @@ body {
 .landing-page-logo {
     margin-top: 1em;
     width: 50%;
+}
+
+@media only screen and (max-width: 750px) {
+    .landing-page-container {
+        width: 70%;
+        height: 90%;
+        align-self: center;
+    }
+
+    .landing-page-container h1 {
+        font-size: 14pt;
+        margin: .25em;
+        margin-top: 1em;
+    }
+
+    .landing-page-container li {
+        padding-top: .5em;
+    }
+
+    .landing-page-container li button {
+        margin-top: .5em;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .landing-page-container h1 {
+        font-size: 12pt;
+    }
+
+    .landing-page-container li p {
+        margin: .5em 0;
+        font-size: 8pt;
+    }
+
+    .landing-page-container li button {
+        font-family: "Delta Block";
+        font-size: 16pt;
+        padding: .5em;
+        margin: 0 0 .5em 0;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .landing-page-container h1 {
+        font-size: 10pt;
+    }
+
+    .landing-page-container li p {
+        font-family: "Delta Block";
+        font-size: 14pt;
+    }
+}
+
+@media only screen and (max-height: 575px) {
+    .landing-page-all {
+        height: auto;
+    }
+
+    .landing-page-container {
+        margin: .25em 0;
+    }
+
+    .landing-page-logo {
+        width: 40%;
+    }
+
+    .landing-page-container li p {
+        margin: .25em 0;
+    }
 }

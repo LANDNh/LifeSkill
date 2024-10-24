@@ -28,7 +28,6 @@ module.exports = {
       },
       equipped: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
         defaultValue: false
       },
       createdAt: {

@@ -1,10 +1,11 @@
 const express = require('express');
+const passport = require('passport');
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 
 const { handleValidationErrors } = require('../../utils/validation');
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
@@ -20,6 +21,27 @@ const validateLogin = [
     handleValidationErrors
 ];
 
+const isProduction = process.env.NODE_ENV === "production";
+
+// Google OAuth routes
+router.get('/google', passport.authenticate('google', {
+    scope: ['profile', 'email'],
+}));
+
+router.get('/google/callback', passport.authenticate('google', {
+    failureRedirect: '/login',
+}), async (req, res) => {
+    const user = req.user;
+
+    await setTokenCookie(res, user);
+
+    if (!isProduction) {
+        res.redirect('http://localhost:5173');
+    } else {
+        res.redirect('https://lifeskill.onrender.com')
+    }
+});
+
 // Restore session user
 router.get(
     '/',
@@ -33,9 +55,12 @@ router.get(
                 email: user.email,
                 username: user.username,
             };
-            return res.json({
-                user: safeUser
-            });
+
+            if (safeUser) {
+                return res.json({
+                    user: safeUser
+                });
+            }
         } else return res.json({ user: null });
     }
 );
@@ -72,21 +97,31 @@ router.post(
             username: user.username,
         };
 
-        await setTokenCookie(res, safeUser);
+        if (safeUser) {
+            await setTokenCookie(res, safeUser);
 
-        return res.json({
-            user: safeUser
-        });
+            return res.json({
+                user: safeUser
+            });
+        }
     }
 );
 
 // Log out
-router.delete(
-    '/',
-    (_req, res) => {
+router.delete('/', (req, res) => {
+    if (req.isAuthenticated()) {
+        req.logout((err) => {
+            if (err) {
+                return next(err);
+            }
+            res.clearCookie('token');
+            return res.json({ message: 'success' });
+        });
+    } else {
         res.clearCookie('token');
         return res.json({ message: 'success' });
     }
+}
 );
 
 module.exports = router;

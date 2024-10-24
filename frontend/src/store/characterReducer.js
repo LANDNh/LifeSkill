@@ -142,7 +142,7 @@ const characterReducer = (state = initialState, action) => {
         case ADD_CHARACTER:
             return { ...state, character: action.character };
         case UPDATE_CHARACTER:
-            return { ...state, character: action.character };
+            return { ...state, userCharacter: action.character };
         case DELETE_CHARACTER:
             return { ...state, character: null };
         default:

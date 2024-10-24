@@ -44,8 +44,10 @@
     font-size: large;
     border-width: 2px;
     border-radius: 8px;
-    width: 500px;
-    height: 300px;
+    max-width: 500px;
+    min-width: 500px;
+    max-height: 300px;
+    min-height: 300px;
 }
 
 .edit-quest-input select {
@@ -81,4 +83,58 @@
     font-family: "Delta Block";
     color: red;
     margin: 0em 1em;
+}
+
+@media only screen and (max-width: 675px) {
+    .edit-quest-modal form {
+        width: auto;
+    }
+
+    .edit-quest-input textarea {
+        max-width: 300px;
+        min-width: 300px;
+    }
+
+    .edit-quest-submit {
+        font-family: "Delta Block";
+        font-size: 16pt;
+        padding: .5em;
+        margin: 1em;
+    }
+}
+
+@media only screen and (max-height: 800px) {
+    .edit-quest-modal h1 {
+        font-size: 14pt;
+    }
+
+    .edit-quest-input textarea {
+        max-height: 200px;
+        min-height: 200px;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    .edit-quest-modal h1 {
+        font-size: 12pt;
+    }
+
+    .edit-quest-input {
+        margin: .5em;
+    }
+
+    .edit-quest-input input,
+    .edit-quest-input textarea,
+    .edit-quest-input select {
+        font-size: 12pt;
+    }
+
+    .edit-quest-input textarea {
+        max-height: 100px;
+        min-height: 100px;
+    }
+
+    .edit-quest-submit {
+        margin: .75em;
+    }
 }

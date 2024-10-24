@@ -24,9 +24,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      color: {
-        type: Sequelize.INTEGER
-      },
       levelRequirement: {
         type: Sequelize.INTEGER,
         allowNull: false
@@ -38,6 +35,9 @@ module.exports = {
       available: {
         type: Sequelize.BOOLEAN,
         defaultValue: true
+      },
+      url: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

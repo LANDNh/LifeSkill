@@ -2,6 +2,16 @@
     display: none;
 }
 
+.navigation-container.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+
+.navigation-container {
+    position: relative;
+}
+
 .navbar {
     display: flex;
     list-style-type: none;
@@ -26,17 +36,50 @@
 }
 
 .navbar .home:hover,
-.navbar .profile:hover {
+.navbar .small-home:hover,
+.navbar .profile:hover,
+.navbar .nav-items:hover,
+.navbar .small-profile:hover {
     background-color: transparent;
 }
 
 .navbar li.active {
-    background-color: #888;
+    background: rgb(9, 255, 254);
+    background: radial-gradient(circle, rgba(9, 255, 254, 0.133473457742472) 0%, rgba(6, 109, 130, 0.4275911048012955) 0%);
+}
+
+.nav-items {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    cursor: unset;
+}
+
+.small-nav-dropdown {
+    color: #163DFF;
+    font-size: 30pt;
+    background-color: transparent;
+    border: none;
+}
+
+.small-nav-dropdown i {
+    cursor: pointer;
+}
+
+.small-dropdown li button {
+    font-size: 10pt;
+    padding: .75em;
+    padding-bottom: .25em;
 }
 
 .home img {
     width: 150px;
     height: auto;
+}
+
+.small-home img {
+    height: 60px;
+    width: auto;
 }
 
 .profile {
@@ -55,7 +98,21 @@
     cursor: pointer;
 }
 
-.profile-dropdown {
+.small-profile button {
+    padding: .5em;
+    padding-bottom: 0;
+    font-family: "M42_FLIGHT 721";
+    font-size: 20pt;
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.profile-dropdown,
+.nav-dropdown {
     font-size: 14pt;
     position: absolute;
     top: 3.5em;
@@ -68,11 +125,28 @@
     padding: .5em;
     margin-top: .25em;
     cursor: default;
+    z-index: 10000;
 }
 
 .profile-dropdown li:hover {
     background-color: transparent;
     cursor: default;
+}
+
+.nav-dropdown li {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-dropdown li .tab-link {
+    padding: .75em .5em;
+}
+
+.nav-dropdown li .tab-link:hover {
+    color: white;
+    text-decoration: underline 5px solid white;
+    background-color: #163DFF;
+    cursor: pointer;
 }
 
 .user-info {
@@ -93,4 +167,43 @@
     align-items: center;
     width: 100%;
     height: 100%;
+}
+
+.toggle-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-nav i {
+    position: absolute;
+    bottom: .25em;
+    padding: .25em .5em;
+    color: #163DFF;
+    border: 2px solid #163DFF;
+    border-radius: 10px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 65%, rgba(205, 205, 205, 1) 100%);
+}
+
+.show {
+    position: sticky;
+    top: 2em;
+    z-index: 9999;
+}
+
+.show.scrolled {
+    opacity: 25%;
+}
+
+@media only screen and (max-width: 775px) {
+    #nav {
+        width: 100%;
+        background-color: transparent;
+        cursor: unset;
+    }
+
+    .navbar {
+        height: 80px;
+    }
 }

@@ -7,6 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10000;
 }
 
 #modal-background {
@@ -20,4 +21,16 @@
 
 #modal-content {
     position: absolute;
+}
+
+@media only screen and (max-width: 850px) {
+    #modal-content {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-height: 800px) {
+    #modal-content {
+        height: auto;
+    }
 }

@@ -33,6 +33,10 @@ function LoginFormModal() {
             .then(closeModal)
     };
 
+    const googleLogin = () => {
+        window.location.href = '/api/session/google';
+    };
+
     const disableLogin = {}
     if (!credential ||
         credential.length < 4 ||
@@ -72,6 +76,7 @@ function LoginFormModal() {
                     {...disableLogin}
                 >Log In</button>
                 <button className='demo login-submit' onClick={demoLogin}>Demo User</button>
+                <button className='google-login login-submit' onClick={googleLogin}>Log In with Google</button>
             </form>
         </div>
     );

@@ -10,6 +10,7 @@ import QuestDetailsPage from './components/QuestDetailsPage';
 import CharactersListPage from './components/CharactersListPage';
 import FriendsListPage from './components/FriendsListPage';
 import AboutLinks from './components/AboutLinks';
+import ItemShopPage from './components/ItemShop';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: '/friends',
         element: <FriendsListPage />
+      },
+      {
+        path: '/items',
+        element: <ItemShopPage />
       },
     ]
   }
