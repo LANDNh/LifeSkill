@@ -31,6 +31,18 @@
     border-radius: 15px;
 }
 
+.pic-name-lvl {
+    padding: 0;
+    margin-right: .5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Delta Block";
+    font-size: larger;
+    color: #163DFF;
+    text-align: center;
+}
+
 .character-tile-info {
     width: 100%;
     font-family: "Delta Block";
@@ -94,5 +106,44 @@
 
     .add-friend {
         font-size: smaller;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .character-list-container {
+        align-self: center;
+        width: 90%;
+    }
+
+    .all-characters {
+        padding: 0;
+    }
+
+    .character-tile {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .add-friend {
+        font-family: "Delta Block";
+        font-size: 10pt;
+        padding: .5em .75em;
+        margin: .5em;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+
+    .char-pic {
+        width: 60px;
+    }
+
+    .character-tile-info {
+        font-size: 8pt;
+    }
+
+    .pic-name-lvl p {
+        margin: .25em 0;
+        font-size: 8pt;
     }
 }

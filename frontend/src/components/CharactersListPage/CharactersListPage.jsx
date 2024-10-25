@@ -7,17 +7,37 @@ import './CharactersList.css'
 import { fetchCharacters, selectAllCharacters } from '../../store/characterReducer';
 import { createRequest, fetchRequests } from '../../store/requestReducer';
 
+export const textTruncate = (text, length = 50) => {
+    if (text.length > length) {
+        return text.slice(0, length) + '...';
+    }
+    return text;
+}
+
 function CharactersListPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
     const characters = useSelector(selectAllCharacters);
     const [requestedCharacters, setRequestedCharacters] = useState([]);
+    const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 400);
 
     useEffect(() => {
         dispatch(fetchCharacters());
         dispatch(fetchRequests());
     }, [dispatch]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsScreenSmall(window.innerWidth <= 400);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
@@ -36,12 +56,27 @@ function CharactersListPage() {
                                 }}
                                 key={character.id}
                             >
-                                <img className='char-pic' src={characterPic(character)} alt={`Character ${character.name}`} />
-                                <div className='character-tile-info'>
-                                    <p className='char-name'>Name: {character.name}</p>
-                                    <p className='char-level'>Level: {character.level}</p>
-                                    <p className='char-status'>{character.status}</p>
-                                </div>
+                                {isScreenSmall ? (
+                                    <>
+                                        <div className='pic-name-lvl'>
+                                            <img className='char-pic' src={characterPic(character)} alt={`Character ${character.name}`} />
+                                            <p className='char-name'>Name: {character.name}</p>
+                                            <p className='char-level'>Level: {character.level}</p>
+                                        </div>
+                                        <div className='character-tile-info'>
+                                            <p className='char-status'>{textTruncate(character.status)}</p>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <img className='char-pic' src={characterPic(character)} alt={`Character ${character.name}`} />
+                                        <div className='character-tile-info'>
+                                            <p className='char-name'>Name: {character.name}</p>
+                                            <p className='char-level'>Level: {character.level}</p>
+                                            <p className='char-status'>{character.status}</p>
+                                        </div>
+                                    </>
+                                )}
                                 <button
                                     className='add-friend'
                                     onClick={e => {

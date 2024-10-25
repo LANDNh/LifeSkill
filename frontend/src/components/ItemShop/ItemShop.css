@@ -293,3 +293,53 @@
         font-size: smaller;
     }
 }
+
+@media only screen and (max-width: 450px) {
+    .item-list-container {
+        align-self: center;
+        width: 90%;
+    }
+
+    .item-tile {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .buy-item,
+    .sell-item {
+        font-family: "Delta Block";
+        font-size: 12pt;
+        padding: .5em .75em;
+    }
+
+    #so-example p,
+    #sell-example p {
+        margin: 0;
+        padding: 0;
+    }
+
+    #so-example,
+    #sell-example {
+        padding: .5em .75em;
+    }
+
+    .item-pic-type {
+        min-width: max-content;
+    }
+
+    .item-pic {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .item-limited {
+        font-size: small;
+        font-weight: normal;
+    }
+
+    .item-tile {
+        font-size: x-small;
+    }
+}

@@ -70,8 +70,8 @@
     width: 100%;
     display: grid;
     grid-template-areas:
-        '. a .'
-        '. b .'
+        'a a a'
+        'b b b'
         'c e d'
     ;
     grid-template-columns: 1fr 1fr 1fr;
@@ -144,4 +144,63 @@
     font-size: 60pt;
     color: #163DFF;
     margin-top: .25em;
+}
+
+@media only screen and (max-width: 450px) {
+    .quest-list-container {
+        width: 90%;
+    }
+
+    .quest-prev,
+    .tile-info {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .tile-info {
+        grid-template-areas:
+            'a a a'
+            'b b b'
+            'c . d'
+            '. e .'
+        ;
+    }
+
+    .quest-prev img {
+        width: 80px;
+    }
+
+    .quest-type {
+        width: max-content;
+    }
+
+    .create-quest i {
+        font-size: 30pt;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .all-tiles {
+        padding: 0;
+    }
+
+    .quest-tile {
+        width: 70%;
+        min-width: 70%;
+        min-height: 15em;
+    }
+
+    .quest-prev,
+    .tile-info {
+        width: 90%;
+        min-width: 90%;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+
+    .tile-info,
+    .create-quest p {
+        font-size: 8pt;
+    }
 }
