@@ -225,7 +225,6 @@
     .character-info {
         grid-template-areas:
             'h h . . g g'
-            '. . . . . .'
             '. a a a a .'
             '. a a a a .'
             '. a a a a .'
@@ -281,5 +280,24 @@
     .customization-item {
         margin-left: 1em;
         margin-right: 1em;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .character-page-container {
+        width: 90%;
+    }
+
+    .character-info {
+        margin: 0;
+    }
+
+    .character-customizations {
+        margin-top: .75em;
+    }
+
+    .char-item-pic {
+        width: 3em;
+        height: 3em;
     }
 }

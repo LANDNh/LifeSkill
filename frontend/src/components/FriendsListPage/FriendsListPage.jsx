@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { characterPic } from '../CharacterPage/CharacterPage';
+import { textTruncate } from '../CharactersListPage/CharactersListPage';
 import './FriendsList.css'
 
 import { fetchRequests, confirmRequest, selectAllRequests, denyRequest } from '../../store/requestReducer';
@@ -13,11 +14,24 @@ function FriendsListPage() {
     const sessionUser = useSelector(state => state.session.user);
     const requests = useSelector(selectAllRequests);
     const friends = useSelector(selectAllFriends);
+    const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 400);
 
     useEffect(() => {
         dispatch(fetchFriends());
         dispatch(fetchRequests());
     }, [dispatch]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsScreenSmall(window.innerWidth <= 400);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     if (!sessionUser) return <Navigate to='/' replace={true} />;
 
@@ -38,12 +52,27 @@ function FriendsListPage() {
                                     }}
                                     key={`request-${character?.id}`}
                                 >
-                                    <img className='request-pic' src={characterPic(character)} alt={`Character ${character?.name}`} />
-                                    <div className='request-tile-info'>
-                                        <p className='request-name'>Name: {character?.name}</p>
-                                        <p className='request-level'>Level: {character?.level}</p>
-                                        <p className='request-status'>{character?.status}</p>
-                                    </div>
+                                    {isScreenSmall ? (
+                                        <>
+                                            <div className='pic-name-lvl'>
+                                                <img className='request-pic' src={characterPic(character)} alt={`Character ${character?.name}`} />
+                                                <p className='request-name'>Name: {character?.name}</p>
+                                                <p className='request-level'>Level: {character?.level}</p>
+                                            </div>
+                                            <div className='request-tile-info'>
+                                                <p className='request-status'>{textTruncate(character?.status)}</p>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <img className='request-pic' src={characterPic(character)} alt={`Character ${character?.name}`} />
+                                            <div className='request-tile-info'>
+                                                <p className='request-name'>Name: {character?.name}</p>
+                                                <p className='request-level'>Level: {character?.level}</p>
+                                                <p className='request-status'>{character?.status}</p>
+                                            </div>
+                                        </>
+                                    )}
                                     {request.type === 'received' && (
                                         <button
                                             className='accept-request'
@@ -89,12 +118,27 @@ function FriendsListPage() {
                                     }}
                                     key={`friend-${character?.id}`}
                                 >
-                                    <img className='friend-pic' src={character ? characterPic(character) : ''} alt={`Character ${character?.name}`} />
-                                    <div className='friend-tile-info'>
-                                        <p className='friend-name'>Name: {character?.name}</p>
-                                        <p className='friend-level'>Level: {character?.level}</p>
-                                        <p className='friend-status'>{character?.status}</p>
-                                    </div>
+                                    {isScreenSmall ? (
+                                        <>
+                                            <div className='pic-name-lvl'>
+                                                <img className='friend-pic' src={character ? characterPic(character) : ''} alt={`Character ${character?.name}`} />
+                                                <p className='friend-name'>Name: {character?.name}</p>
+                                                <p className='friend-level'>Level: {character?.level}</p>
+                                            </div>
+                                            <div className='friend-tile-info'>
+                                                <p className='friend-status'>{textTruncate(character?.status)}</p>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <img className='friend-pic' src={character ? characterPic(character) : ''} alt={`Character ${character?.name}`} />
+                                            <div className='friend-tile-info'>
+                                                <p className='friend-name'>Name: {character?.name}</p>
+                                                <p className='friend-level'>Level: {character?.level}</p>
+                                                <p className='friend-status'>{character?.status}</p>
+                                            </div>
+                                        </>
+                                    )}
                                     <button
                                         className='remove-friend'
                                         onClick={e => {

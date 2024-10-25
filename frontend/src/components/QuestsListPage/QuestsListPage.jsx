@@ -123,9 +123,9 @@ function QuestsListPage() {
                                         )}
                                         <div className='quest-coins'>
                                             {quest.completionCoins ? (
-                                                <p className='coins'>Reward: <i className='fa-solid fa-coins'></i>{quest.completionCoins}</p>
+                                                <p className='quest-list-coins'>Reward: <i className='fa-solid fa-coins'></i>{quest.completionCoins}</p>
                                             ) : (
-                                                <p className='coins'>Reward: <i className='fa-solid fa-coins'></i>???</p>
+                                                <p className='quest-list-coins'>Reward: <i className='fa-solid fa-coins'></i>???</p>
                                             )
                                             }
                                         </div>
