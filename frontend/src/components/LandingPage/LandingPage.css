@@ -120,6 +120,12 @@ body {
     }
 }
 
+@media only screen and (max-width: 450px) {
+    .landing-page-container {
+        width: 80%;
+    }
+}
+
 @media only screen and (max-height: 575px) {
     .landing-page-all {
         height: auto;
