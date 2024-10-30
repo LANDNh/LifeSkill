@@ -138,3 +138,36 @@
         margin: .75em;
     }
 }
+
+@media only screen and (max-width: 450px) {
+    .create-quest-step-modal h1 {
+        font-family: "Delta Block";
+        font-size: 18pt;
+    }
+
+    .create-quest-step-input textarea {
+        max-width: 250px;
+        min-width: 250px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .create-quest-step-modal h1 {
+        font-size: 16pt;
+    }
+
+    .create-quest-step-input textarea {
+        max-width: 200px;
+        min-width: 200px;
+    }
+
+    .create-quest-step-input input,
+    .create-quest-step-input textarea,
+    .create-quest-step-input select {
+        font-size: 10pt;
+    }
+
+    .create-quest-step-submit {
+        font-size: 14pt;
+    }
+}

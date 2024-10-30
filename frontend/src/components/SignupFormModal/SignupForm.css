@@ -159,3 +159,22 @@
         margin-top: .5em;
     }
 }
+
+@media only screen and (max-width: 450px) {
+    .signup-modal h1 {
+        font-family: "Delta Block";
+        font-size: 16pt;
+        padding: .5em 0;
+        margin: .5em 0;
+    }
+
+    .signup-submit {
+        font-size: 14pt;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .signup-input {
+        width: 140px;
+    }
+}

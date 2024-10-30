@@ -138,3 +138,36 @@
         margin: .5em;
     }
 }
+
+@media only screen and (max-width: 450px) {
+    .create-character-modal h1 {
+        font-family: "Delta Block";
+        font-size: 18pt;
+    }
+
+    .create-character-input textarea {
+        max-width: 250px;
+        min-width: 250px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .create-character-modal h1 {
+        font-size: 16pt;
+    }
+
+    .create-character-input textarea {
+        max-width: 200px;
+        min-width: 200px;
+    }
+
+    .create-character-input input,
+    .create-character-input textarea,
+    .create-character-input select {
+        font-size: 10pt;
+    }
+
+    .create-character-submit {
+        font-size: 14pt;
+    }
+}

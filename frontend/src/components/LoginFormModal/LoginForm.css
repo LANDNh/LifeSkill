@@ -114,3 +114,16 @@
         margin-bottom: 1em;
     }
 }
+
+@media only screen and (max-width: 450px) {
+    .login-modal h1 {
+        font-family: "Delta Block";
+        font-size: 18pt;
+        padding: .5em;
+        margin: .5em;
+    }
+
+    .login-submit {
+        font-size: 14pt;
+    }
+}
