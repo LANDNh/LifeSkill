@@ -9,10 +9,20 @@ const { environment } = require('./config');
 const { ValidationError } = require('sequelize');
 const passport = require('passport');
 const session = require('express-session');
+const http = require('http');
+const { Server } = require('socket.io');
 
 const isProduction = environment === 'production';
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: process.env.FRONTEND_URL,
+        methods: ['GET', 'POST'],
+        credentials: true,
+    },
+});
 
 app.use(morgan('dev'));
 app.use(cookieParser());
