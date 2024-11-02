@@ -105,4 +105,28 @@ app.use((err, _req, res, _next) => {
     });
 });
 
-module.exports = app;
+io.on('connection', (socket) => {
+    console.log(`User connected: ${socket.id}`);
+
+    // Join Global Chat
+    socket.join('globalChat');
+    socket.on('sendGlobalMessage', (messageData) => {
+        io.to('globalChat').emit('recievedGlobalMessage', messageData);
+    });
+
+    // Join Private Chat
+    socket.on('joinPrivateChat', ({ senderId, receiverId }) => {
+        const roomName = [senderId, receiverId].sort().join('-');
+
+        socket.join(roomName);
+        socket.on('sendPrivateMessage', (messageData) => {
+            io.to(roomName).emit('recievePrivateMessage', messageData);
+        });
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`User disconnected: ${socket.id}`);
+    });
+});
+
+module.exports = { app, server };
