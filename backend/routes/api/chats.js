@@ -31,7 +31,12 @@ router.get('/:senderId/:receiverId', requireAuth, async (req, res) => {
         },
         order: [['createdAt', 'ASC']]
     });
-    return res.json(privateChats);
+
+    if (privateChats.length) {
+        return res.json(privateChats);
+    } else {
+        return res.json([]);
+    }
 });
 
 // Send a message

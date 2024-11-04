@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      recieverId: {
+      receiverId: {
         type: Sequelize.INTEGER,
         allowNull: true
       },

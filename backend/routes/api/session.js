@@ -54,6 +54,7 @@ router.get(
                 lastName: user.lastName,
                 email: user.email,
                 username: user.username,
+                Character: user.Character
             };
 
             if (safeUser) {

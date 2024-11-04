@@ -56,17 +56,30 @@
     width: auto;
 }
 
+.message-user button,
 .add-friend {
-    margin: 1.5em;
-    padding: .75em;
-    padding-top: 1.25em;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1em 0 0;
+    padding: 0;
     font-family: "M42_FLIGHT 721";
     background-color: #00C7FF;
     border: 2px solid #163DFF;
     box-shadow: 5px 5px 10px #163DFF;
     color: white;
-    border-radius: 15px;
+    font-size: 45pt;
+    border-radius: 50px;
     cursor: pointer;
+}
+
+.add-icon,
+.message-user img {
+    width: 50px;
+    height: 50px;
+    filter: brightness(5000%);
+    -webkit-filter: brightness(5000%);
+
 }
 
 @media only screen and (max-width: 900px) {

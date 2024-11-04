@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 import { characterPic } from '../CharacterPage/CharacterPage';
 import './CharactersList.css'
 
-import { fetchCharacters, selectAllCharacters } from '../../store/characterReducer';
+import { fetchCharacters, fetchUserCharacter, selectAllCharacters } from '../../store/characterReducer';
 import { createRequest, fetchRequests } from '../../store/requestReducer';
+
+import OpenModalButton from '../OpenModalButton';
+import PrivateChatModal from '../PrivateChatModal';
 
 export const textTruncate = (text, length = 50) => {
     if (text.length > length) {
@@ -18,11 +21,13 @@ function CharactersListPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
+    const userCharacter = useSelector(state => state.characters.userCharacter);
     const characters = useSelector(selectAllCharacters);
     const [requestedCharacters, setRequestedCharacters] = useState([]);
     const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 400);
 
     useEffect(() => {
+        dispatch(fetchUserCharacter());
         dispatch(fetchCharacters());
         dispatch(fetchRequests());
     }, [dispatch]);
@@ -77,6 +82,22 @@ function CharactersListPage() {
                                         </div>
                                     </>
                                 )}
+                                <span
+                                    className='message-user'
+                                    onClick={e => e.stopPropagation()}
+                                >
+                                    <OpenModalButton
+                                        buttonText={<img src='https://lifeskill-bucket.s3.us-east-1.amazonaws.com/images/circle-message.png' />}
+                                        modalComponent={
+                                            <PrivateChatModal
+                                                senderId={userCharacter.id}
+                                                receiverId={character.id}
+                                                senderCharacter={userCharacter}
+                                                receiverCharacter={character}
+                                            />
+                                        }
+                                    />
+                                </span>
                                 <button
                                     className='add-friend'
                                     onClick={e => {
@@ -86,7 +107,7 @@ function CharactersListPage() {
                                         setRequestedCharacters([...requestedCharacters, character.id]);
                                     }}
                                 >
-                                    Add Friend?
+                                    <img className='add-icon' src='https://lifeskill-bucket.s3.us-east-1.amazonaws.com/images/circle-plus.png' />
                                 </button>
                             </div>
                         ))}
