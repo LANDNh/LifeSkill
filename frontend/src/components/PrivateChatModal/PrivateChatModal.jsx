@@ -14,15 +14,12 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
     const messages = useSelector(state => getPrivateMessages(state, senderId, receiverId));
     const [message, setMessage] = useState('');
 
-    console.log(messages)
-
     useEffect(() => {
         socket.emit('joinPrivateChat', { senderId, receiverId });
         dispatch(fetchPrivate(senderId, receiverId));
 
         socket.on('sendPrivateMessage', (messageData) => {
             dispatch(sendMessage(messageData));
-            socket.to(messageData.receiverId).emit('sendPrivateMessage', messageData);
         });
         return () => {
             socket.off('sendPrivateMessage');
@@ -33,14 +30,13 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
         if (message.trim()) {
             const messageData = { senderId, receiverId, message };
             socket.emit('sendPrivateMessage', messageData);
-            dispatch(sendMessage(messageData));
-            dispatch(fetchPrivate(senderId, receiverId));
             setMessage('');
         }
     };
 
     return (
         <div className="private-message-modal">
+            <h1 className="chat-name">{senderCharacter.name} & {receiverCharacter.name} Chat</h1>
             <div className="private-message-log">
                 {messages && messages.length > 0 ? (
                     messages.map((msg) => (
@@ -55,13 +51,15 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
                     <p>No messages yet.</p>
                 )}
             </div>
-            <input
-                type="text"
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-                onKeyPress={e => e.key === 'Enter' && handleSendMessage()}
-            />
-            <button onClick={handleSendMessage}>Send</button>
+            <div className="message-input">
+                <input
+                    type="text"
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    onKeyPress={e => e.key === 'Enter' && handleSendMessage()}
+                />
+                <button onClick={handleSendMessage}>Send</button>
+            </div>
         </div>
     );
 };

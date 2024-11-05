@@ -12,6 +12,8 @@ const session = require('express-session');
 const http = require('http');
 const { Server } = require('socket.io');
 
+const { Chat } = require('./db/models')
+
 const isProduction = environment === 'production';
 
 const app = express();
@@ -117,11 +119,16 @@ io.on('connection', (socket) => {
     // Join Private Chat
     socket.on('joinPrivateChat', ({ senderId, receiverId }) => {
         const roomName = [senderId, receiverId].sort().join('-');
-
         socket.join(roomName);
-        socket.on('sendPrivateMessage', (messageData) => {
-            io.to(roomName).emit('recievePrivateMessage', messageData);
-        });
+    });
+
+    socket.on('sendPrivateMessage', async (messageData) => {
+        const { senderId, receiverId, message } = messageData;
+
+        const chatMessage = await Chat.create({ senderId, receiverId, message });
+
+        const roomName = [senderId, receiverId].sort().join('-');
+        io.to(roomName).emit('sendPrivateMessage', chatMessage);
     });
 
     socket.on('disconnect', () => {
