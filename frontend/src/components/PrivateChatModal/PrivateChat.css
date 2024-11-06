@@ -55,7 +55,7 @@
     scrollbar-color: #163DFF rgba(0, 0, 0, 0) !important;
     scrollbar-width: thick;
     width: 100%;
-    height: 200px;
+    max-height: 200px;
 }
 
 .private-message {
@@ -72,24 +72,36 @@
 }
 
 .message-input {
+    width: 90%;
+    height: 3em;
     margin: .5em;
-    width: 50%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.message-input input {
-    border: 2p solid #163DFF;
+.message-input textarea {
+    border: 2px solid #163DFF;
     border-radius: 6px;
+    padding: .5em;
+    resize: none;
+    min-width: 70%;
+    max-width: 70%;
+    min-height: 100%;
+    max-height: 100%;
+    font-family: "Delta Block";
+    font-size: 14pt;
+    color: #163DFF;
+    scrollbar-color: #163DFF rgba(0, 0, 0, 0) !important;
+    scrollbar-width: thick;
 }
 
 .message-input button {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin: 0 1em 0 2em;
+    margin: 0 1em 0 .5em;
     padding: 0;
     font-family: "M42_FLIGHT 721";
     background-color: #00C7FF;

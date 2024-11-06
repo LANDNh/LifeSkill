@@ -119,7 +119,12 @@ io.on('connection', (socket) => {
     // Join Private Chat
     socket.on('joinPrivateChat', ({ senderId, receiverId }) => {
         const roomName = [senderId, receiverId].sort().join('-');
-        socket.join(roomName);
+        const rooms = Array.from(socket.rooms);
+
+        if (!rooms.includes(roomName)) {
+            socket.join(roomName);
+            console.log(`Socket ${socket.id} joined room: ${roomName}`);
+        }
     });
 
     socket.on('sendPrivateMessage', async (messageData) => {

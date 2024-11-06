@@ -53,19 +53,23 @@ export const sendMessage = messageData => async dispatch => {
 };
 
 const selectGlobalMessages = (state) => state.chat.globalMessages;
-const selectPrivateMessages = (state, senderId, receiverId) => {
-    const key = [senderId, receiverId].sort().join('-');
-    return state.chat.privateMessages[key] || [];
-};
 
 export const getGlobalMessages = createSelector(selectGlobalMessages, globalMessages => {
     return globalMessages ? Object.values(globalMessages) : [];
 });
 
-export const getPrivateMessages = createSelector((state, senderId, receiverId) => selectPrivateMessages(state, senderId, receiverId),
-    privateMessages => {
-        return privateMessages ? Object.values(privateMessages) : [];
-    });
+const getPrivateChatKey = (senderId, receiverId) => {
+    return [senderId, receiverId].sort().join('-');
+};
+
+export const getPrivateMessages = createSelector(
+    (state) => state.chat.privateMessages,
+    (state, senderId, receiverId) => getPrivateChatKey(senderId, receiverId),
+
+    (privateMessages, key) => {
+        return privateMessages[key] || [];
+    }
+);
 
 const initialState = {
     globalMessages: [],
