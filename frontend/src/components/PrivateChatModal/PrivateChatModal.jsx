@@ -37,19 +37,21 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
     return (
         <div className="private-message-modal">
             <h1 className="chat-name">{senderCharacter.name} & {receiverCharacter.name} Chat</h1>
-            <div className="private-message-log">
-                {messages && messages.length > 0 ? (
-                    messages.map((msg) => (
-                        <div
-                            key={msg.id}
-                            className="private-message"
-                        >
-                            <b>{msg.senderId === senderId ? `${senderCharacter.name}` : `${receiverCharacter.name}`}:</b> {msg.message}
-                        </div>
-                    ))
-                ) : (
-                    <p>No messages yet.</p>
-                )}
+            <div className="private-message-log-container">
+                <div className="private-message-log">
+                    {messages && messages.length > 0 ? (
+                        messages.map((msg) => (
+                            <div
+                                key={msg.id}
+                                className="private-message"
+                            >
+                                <b>{msg.senderId === senderId ? `${senderCharacter.name}` : `${receiverCharacter.name}`}:</b> {msg.message}
+                            </div>
+                        ))
+                    ) : (
+                        <p>No messages yet.</p>
+                    )}
+                </div>
             </div>
             <div className="message-input">
                 <input
@@ -58,7 +60,7 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
                     onChange={e => setMessage(e.target.value)}
                     onKeyPress={e => e.key === 'Enter' && handleSendMessage()}
                 />
-                <button onClick={handleSendMessage}>Send</button>
+                <button onClick={handleSendMessage}><i className="fa-regular fa-circle-right"></i></button>
             </div>
         </div>
     );
