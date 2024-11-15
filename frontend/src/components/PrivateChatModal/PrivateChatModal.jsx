@@ -13,19 +13,15 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
     const [isAtBottom, setIsAtBottom] = useState(true);
 
     useEffect(() => {
-        // Emit join room event only once per session
         socket.emit('joinPrivateChat', { senderId, receiverId });
-
-        // Fetch initial chat history
         dispatch(fetchPrivate(senderId, receiverId));
 
-        // Listener for receiving messages
         const messageListener = (messageData) => {
             dispatch(sendMessage(messageData));
         };
+
         socket.on('sendPrivateMessage', messageListener);
 
-        // Cleanup listener on component unmount
         return () => {
             socket.off('sendPrivateMessage', messageListener);
         };
@@ -74,7 +70,7 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
                             </div>
                         ))
                     ) : (
-                        <p>No messages yet.</p>
+                        <p className="no-messages">No messages yet.</p>
                     )}
                     <div ref={scrollAnchorRef}></div>
                 </div>

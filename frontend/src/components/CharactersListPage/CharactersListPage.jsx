@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { characterPic } from '../CharacterPage/CharacterPage';
 import './CharactersList.css'
 
 import { fetchCharacters, fetchUserCharacter, selectAllCharacters } from '../../store/characterReducer';
 import { createRequest, fetchRequests } from '../../store/requestReducer';
 
+import { characterPic } from '../CharacterPage/CharacterPage';
 import OpenModalButton from '../OpenModalButton';
 import PrivateChatModal from '../PrivateChatModal';
 

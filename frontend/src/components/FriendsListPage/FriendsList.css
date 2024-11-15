@@ -42,19 +42,6 @@
     max-height: 8em;
 }
 
-.remove-friend {
-    margin: 1.5em;
-    padding: .75em;
-    padding-top: 1.25em;
-    font-family: "M42_FLIGHT 721";
-    background-color: red;
-    border: 2px solid rgb(172, 0, 0);
-    box-shadow: 5px 5px 10px rgb(172, 0, 0);
-    color: white;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
 .all-requests {
     padding: 2em;
     display: flex;
@@ -100,6 +87,7 @@
     max-height: 8em;
 }
 
+.remove-friend,
 .reject-request {
     display: inline-flex;
     justify-content: center;
@@ -130,6 +118,29 @@
     font-size: 45pt;
     border-radius: 50px;
     cursor: pointer;
+}
+
+.message-request-user button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1em 0 0;
+    padding: 0;
+    font-family: "M42_FLIGHT 721";
+    background-color: #e79946;
+    border: 2px solid #b07230;
+    box-shadow: 5px 5px 10px #b07230;
+    color: white;
+    font-size: 45pt;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.message-request-user img {
+    width: 60px;
+    height: 60px;
+    filter: brightness(5000%);
+    -webkit-filter: brightness(5000%);
 }
 
 .list-header {
