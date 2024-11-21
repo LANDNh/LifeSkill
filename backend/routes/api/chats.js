@@ -42,7 +42,18 @@ router.get('/:senderId/:receiverId', requireAuth, async (req, res) => {
 // Send a message
 router.post('/send', requireAuth, async (req, res) => {
     const { senderId, receiverId, message } = req.body;
-    const chat = await Chat.create({ senderId, receiverId, message });
-    return res.json(chat);
+
+    const io = req.app.get('io'); // Get the io instance
+    if (!io) {
+        return res.status(500).json({ error: "Socket.IO instance not found" });
+    }
+
+    const roomName = [senderId, receiverId].sort().join('-');
+    const messageData = { senderId, receiverId, message };
+
+    // Emit the message via Socket.IO
+    io.to(roomName).emit('sendPrivateMessage', messageData);
+
+    return res.json({ success: true, message: "Message sent to socket" });
 });
 module.exports = router;

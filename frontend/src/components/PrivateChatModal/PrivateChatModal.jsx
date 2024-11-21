@@ -17,7 +17,9 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
         dispatch(fetchPrivate(senderId, receiverId));
 
         const messageListener = (messageData) => {
-            dispatch(sendMessage(messageData));
+            if (messageData.originSocketId !== socket.id) {
+                dispatch(sendMessage(messageData, true));
+            }
         };
 
         socket.on('sendPrivateMessage', messageListener);
@@ -47,6 +49,8 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
         if (message.trim()) {
             const messageData = { senderId, receiverId, message };
             socket.emit('sendPrivateMessage', messageData);
+
+            dispatch(sendMessage(messageData, true));
             setMessage('');
         }
     };
@@ -61,9 +65,9 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
                     onScroll={handleScroll}
                 >
                     {messages && messages.length > 0 ? (
-                        messages.map((msg) => (
+                        messages.map((msg, index) => (
                             <div
-                                key={msg.id}
+                                key={msg.id || `${msg.senderId}-${msg.timestamp || index}`}
                                 className="private-message"
                             >
                                 <b>{msg.senderId === senderId ? `${senderCharacter.name}` : `${receiverCharacter.name}`}:</b> {msg.message}

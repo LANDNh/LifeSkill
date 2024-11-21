@@ -40,15 +40,18 @@ export const fetchPrivate = (senderId, receiverId) => async dispatch => {
     }
 };
 
-export const sendMessage = messageData => async dispatch => {
-    const res = await csrfFetch('/api/chat/send', {
-        method: 'POST',
-        body: JSON.stringify(messageData),
-    });
+export const sendMessage = (messageData, skipApi = false) => async dispatch => {
+    dispatch(addMessage(messageData));
 
-    if (res.ok) {
-        const message = await res.json();
-        dispatch(addMessage(message));
+    if (!skipApi) {
+        const res = await csrfFetch('/api/chat/send', {
+            method: 'POST',
+            body: JSON.stringify(messageData),
+        });
+
+        if (!res.ok) {
+            console.error('Failed to send message');
+        }
     }
 };
 
@@ -73,7 +76,8 @@ export const getPrivateMessages = createSelector(
 
 const initialState = {
     globalMessages: [],
-    privateMessages: {} // Keyed by senderId & receiverId
+    privateMessages: {}, // Keyed by senderId & receiverId
+    processedMessageIds: new Set(), // Track already processed messages by id
 };
 
 const chatReducer = (state = initialState, action) => {
@@ -95,9 +99,21 @@ const chatReducer = (state = initialState, action) => {
         case ADD_MESSAGE: {
             const { message } = action;
 
+            // Check if the message has already been processed
+            if (state.processedMessageIds.has(message.id)) {
+                return state; // Ignore duplicate messages
+            }
+
+            const updatedProcessedIds = new Set(state.processedMessageIds);
+            updatedProcessedIds.add(message.id);
+
             if (message.receiverId === null) {
                 // Global message
-                return { ...state, globalMessages: [...state.globalMessages, message] };
+                return {
+                    ...state,
+                    globalMessages: [...state.globalMessages, message],
+                    processedMessageIds: updatedProcessedIds,
+                };
             } else {
                 // Private message
                 const key = [message.senderId, message.receiverId].sort().join('-');
@@ -108,6 +124,7 @@ const chatReducer = (state = initialState, action) => {
                         ...state.privateMessages,
                         [key]: [...(state.privateMessages[key] || []), message]
                     },
+                    processedMessageIds: updatedProcessedIds,
                 };
             }
         }

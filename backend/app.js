@@ -6,11 +6,12 @@ const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { environment } = require('./config');
-const { ValidationError } = require('sequelize');
+const { ValidationError, where } = require('sequelize');
 const passport = require('passport');
 const session = require('express-session');
 const http = require('http');
 const { Server } = require('socket.io');
+const { Op } = require('sequelize');
 
 const { Chat } = require('./db/models')
 
@@ -25,6 +26,8 @@ const io = new Server(server, {
         credentials: true,
     },
 });
+
+app.set('io', io);
 
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -127,13 +130,46 @@ io.on('connection', (socket) => {
         }
     });
 
+    const MESSAGE_LIMIT = 50;
+
     socket.on('sendPrivateMessage', async (messageData) => {
         const { senderId, receiverId, message } = messageData;
 
         const chatMessage = await Chat.create({ senderId, receiverId, message });
 
         const roomName = [senderId, receiverId].sort().join('-');
-        io.to(roomName).emit('sendPrivateMessage', chatMessage);
+
+        const totalMessages = await Chat.count({
+            where: {
+                [Op.or]: [
+                    { senderId, receiverId },
+                    { senderId: receiverId, receiverId: senderId },
+                ],
+            },
+        });
+
+        if (totalMessages > MESSAGE_LIMIT) {
+            const excessMessages = await Chat.findAll({
+                where: {
+                    [Op.or]: [
+                        { senderId, receiverId },
+                        { senderId: receiverId, receiverId: senderId },
+                    ],
+                },
+                order: [['createdAt', 'ASC']],
+                limit: totalMessages - MESSAGE_LIMIT,
+            });
+
+            await Chat.destroy({
+                where: {
+                    id: excessMessages.map(msg => msg.id),
+                },
+            });
+        }
+
+        io.to(roomName).emit('sendPrivateMessage', { ...chatMessage.toJSON(), originSocketId: socket.id });
+
+        socket.emit('sendPrivateMessage', { ...chatMessage.toJSON(), originSocketId: socket.id });
     });
 
     socket.on('disconnect', () => {
