@@ -88,11 +88,18 @@ const chatReducer = (state = initialState, action) => {
             const { senderId, receiverId, messages } = action;
             const key = [senderId, receiverId].sort().join('-');
 
+
+            const existingMessages = state.privateMessages[key] || [];
+            const existingMessageIds = new Set(existingMessages.map(msg => msg.id));
+
+            // Merge only new messages
+            const newMessages = messages.filter(msg => !existingMessageIds.has(msg.id));
+
             return {
                 ...state,
                 privateMessages: {
                     ...state.privateMessages,
-                    [key]: messages
+                    [key]: [...existingMessages, ...newMessages],
                 },
             };
         }
@@ -118,11 +125,14 @@ const chatReducer = (state = initialState, action) => {
                 // Private message
                 const key = [message.senderId, message.receiverId].sort().join('-');
 
+                const existingMessages = state.privateMessages[key] || [];
+                const updatedMessages = existingMessages.filter(msg => msg.id !== message.id);
+
                 return {
                     ...state,
                     privateMessages: {
                         ...state.privateMessages,
-                        [key]: [...(state.privateMessages[key] || []), message]
+                        [key]: [...updatedMessages, message]
                     },
                     processedMessageIds: updatedProcessedIds,
                 };

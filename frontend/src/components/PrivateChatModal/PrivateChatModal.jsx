@@ -14,13 +14,14 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
 
     useEffect(() => {
         socket.emit('joinPrivateChat', { senderId, receiverId });
-        dispatch(fetchPrivate(senderId, receiverId));
 
         const messageListener = (messageData) => {
-            if (messageData.originSocketId !== socket.id) {
-                dispatch(sendMessage(messageData, true));
-            }
+            if (!messageData.id || messageData.id === undefined) return;
+
+            dispatch(sendMessage(messageData, true));
         };
+
+        dispatch(fetchPrivate(senderId, receiverId));
 
         socket.on('sendPrivateMessage', messageListener);
 
@@ -48,9 +49,9 @@ const PrivateChatModal = ({ senderId, receiverId, senderCharacter, receiverChara
     const handleSendMessage = () => {
         if (message.trim()) {
             const messageData = { senderId, receiverId, message };
+
             socket.emit('sendPrivateMessage', messageData);
 
-            dispatch(sendMessage(messageData, true));
             setMessage('');
         }
     };
