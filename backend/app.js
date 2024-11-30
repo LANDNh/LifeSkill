@@ -20,15 +20,18 @@ const isProduction = environment === 'production';
 const app = express();
 const server = http.createServer(app);
 
-const ioCorsOptions = isProduction
-    ? {}
-    : {
-        cors: {
-            origin: process.env.FRONTEND_URL,
-            methods: ['GET', 'POST'],
-            credentials: true,
-        },
-    };
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+console.log('isProduction:', isProduction);
+
+const ioCorsOptions = {
+    cors: {
+        origin: isProduction ? process.env.FRONTEND_URL : 'http://127.0.0.1:5173',
+        methods: ['GET', 'POST'],
+        credentials: true,
+    },
+};
+
+console.log('ioCorsOptions:', ioCorsOptions);
 
 const io = new Server(server, ioCorsOptions);
 
