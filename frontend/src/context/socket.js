@@ -8,6 +8,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 if (!socket) {
     socket = io(apiUrl, {
         withCredentials: true,
+        transports: ['websocket', 'polling'],
     });
     console.log("Socket initialized");
 }

@@ -20,18 +20,18 @@ const isProduction = environment === 'production';
 const app = express();
 const server = http.createServer(app);
 
-console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+// console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
 const ioCorsOptions = {
     cors: {
-        origin: 'https://lifeskill.onrender.com',
+        origin: isProduction ? process.env.FRONTEND_URL : 'http://localhost:8000',
         methods: ['GET', 'POST'],
         credentials: true,
     },
 };
 
-console.log('isProduction:', isProduction);
-console.log('ioCorsOptions:', ioCorsOptions);
+// console.log('isProduction:', isProduction);
+// console.log('ioCorsOptions:', ioCorsOptions);
 
 const io = new Server(server, ioCorsOptions);
 
@@ -118,12 +118,12 @@ app.use((err, _req, res, _next) => {
     });
 });
 
-io.engine.on('headers', (headers, req) => {
-    console.log('Request Origin:', req.headers.origin); // Should show the frontend URL
-    console.log('CORS Headers Before:', headers);       // Check existing headers
-    headers['Access-Control-Allow-Origin'] = 'https://lifeskill.onrender.com'; // Force correct header
-    console.log('CORS Headers After:', headers);        // Verify updated headers
-});
+// io.engine.on('headers', (headers, req) => {
+//     console.log('Request Origin:', req.headers.origin);
+//     console.log('CORS Headers Before:', headers);
+//     headers['Access-Control-Allow-Origin'] = 'https://lifeskill.onrender.com';
+//     console.log('CORS Headers After:', headers);
+// });
 
 
 io.on('connection', (socket) => {
