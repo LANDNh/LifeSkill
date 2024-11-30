@@ -42,19 +42,6 @@
     max-height: 8em;
 }
 
-.remove-friend {
-    margin: 1.5em;
-    padding: .75em;
-    padding-top: 1.25em;
-    font-family: "M42_FLIGHT 721";
-    background-color: red;
-    border: 2px solid rgb(172, 0, 0);
-    box-shadow: 5px 5px 10px rgb(172, 0, 0);
-    color: white;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
 .all-requests {
     padding: 2em;
     display: flex;
@@ -100,36 +87,56 @@
     max-height: 8em;
 }
 
-.reject-request {
+.message-request-user {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin: 0 1em 0 0;
+    margin: 0 60px 0 0;
+    padding: 0;
+    max-width: fit-content;
+}
+
+.remove-friend,
+.reject-request,
+.accept-request,
+.message-request-user button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 60px 0 0;
     padding: 0;
     font-family: "M42_FLIGHT 721";
-    background-color: red;
-    border: 2px solid rgb(172, 0, 0);
-    box-shadow: 5px 5px 10px rgb(172, 0, 0);
     color: white;
     font-size: 45pt;
     border-radius: 50px;
     cursor: pointer;
 }
 
+.remove-friend,
+.reject-request {
+    background-color: red;
+    border: 2px solid rgb(172, 0, 0);
+    box-shadow: 5px 5px 10px rgb(172, 0, 0);
+}
+
 .accept-request {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 1em 0 0;
-    padding: 0;
-    font-family: "M42_FLIGHT 721";
     background-color: #00C7FF;
     border: 2px solid #163DFF;
     box-shadow: 5px 5px 10px #163DFF;
-    color: white;
-    font-size: 45pt;
-    border-radius: 50px;
-    cursor: pointer;
+}
+
+.message-request-user button {
+    margin: 0;
+    background-color: #e79946;
+    border: 2px solid #b07230;
+    box-shadow: 5px 5px 10px #b07230;
+}
+
+.message-request-user img {
+    width: 60px;
+    height: 60px;
+    filter: brightness(5000%);
+    -webkit-filter: brightness(5000%);
 }
 
 .list-header {
@@ -165,12 +172,16 @@
     }
 
     .accept-request,
-    .reject-request {
+    .reject-request,
+    .remove-friend,
+    .message-request-user {
         font-size: 30pt;
+        margin-right: 40px;
     }
 
-    .remove-friend {
-        font-size: 8pt;
+    .message-request-user img {
+        width: 40px;
+        height: 40px;
     }
 }
 
@@ -193,12 +204,16 @@
     }
 
     .accept-request,
-    .reject-request {
+    .reject-request,
+    .remove-friend,
+    .message-request-user {
         font-size: 25pt;
+        margin-right: 25px;
     }
 
-    .remove-friend {
-        font-size: smaller;
+    .message-request-user img {
+        width: 33.3333px;
+        height: 33.3333px;
     }
 }
 
@@ -226,11 +241,17 @@
         min-width: 100%;
     }
 
-    .remove-friend {
-        font-family: "Delta Block";
-        font-size: 10pt;
-        padding: .5em .75em;
-        margin: .5em;
+    .accept-request,
+    .reject-request,
+    .remove-friend,
+    .message-request-user {
+        font-size: 20pt;
+        margin-right: 20px;
+    }
+
+    .message-request-user img {
+        width: 26.6667px;
+        height: 26.6667px;
     }
 }
 
@@ -252,8 +273,9 @@
     }
 
     .accept-request,
-    .reject-request {
-        margin-right: .5em;
-        font-size: 20pt;
+    .reject-request,
+    .remove-friend,
+    .message-request-user {
+        margin-right: 15px;
     }
 }

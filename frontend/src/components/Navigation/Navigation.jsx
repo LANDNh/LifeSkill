@@ -91,7 +91,10 @@ function Navigation({ isLoaded }) {
                                         className='nav-items'
                                         id='nav'
                                     >
-                                        <NavsButton user={sessionUser} isScreenSmall={isScreenSmall} />
+                                        <NavsButton />
+                                    </li>
+                                    <li className='small-profile'>
+                                        <ProfileButton user={sessionUser} isScreenSmall={isScreenSmall} />
                                     </li>
                                 </>
                             ) : (

@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import ProfileButton from './ProfileButton';
-
-function NavsButton({ user, isScreenSmall }) {
+function NavsButton() {
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
 
@@ -73,9 +71,6 @@ function NavsButton({ user, isScreenSmall }) {
                     </li>
                 </>
             </ul>
-            <li className='small-profile'>
-                <ProfileButton user={user} isScreenSmall={isScreenSmall} />
-            </li>
         </>
     );
 }

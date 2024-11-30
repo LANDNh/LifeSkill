@@ -6,6 +6,7 @@ const questsRouter = require('./quests.js');
 const questStepsRouter = require('./queststeps.js');
 const friendsRouter = require('./friends.js');
 const itemsRouter = require('./items.js');
+const chatRouter = require('./chats.js');
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -20,5 +21,6 @@ router.use('/quests', questsRouter);
 router.use('/quest-steps', questStepsRouter);
 router.use('/friends', friendsRouter);
 router.use('/items', itemsRouter);
+router.use('/chat', chatRouter);
 
 module.exports = router;

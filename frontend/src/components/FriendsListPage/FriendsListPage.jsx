@@ -1,22 +1,28 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { characterPic } from '../CharacterPage/CharacterPage';
-import { textTruncate } from '../CharactersListPage/CharactersListPage';
 import './FriendsList.css'
 
 import { fetchRequests, confirmRequest, selectAllRequests, denyRequest } from '../../store/requestReducer';
 import { fetchFriends, removeFriend, selectAllFriends } from '../../store/friendReducer';
+import { fetchUserCharacter } from '../../store/characterReducer';
+
+import { characterPic } from '../CharacterPage/CharacterPage';
+import { textTruncate } from '../CharactersListPage/CharactersListPage';
+import OpenModalButton from '../OpenModalButton';
+import PrivateChatModal from '../PrivateChatModal';
 
 function FriendsListPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionUser = useSelector(state => state.session.user);
+    const userCharacter = useSelector(state => state.characters.userCharacter);
     const requests = useSelector(selectAllRequests);
     const friends = useSelector(selectAllFriends);
     const [isScreenSmall, setIsScreenSmall] = useState(window.innerWidth <= 400);
 
     useEffect(() => {
+        dispatch(fetchUserCharacter());
         dispatch(fetchFriends());
         dispatch(fetchRequests());
     }, [dispatch]);
@@ -73,6 +79,22 @@ function FriendsListPage() {
                                             </div>
                                         </>
                                     )}
+                                    <span
+                                        className='message-request-user'
+                                        onClick={e => e.stopPropagation()}
+                                    >
+                                        <OpenModalButton
+                                            buttonText={<img src='https://lifeskill-bucket.s3.us-east-1.amazonaws.com/images/circle-message.png' />}
+                                            modalComponent={
+                                                <PrivateChatModal
+                                                    senderId={userCharacter.id}
+                                                    receiverId={character.id}
+                                                    senderCharacter={userCharacter}
+                                                    receiverCharacter={character}
+                                                />
+                                            }
+                                        />
+                                    </span>
                                     {request.type === 'received' && (
                                         <button
                                             className='accept-request'
@@ -139,6 +161,22 @@ function FriendsListPage() {
                                             </div>
                                         </>
                                     )}
+                                    <span
+                                        className='message-request-user'
+                                        onClick={e => e.stopPropagation()}
+                                    >
+                                        <OpenModalButton
+                                            buttonText={<img src='https://lifeskill-bucket.s3.us-east-1.amazonaws.com/images/circle-message.png' />}
+                                            modalComponent={
+                                                <PrivateChatModal
+                                                    senderId={userCharacter.id}
+                                                    receiverId={character.id}
+                                                    senderCharacter={userCharacter}
+                                                    receiverCharacter={character}
+                                                />
+                                            }
+                                        />
+                                    </span>
                                     <button
                                         className='remove-friend'
                                         onClick={e => {
@@ -147,7 +185,7 @@ function FriendsListPage() {
                                             return dispatch(removeFriend(friend.id))
                                         }}
                                     >
-                                        Remove Friend?
+                                        <i className="fa-regular fa-circle-xmark"></i>
                                     </button>
                                 </div>
                             )

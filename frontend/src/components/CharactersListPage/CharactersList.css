@@ -56,17 +56,48 @@
     width: auto;
 }
 
-.add-friend {
-    margin: 1.5em;
-    padding: .75em;
-    padding-top: 1.25em;
+.message-user {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 60px 0 0;
+    padding: 0;
+    max-width: fit-content;
+}
+
+.add-friend,
+.message-user button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 60px 0 0;
+    padding: 0;
     font-family: "M42_FLIGHT 721";
+    color: white;
+    font-size: 45pt;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.add-friend {
     background-color: #00C7FF;
     border: 2px solid #163DFF;
     box-shadow: 5px 5px 10px #163DFF;
-    color: white;
-    border-radius: 15px;
-    cursor: pointer;
+}
+
+.message-user button {
+    margin: 0;
+    background-color: #e79946;
+    border: 2px solid #b07230;
+    box-shadow: 5px 5px 10px #b07230;
+}
+
+.add-icon,
+.message-user img {
+    width: 60px;
+    height: 60px;
+    filter: brightness(5000%);
+    -webkit-filter: brightness(5000%);
 }
 
 @media only screen and (max-width: 900px) {
@@ -84,8 +115,16 @@
         font-size: 12pt;
     }
 
+    .message-user,
     .add-friend {
-        font-size: 8pt;
+        margin-right: 40px;
+    }
+
+    .add-icon,
+    .message-user img {
+        width: 40px;
+        height: 40px;
+
     }
 }
 
@@ -104,8 +143,15 @@
         font-size: small;
     }
 
+    .message-user,
     .add-friend {
-        font-size: smaller;
+        margin-right: 25px;
+    }
+
+    .add-icon,
+    .message-user img {
+        width: 33.3333px;
+        height: 33.3333px;
     }
 }
 
@@ -124,11 +170,15 @@
         min-width: 100%;
     }
 
+    .message-user,
     .add-friend {
-        font-family: "Delta Block";
-        font-size: 10pt;
-        padding: .5em .75em;
-        margin: .5em;
+        margin-right: 20px;
+    }
+
+    .add-icon,
+    .message-user img {
+        width: 26.6667px;
+        height: 26.6667px;
     }
 }
 
@@ -145,5 +195,10 @@
     .pic-name-lvl p {
         margin: .25em 0;
         font-size: 8pt;
+    }
+
+    .message-user,
+    .add-friend {
+        margin-right: 15px;
     }
 }
