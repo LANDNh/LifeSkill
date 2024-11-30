@@ -21,16 +21,16 @@ const app = express();
 const server = http.createServer(app);
 
 console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
-console.log('isProduction:', isProduction);
 
 const ioCorsOptions = {
     cors: {
-        origin: isProduction ? process.env.FRONTEND_URL : 'http://127.0.0.1:5173',
+        origin: 'https://lifeskill.onrender.com',
         methods: ['GET', 'POST'],
-        credentials: isProduction ? false : true,
+        credentials: true,
     },
 };
 
+console.log('isProduction:', isProduction);
 console.log('ioCorsOptions:', ioCorsOptions);
 
 const io = new Server(server, ioCorsOptions);
@@ -117,6 +117,14 @@ app.use((err, _req, res, _next) => {
         stack: isProduction ? null : err.stack
     });
 });
+
+io.engine.on('headers', (headers, req) => {
+    console.log('Request Origin:', req.headers.origin); // Should show the frontend URL
+    console.log('CORS Headers Before:', headers);       // Check existing headers
+    headers['Access-Control-Allow-Origin'] = 'https://lifeskill.onrender.com'; // Force correct header
+    console.log('CORS Headers After:', headers);        // Verify updated headers
+});
+
 
 io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id}`);
