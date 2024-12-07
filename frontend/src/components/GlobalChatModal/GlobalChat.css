@@ -1,0 +1,193 @@
+.global-message-modal {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 1em;
+    min-width: 700px;
+    max-width: 700px;
+    height: 70%;
+}
+
+.chat-name {
+    font-family: "Delta Block";
+    font-size: 20pt;
+    color: #163DFF;
+    text-align: center;
+}
+
+.global-message-log-container {
+    position: relative;
+    width: 95%;
+    margin: 1em;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.global-message-log-container:before {
+    content: "";
+    background: url('https://lifeskill-bucket.s3.amazonaws.com/images/page-background-clip.png') white;
+    background-size: 8em auto;
+    background-repeat: repeat;
+    background-attachment: local;
+    background-position: center;
+    opacity: .1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+}
+
+.global-message-log {
+    position: relative;
+    border: 2px solid #163DFF;
+    border-radius: 10px;
+    box-shadow: 8px 4px 8px gray;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    scrollbar-color: #163DFF rgba(0, 0, 0, 0) !important;
+    scrollbar-width: thick;
+    width: 100%;
+    min-height: 200px;
+    max-height: 200px;
+}
+
+.global-message {
+    font-family: "Delta Block";
+    font-size: 14pt;
+    margin: .1em .25em;
+    padding: .25em;
+    color: #163DFF;
+    word-wrap: break-word;
+    max-width: 80%;
+    width: fit-content;
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 15px;
+}
+
+.no-messages {
+    font-family: "Delta Block";
+    font-size: 14pt;
+    margin: .1em .25em;
+    padding: .25em;
+    color: #163DFF;
+    word-wrap: break-word;
+    max-width: 80%;
+    width: fit-content;
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 15px;
+}
+
+.message-input {
+    width: 95%;
+    height: 3em;
+    margin: .5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+}
+
+.message-input textarea {
+    border: 2px solid #163DFF;
+    border-radius: 6px;
+    padding: .5em;
+    resize: none;
+    min-width: 70%;
+    max-width: 70%;
+    min-height: 100%;
+    max-height: 100%;
+    font-family: "Delta Block";
+    font-size: 14pt;
+    color: #163DFF;
+    scrollbar-color: #163DFF rgba(0, 0, 0, 0) !important;
+    scrollbar-width: thick;
+}
+
+.message-input button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1em 0 .5em;
+    padding: 0;
+    font-family: "M42_FLIGHT 721";
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    font-size: 30pt;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 850px) {
+    .global-message-modal {
+        min-width: unset;
+        max-width: unset;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .chat-name {
+        font-size: 18pt;
+    }
+
+    .message-input button {
+        margin: 0 .25em;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .chat-name {
+        font-size: 16pt;
+    }
+
+    .global-message,
+    .no-messages,
+    .message-input textarea {
+        font-size: 12pt;
+    }
+
+    .message-input button {
+        font-size: 25pt;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .chat-name {
+        margin: .5em 0;
+        font-size: 14pt;
+    }
+
+    .global-message-log-container {
+        margin: .5em 1em;
+    }
+
+    .global-message-log {
+        min-height: 100px;
+        max-height: 100px;
+    }
+
+    .global-message,
+    .no-messages,
+    .message-input textarea {
+        font-size: 10pt;
+    }
+
+    .message-input textarea {
+        min-width: 50%;
+        max-width: 50%;
+        min-height: 80%;
+        max-height: 80%;
+    }
+}

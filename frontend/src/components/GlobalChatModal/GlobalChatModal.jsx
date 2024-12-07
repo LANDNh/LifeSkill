@@ -30,6 +30,7 @@ const GlobalChatModal = ({ currentCharacter }) => {
         };
     }, [dispatch]);
 
+    // Scroll to bottom when a new message is sent but only when already at bottom
     useEffect(() => {
         if (isAtBottom && scrollAnchorRef.current) {
             scrollAnchorRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -65,16 +66,14 @@ const GlobalChatModal = ({ currentCharacter }) => {
                     onScroll={handleScroll}
                 >
                     {messages && messages.length > 0 ? (
-                        messages.map((msg, index) => {
-                            return (
-                                <div
-                                    key={msg.id || `${msg.senderId}-${msg.timestamp || index}`}
-                                    className="global-message"
-                                >
-                                    <b>{msg.senderId === currentCharacter.id ? `You` : `User ${msg.senderId}`}:</b> {msg.message}
-                                </div>
-                            )
-                        })
+                        messages.map((msg, index) => (
+                            <div
+                                key={msg.id || `${msg.senderId}-${msg.timestamp || index}`}
+                                className="global-message"
+                            >
+                                <b>{msg.senderName || `User ${msg.senderId}`}:</b> {msg.message}
+                            </div>
+                        ))
                     ) : (
                         <p className="no-messages">No messages yet.</p>
                     )}
