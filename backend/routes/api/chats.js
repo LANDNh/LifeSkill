@@ -13,7 +13,7 @@ router.get('/', requireAuth, async (req, res) => {
     // Include 'Sender' Character to extract name for display in chat
     const globalChats = await Chat.findAll({
         where: {
-            recieverId: null
+            receiverId: null
         },
         include: {
             model: Character,

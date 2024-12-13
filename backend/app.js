@@ -13,7 +13,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const { Op } = require('sequelize');
 
-const { Chat } = require('./db/models')
+const { Chat, Character } = require('./db/models')
 
 const isProduction = environment === 'production';
 
@@ -119,8 +119,17 @@ io.on('connection', (socket) => {
     // Join Global Chat
     socket.join('globalChat');
 
-    socket.on('sendGlobalMessage', (messageData) => {
-        io.to('globalChat').emit('recievedGlobalMessage', messageData);
+    socket.on('sendGlobalMessage', async (messageData) => {
+        const { senderId, message } = messageData;
+
+        const chatMessage = await Chat.create({ senderId, receiverId: null, message });
+
+        const chatWithSender = {
+            ...chatMessage.toJSON(),
+            senderName: await getSenderName(senderId)
+        };
+
+        io.to('globalChat').emit('recievedGlobalMessage', chatWithSender);
     });
 
     // Join Private Chat
@@ -180,5 +189,10 @@ io.on('connection', (socket) => {
         console.log(`User disconnected: ${socket.id}`);
     });
 });
+
+async function getSenderName(senderId) {
+    const sender = await Character.findByPk(senderId, { attributes: ['name'] });
+    return sender ? sender.name : `User ${senderId}`;
+}
 
 module.exports = { app, server };
