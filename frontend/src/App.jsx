@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 import Navigation from './components/Navigation';
@@ -11,10 +11,12 @@ import CharactersListPage from './components/CharactersListPage';
 import FriendsListPage from './components/FriendsListPage';
 import AboutLinks from './components/AboutLinks';
 import ItemShopPage from './components/ItemShop';
+import GlobalChat from './components/GlobalChat';
 import * as sessionActions from './store/session';
 
 function Layout() {
   const dispatch = useDispatch();
+  const currentCharacter = useSelector(state => state.characters.userCharacter);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -28,6 +30,7 @@ function Layout() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Outlet />}
       {isLoaded && <AboutLinks />}
+      {isLoaded && <GlobalChat currentCharacter={currentCharacter} />}
     </>
   );
 }

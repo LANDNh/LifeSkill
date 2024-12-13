@@ -118,6 +118,7 @@ io.on('connection', (socket) => {
 
     // Join Global Chat
     socket.join('globalChat');
+
     socket.on('sendGlobalMessage', (messageData) => {
         io.to('globalChat').emit('recievedGlobalMessage', messageData);
     });

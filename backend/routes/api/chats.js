@@ -22,10 +22,15 @@ router.get('/', requireAuth, async (req, res) => {
         },
         order: [['createdAt', 'ASC']]
     });
-    return res.json(globalChats.map(chat => ({
-        ...chat.toJSON(),
-        senderName: chat.Sender.name,
-    })));
+
+    if (globalChats.length) {
+        return res.json(globalChats.map(chat => ({
+            ...chat.toJSON(),
+            senderName: chat.Sender.name,
+        })));
+    } else {
+        return res.json([]);
+    }
 });
 
 // Get private message chat history
