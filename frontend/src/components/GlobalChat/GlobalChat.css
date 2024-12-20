@@ -6,6 +6,7 @@
     bottom: 0;
     right: 35px;
     width: 150px;
+    max-width: 20%;
     height: 40px;
     /* Visible toggle area */
     color: #163DFF;
@@ -16,6 +17,7 @@
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
     border: 2px solid #163DFF;
     border-radius: 15px 15px 0 0;
+    opacity: 25%;
     user-select: none;
     transform: translateY(calc(100% - 60px));
     /* Synchronize with the container */
@@ -25,6 +27,7 @@
 
 .global-chat-header.visible {
     transform: translateY(-450px);
+    opacity: 100%;
 }
 
 .global-chat-container {
@@ -37,7 +40,7 @@
     bottom: 0;
     right: 20px;
     width: 700px;
-    max-width: 90%;
+    max-width: 60%;
     height: 455px;
     background: rgb(255, 255, 255);
     background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
@@ -163,25 +166,16 @@
 }
 
 @media only screen and (max-width: 850px) {
-    .global-message-modal {
-        min-width: unset;
-        max-width: unset;
+    .global-chat-container {
+        width: 500px;
+        max-width: 50%;
+        min-width: 275px;
     }
 }
 
 @media only screen and (max-width: 600px) {
-    .chat-name {
-        font-size: 18pt;
-    }
-
-    .message-input button {
-        margin: 0 .25em;
-    }
-}
-
-@media only screen and (max-width: 450px) {
-    .chat-name {
-        font-size: 16pt;
+    .global-chat-header {
+        font-size: 14pt;
     }
 
     .global-message,
@@ -191,23 +185,16 @@
     }
 
     .message-input button {
-        font-size: 25pt;
+        margin: 0 .25em;
     }
 }
 
-@media only screen and (max-width: 400px) {
-    .chat-name {
-        margin: .5em 0;
-        font-size: 14pt;
-    }
-
-    .global-message-log-container {
-        margin: .5em 1em;
-    }
-
-    .global-message-log {
-        min-height: 100px;
-        max-height: 100px;
+@media only screen and (max-width: 450px) {
+    .global-chat-header {
+        font-size: 12pt;
+        height: 25px;
+        min-width: 80px;
+        transform: translateY(calc(100% - 45px));
     }
 
     .global-message,
@@ -216,10 +203,17 @@
         font-size: 10pt;
     }
 
-    .message-input textarea {
-        min-width: 50%;
-        max-width: 50%;
-        min-height: 80%;
-        max-height: 80%;
+    .message-input button {
+        font-size: 25pt;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .global-chat-header {
+        right: 6%;
+    }
+
+    .global-chat-container {
+        right: 2%;
     }
 }
