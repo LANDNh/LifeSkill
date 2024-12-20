@@ -12,6 +12,7 @@ const GlobalChat = ({ currentCharacter }) => {
     const [message, setMessage] = useState('');
     const [isAtBottom, setIsAtBottom] = useState(true);
     const [isVisible, setIsVisible] = useState(false);
+    const [unreadMessages, setUnreadMessages] = useState(false);
 
     useEffect(() => {
         socket.emit('joinGlobalChat');
@@ -20,6 +21,10 @@ const GlobalChat = ({ currentCharacter }) => {
             if (!messageData.id || messageData.id === undefined) return;
 
             dispatch(sendMessage(messageData, true));
+
+            if (!isVisible) {
+                setUnreadMessages(true);
+            }
         };
 
         dispatch(fetchGlobal());
@@ -59,6 +64,10 @@ const GlobalChat = ({ currentCharacter }) => {
 
     const toggleChat = () => {
         setIsVisible(!isVisible);
+
+        if (!isVisible) {
+            setUnreadMessages(false);
+        }
     };
 
     return (
@@ -69,6 +78,11 @@ const GlobalChat = ({ currentCharacter }) => {
             >
                 <span>{isVisible ? "Hide Chat" : "Show Chat"}</span>
             </div>
+            {unreadMessages && !isVisible && (
+                <div className="chat-notification">
+                    <i className="fa-solid fa-paper-plane"></i>
+                </div>
+            )}
             <div className={`global-chat-container ${isVisible ? "visible" : ""}`}>
                 <div className="global-message-log-container">
                     <div

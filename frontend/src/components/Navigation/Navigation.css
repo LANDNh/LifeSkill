@@ -193,7 +193,7 @@
 }
 
 .show.scrolled {
-    opacity: 25%;
+    opacity: 35%;
 }
 
 @media only screen and (max-width: 775px) {
