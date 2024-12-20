@@ -65,9 +65,7 @@ const GlobalChat = ({ currentCharacter }) => {
     const toggleChat = () => {
         setIsVisible(!isVisible);
 
-        if (!isVisible) {
-            setUnreadMessages(false);
-        }
+        setUnreadMessages(false);
     };
 
     return (
