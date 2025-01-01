@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
+import { fetchGlobal } from './store/chatReducer';
 
 import Navigation from './components/Navigation';
 import LandingPage from './components/LandingPage';
@@ -11,11 +12,16 @@ import CharactersListPage from './components/CharactersListPage';
 import FriendsListPage from './components/FriendsListPage';
 import AboutLinks from './components/AboutLinks';
 import ItemShopPage from './components/ItemShop';
+import GlobalChat from './components/GlobalChat';
 import * as sessionActions from './store/session';
 
 function Layout() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const currentCharacter = useSelector(state => state.characters.userCharacter);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const excludedPaths = ['/'];
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
@@ -23,11 +29,18 @@ function Layout() {
     });
   }, [dispatch]);
 
+  useEffect(() => {
+    if (!excludedPaths.includes(location.pathname)) {
+      dispatch(fetchGlobal());
+    }
+  }, [location.pathname, dispatch, excludedPaths]);
+
   return (
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Outlet />}
       {isLoaded && <AboutLinks />}
+      {isLoaded && !excludedPaths.includes(location.pathname) && <GlobalChat currentCharacter={currentCharacter} />}
     </>
   );
 }

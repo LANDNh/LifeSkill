@@ -13,14 +13,12 @@ const http = require('http');
 const { Server } = require('socket.io');
 const { Op } = require('sequelize');
 
-const { Chat } = require('./db/models')
+const { Chat, Character } = require('./db/models')
 
 const isProduction = environment === 'production';
 
 const app = express();
 const server = http.createServer(app);
-
-// console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
 const ioCorsOptions = {
     cors: {
@@ -29,9 +27,6 @@ const ioCorsOptions = {
         credentials: true,
     },
 };
-
-// console.log('isProduction:', isProduction);
-// console.log('ioCorsOptions:', ioCorsOptions);
 
 const io = new Server(server, ioCorsOptions);
 
@@ -118,21 +113,23 @@ app.use((err, _req, res, _next) => {
     });
 });
 
-// io.engine.on('headers', (headers, req) => {
-//     console.log('Request Origin:', req.headers.origin);
-//     console.log('CORS Headers Before:', headers);
-//     headers['Access-Control-Allow-Origin'] = 'https://lifeskill.onrender.com';
-//     console.log('CORS Headers After:', headers);
-// });
-
-
 io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id}`);
 
     // Join Global Chat
     socket.join('globalChat');
-    socket.on('sendGlobalMessage', (messageData) => {
-        io.to('globalChat').emit('recievedGlobalMessage', messageData);
+
+    socket.on('sendGlobalMessage', async (messageData) => {
+        const { senderId, message } = messageData;
+
+        const chatMessage = await Chat.create({ senderId, receiverId: null, message });
+
+        const chatWithSender = {
+            ...chatMessage.toJSON(),
+            senderName: await getSenderName(senderId)
+        };
+
+        io.to('globalChat').emit('recievedGlobalMessage', chatWithSender);
     });
 
     // Join Private Chat
@@ -192,5 +189,10 @@ io.on('connection', (socket) => {
         console.log(`User disconnected: ${socket.id}`);
     });
 });
+
+async function getSenderName(senderId) {
+    const sender = await Character.findByPk(senderId, { attributes: ['name'] });
+    return sender ? sender.name : `User ${senderId}`;
+}
 
 module.exports = { app, server };

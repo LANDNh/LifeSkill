@@ -1,0 +1,265 @@
+.global-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    right: 35px;
+    width: 150px;
+    max-width: 20%;
+    height: 40px;
+    /* Visible toggle area */
+    color: #163DFF;
+    padding: 10px;
+    cursor: pointer;
+    font-family: "Delta Block";
+    font-size: 16pt;
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    border: 2px solid #163DFF;
+    border-radius: 15px 15px 0 0;
+    opacity: 35%;
+    user-select: none;
+    transform: translateY(calc(100% - 60px));
+    /* Synchronize with the container */
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.global-chat-header.visible {
+    transform: translateY(-450px);
+    opacity: 100%;
+}
+
+.chat-notification {
+    position: fixed;
+    bottom: 15px;
+    right: 178px;
+    margin-left: .5em;
+    color: #163DFF;
+    font-size: 16pt;
+    opacity: 100%;
+    animation: pulse 1.5s infinite;
+    z-index: 1003;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        color: #163DFF;
+    }
+
+    50% {
+        color: #00C7FF;
+        text-shadow: 0 0 4px #00C7FF;
+        filter: brightness(1.2);
+    }
+}
+
+.global-chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1em;
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    width: 700px;
+    max-width: 60%;
+    height: 455px;
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 35%, rgba(205, 205, 205, 1) 100%);
+    border: 2px solid #163DFF;
+    border-radius: 15px;
+    overflow: hidden;
+    box-sizing: border-box;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1001;
+}
+
+.global-chat-container.visible {
+    transform: translateY(0);
+}
+
+.global-message-log-container {
+    position: relative;
+    width: 95%;
+    margin: 1em;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.global-message-log-container:before {
+    content: "";
+    background: url('https://lifeskill-bucket.s3.amazonaws.com/images/page-background-clip.png') white;
+    background-size: 8em auto;
+    background-repeat: repeat;
+    background-attachment: local;
+    background-position: center;
+    opacity: .1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+}
+
+.global-message-log {
+    position: relative;
+    border: 2px solid #163DFF;
+    border-radius: 10px;
+    box-shadow: 8px 4px 8px gray;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    scrollbar-color: #163DFF rgba(0, 0, 0, 0) !important;
+    scrollbar-width: thick;
+    width: 100%;
+    min-height: 300px;
+    max-height: 300px;
+}
+
+.global-message {
+    font-family: "Delta Block";
+    font-size: 14pt;
+    margin: .1em .25em;
+    padding: .25em;
+    color: #163DFF;
+    word-wrap: break-word;
+    max-width: 80%;
+    width: fit-content;
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 15px;
+}
+
+.no-messages {
+    font-family: "Delta Block";
+    font-size: 14pt;
+    margin: .1em .25em;
+    padding: .25em;
+    color: #163DFF;
+    word-wrap: break-word;
+    max-width: 80%;
+    width: fit-content;
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 15px;
+}
+
+.message-input {
+    width: 95%;
+    height: 3em;
+    margin: .5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+}
+
+.message-input textarea {
+    border: 2px solid #163DFF;
+    border-radius: 6px;
+    padding: .5em;
+    resize: none;
+    min-width: 70%;
+    max-width: 70%;
+    min-height: 100%;
+    max-height: 100%;
+    font-family: "Delta Block";
+    font-size: 14pt;
+    color: #163DFF;
+    scrollbar-color: #163DFF rgba(0, 0, 0, 0) !important;
+    scrollbar-width: thick;
+}
+
+.message-input button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1em 0 .5em;
+    padding: 0;
+    font-family: "M42_FLIGHT 721";
+    background-color: #00C7FF;
+    border: 2px solid #163DFF;
+    box-shadow: 5px 5px 10px #163DFF;
+    color: white;
+    font-size: 30pt;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 850px) {
+    .global-chat-header {
+        min-width: 140px;
+    }
+
+    .global-chat-container {
+        width: 500px;
+        max-width: 50%;
+        min-width: 275px;
+    }
+}
+
+@media only screen and (max-width: 715px) {
+    .chat-notification {
+        right: 170px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .global-chat-header {
+        font-size: 14pt;
+    }
+
+    .global-message,
+    .no-messages,
+    .message-input textarea {
+        font-size: 12pt;
+    }
+
+    .message-input button {
+        margin: 0 .25em;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .global-chat-header {
+        font-size: 12pt;
+        height: 25px;
+        min-width: 105px;
+        transform: translateY(calc(100% - 45px));
+    }
+
+    .chat-notification {
+        right: 142px;
+        bottom: 11px;
+        font-size: 12pt;
+    }
+
+    .global-message,
+    .no-messages,
+    .message-input textarea {
+        font-size: 10pt;
+    }
+
+    .message-input button {
+        font-size: 25pt;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .global-chat-header {
+        right: 20px;
+    }
+
+    .chat-notification {
+        right: 127px;
+    }
+
+    .global-chat-container {
+        right: 10px;
+    }
+}

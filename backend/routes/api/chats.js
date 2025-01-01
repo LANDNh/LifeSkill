@@ -10,13 +10,27 @@ const router = express.Router();
 
 // Get global chat hitsory
 router.get('/', requireAuth, async (req, res) => {
+    // Include 'Sender' Character to extract name for display in chat
     const globalChats = await Chat.findAll({
         where: {
-            recieverId: null
+            receiverId: null
+        },
+        include: {
+            model: Character,
+            as: 'Sender',
+            attributes: ['id', 'name'],
         },
         order: [['createdAt', 'ASC']]
     });
-    return res.json(globalChats);
+
+    if (globalChats.length) {
+        return res.json(globalChats.map(chat => ({
+            ...chat.toJSON(),
+            senderName: chat.Sender.name,
+        })));
+    } else {
+        return res.json([]);
+    }
 });
 
 // Get private message chat history
