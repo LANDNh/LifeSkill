@@ -353,6 +353,59 @@ router.put('/current/:questId', requireAuth, questAuthorize, validateQuest, asyn
     // Add coins to user character upon completion and remove quest
     if (quest.complete) {
         const { user } = req;
+
+        //
+        if (quest.type && quest.type !== 'none') {
+            // Clone a quest with a repeating type
+            const clonedQuest = await Quest.create({
+                userId: quest.userId,
+                title: quest.title,
+                description: quest.description,
+                type: quest.type,
+                difficultyAggregate: quest.difficultyAggregate,
+                completionCoins: quest.completionCoins
+            });
+
+            // And its related quest steps
+            const questSteps = await QuestStep.findAll({
+                where: {
+                    questId: quest.id
+                }
+            });
+
+            for (const step of questSteps) {
+                await QuestStep.create({
+                    questId: clonedQuest.id,
+                    title: step.title,
+                    notes: step.notes,
+                    difficulty: step.difficulty,
+                    xp: step.xp,
+                    complete: false
+                });
+            }
+
+            const nextAvailableDate = new Date();
+            switch (quest.type) {
+                case 'daily':
+                    nextAvailableDate.setDate(nextAvailableDate.getDate() + 1);
+                    break;
+                case 'weekly': {
+                    // Get day of the week and determine # of days until the next Sunday
+                    const currentDay = nextAvailableDate.getDay();
+                    const daysUntilNextSunday = (7 - currentDay) % 7 || 7;
+
+                    nextAvailableDate.setDate(nextAvailableDate.getDate() + daysUntilNextSunday);
+                    break;
+                }
+                case 'monthly':
+                    nextAvailableDate.setMonth(nextAvailableDate.getMonth() + 1);
+                    break;
+            }
+
+            clonedQuest.availableAt = nextAvailableDate;
+            await clonedQuest.save();
+        }
+
         const character = await Character.findOne({
             where: {
                 userId: user.id

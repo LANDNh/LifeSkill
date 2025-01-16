@@ -15,6 +15,7 @@ const { Op } = require('sequelize');
 
 const { Chat, Character } = require('./db/models')
 const cleanUpMessages = require('./cron/cleanUpMessages');
+const questSchedule = require('./cron/questSchedule');
 
 const isProduction = environment === 'production';
 
@@ -22,6 +23,7 @@ const app = express();
 const server = http.createServer(app);
 
 cleanUpMessages();
+questSchedule();
 
 const ioCorsOptions = {
     cors: {
