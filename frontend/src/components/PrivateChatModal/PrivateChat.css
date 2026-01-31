@@ -32,7 +32,7 @@
 
 .private-message-log-container:before {
     content: "";
-    background: url('https://lifeskill-bucket.s3.amazonaws.com/images/page-background-clip.png') white;
+    background: url('/images/page-background-clip.png') white;
     background-size: 8em auto;
     background-repeat: repeat;
     background-attachment: local;

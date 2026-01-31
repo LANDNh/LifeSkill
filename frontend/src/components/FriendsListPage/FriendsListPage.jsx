@@ -84,7 +84,7 @@ function FriendsListPage() {
                                         onClick={e => e.stopPropagation()}
                                     >
                                         <OpenModalButton
-                                            buttonText={<img src='https://lifeskill-bucket.s3.us-east-1.amazonaws.com/images/circle-message.png' />}
+                                            buttonText={<img src='/images/circle-message.png' />}
                                             modalComponent={
                                                 <PrivateChatModal
                                                     senderId={userCharacter.id}
@@ -166,7 +166,7 @@ function FriendsListPage() {
                                         onClick={e => e.stopPropagation()}
                                     >
                                         <OpenModalButton
-                                            buttonText={<img src='https://lifeskill-bucket.s3.us-east-1.amazonaws.com/images/circle-message.png' />}
+                                            buttonText={<img src='/images/circle-message.png' />}
                                             modalComponent={
                                                 <PrivateChatModal
                                                     senderId={userCharacter.id}

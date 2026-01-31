@@ -14,11 +14,16 @@ const { Server } = require('socket.io');
 const { Op } = require('sequelize');
 
 const { Chat, Character } = require('./db/models')
+const cleanUpMessages = require('./cron/cleanUpMessages');
+const questSchedule = require('./cron/questSchedule');
 
 const isProduction = environment === 'production';
 
 const app = express();
 const server = http.createServer(app);
+
+cleanUpMessages();
+questSchedule();
 
 const ioCorsOptions = {
     cors: {
@@ -74,8 +79,6 @@ app.use(
 
 const routes = require('./routes');
 
-// ...
-
 app.use(routes); // Connect all the routes
 
 // Catch unhandled requests and forward to error handler.
@@ -119,10 +122,38 @@ io.on('connection', (socket) => {
     // Join Global Chat
     socket.join('globalChat');
 
+    const GLOBAL_MESSAGE_LIMIT = 100;
+
     socket.on('sendGlobalMessage', async (messageData) => {
         const { senderId, message } = messageData;
 
         const chatMessage = await Chat.create({ senderId, receiverId: null, message });
+
+        const totalMessages = await Chat.count({
+            where: {
+                receiverId: {
+                    [Op.is]: null
+                }
+            }
+        });
+
+        if (totalMessages > GLOBAL_MESSAGE_LIMIT) {
+            const excessMessages = await Chat.findAll({
+                where: {
+                    receiverId: {
+                        [Op.is]: null
+                    }
+                },
+                order: [['createdAt', 'ASC']],
+                limit: totalMessages - GLOBAL_MESSAGE_LIMIT,
+            });
+
+            await Chat.destroy({
+                where: {
+                    id: excessMessages.map(msg => msg.id),
+                },
+            });
+        }
 
         const chatWithSender = {
             ...chatMessage.toJSON(),
@@ -143,7 +174,7 @@ io.on('connection', (socket) => {
         }
     });
 
-    const MESSAGE_LIMIT = 50;
+    const PRIVATE_MESSAGE_LIMIT = 50;
 
     socket.on('sendPrivateMessage', async (messageData) => {
         const { senderId, receiverId, message } = messageData;
@@ -161,7 +192,7 @@ io.on('connection', (socket) => {
             },
         });
 
-        if (totalMessages > MESSAGE_LIMIT) {
+        if (totalMessages > PRIVATE_MESSAGE_LIMIT) {
             const excessMessages = await Chat.findAll({
                 where: {
                     [Op.or]: [
@@ -170,7 +201,7 @@ io.on('connection', (socket) => {
                     ],
                 },
                 order: [['createdAt', 'ASC']],
-                limit: totalMessages - MESSAGE_LIMIT,
+                limit: totalMessages - PRIVATE_MESSAGE_LIMIT,
             });
 
             await Chat.destroy({

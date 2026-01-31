@@ -22,7 +22,7 @@ function LandingPage() {
     return (
         <div className='landing-page-all'>
             <div className='landing-page-container'>
-                <img className='landing-page-logo' src={'https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-logo.png'} alt="LifeSkill Logo" />
+                <img className='landing-page-logo' src={'/images/LifeSkill-logo.png'} alt="LifeSkill Logo" />
                 <h1>Complete Quests, Form Habits</h1>
                 <li className='landing-page-login'>
                     <p>Returning User?</p>

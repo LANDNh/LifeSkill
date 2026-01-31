@@ -69,7 +69,7 @@ function Navigation({ isLoaded }) {
                                 className='small-home'
                             >
                                 <NavLink to="/">
-                                    <img src="https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-logo.png" alt="LifeSkill" />
+                                    <img src="/images/LifeSkill-logo.png" alt="LifeSkill" />
                                 </NavLink>
                             </li>
                         </>
@@ -79,7 +79,7 @@ function Navigation({ isLoaded }) {
                             className='home'
                         >
                             <NavLink to="/">
-                                <img src="https://lifeskill-bucket.s3.amazonaws.com/images/LifeSkill-home.png" alt="LifeSkill" />
+                                <img src="/images/LifeSkill-home.png" alt="LifeSkill" />
                             </NavLink>
                         </li>
                     )}
