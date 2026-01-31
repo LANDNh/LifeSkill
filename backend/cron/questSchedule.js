@@ -24,3 +24,5 @@ const questSchedule = async () => {
 };
 
 cron.schedule('* * * * *', questSchedule);
+
+module.exports = questSchedule;
