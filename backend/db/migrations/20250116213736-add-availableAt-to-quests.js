@@ -7,22 +7,27 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
 }
 
+const tableRef = options.schema
+  ? { tableName: 'Quests', schema: options.schema }
+  : 'Quests';
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = 'Quests';
-    await queryInterface.addColumn(options.tableName, 'availableAt', {
-      type: Sequelize.DATE,
-      allowNull: true,
-      defaultValue: null
-    }, options);
+    await queryInterface.addColumn(
+      tableRef,
+      'availableAt',
+      {
+        type: Sequelize.DATE,
+        allowNull: true,
+        defaultValue: null
+      }
+    );
   },
 
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Quests';
     await queryInterface.removeColumn(
-      options.tableName,
-      'availableAt',
-      options
+      tableRef,
+      'availableAt'
     );
   }
 };
